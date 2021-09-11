@@ -65,7 +65,7 @@ public class UI {
 	}
 	
 	public void createUIComponent() {
-		m_sound.setMusic(getClass().getResource("TitleTrack.wav"));
+		m_sound.setMusic(m_constants.titleTrackURL);
 		try {
 			window.remove(optionsPanel);
 			window.remove(optionsPanel2);

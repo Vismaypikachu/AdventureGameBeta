@@ -21,8 +21,8 @@ public class Constants {
 	//SOUND
 	
 	public URL clickSoundURL = getClass().getResource("ButtonPress.wav");
-	public URL titleTrackURL = getClass().getResource("TitleTrack.wav");
-	public URL innTrackURL = getClass().getResource("InnTrack.wav");
+	public URL titleTrackURL = getClass().getResource("titleTrack.wav");
+	public URL innTrackURL = getClass().getResource("innTrack.wav");
 	public URL testImageURL = getClass().getResource("test.png");
 	public URL currentMusic;
 	public static boolean musicOn = false;
