@@ -9,7 +9,7 @@ import javax.sound.sampled.Clip;
 public class Sound {
 	
 	Clip clip;
-	String clickSound, titleTrack, innTrack;
+	//String clickSound, titleTrack, innTrack;
 	
 	Constants m_constants = new Constants();
 	

@@ -62,4 +62,15 @@ public class Images {
 		Image newimg8 = image8.getScaledInstance(iconwidth, iconheight,  java.awt.Image.SCALE_SMOOTH);
 		CapsulesIcon = new ImageIcon(newimg8);
 	}
+
+	public void setImage(URL ImageURL) {
+		m_constants.currentImage = ImageURL;
+		m_ui.image = new ImageIcon(ImageURL);
+		int image_w = (int)Math.round(m_constants.currentScreenWidth * 0.5555555555555556);
+		int image_h = (int)Math.round(m_constants.currentScreenHeight * 0.5617977528089888);
+		
+		Image im = m_ui.image.getImage().getScaledInstance(image_w, image_h, Image.SCALE_DEFAULT);
+		m_ui.image = new ImageIcon(im);
+		m_ui.imageLabel.setIcon(m_ui.image);
+	}
 }

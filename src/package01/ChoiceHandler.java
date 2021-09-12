@@ -15,11 +15,11 @@ public class ChoiceHandler implements ActionListener{
 	public void actionPerformed(ActionEvent event){
 		String yourChoice = event.getActionCommand();
 		switch(yourChoice){
-			case "start": m_game.vm.showGameScreen(); break; //m_game.story.townGate();
-		//	case "c1": game.story.selectPosition(game.nextPosition1); break;
-			//case "c2": game.story.selectPosition(game.nextPosition2); break;
-		//	case "c3": game.story.selectPosition(game.nextPosition3); break;
-		//	case "c4": game.story.selectPosition(game.nextPosition4); break;
+			case "start": m_game.vm.showGameScreen(); m_game.story.fork(); break;
+			case "c1": m_game.story.selectPosition(m_game.nextPosition1); break;
+			case "c2": m_game.story.selectPosition(m_game.nextPosition2); break;
+			case "c3": m_game.story.selectPosition(m_game.nextPosition3); break;
+			case "c4": m_game.story.selectPosition(m_game.nextPosition4); break;
 		}
 	}
 }
