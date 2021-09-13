@@ -19,6 +19,12 @@ public class VisibilityManager {
 		m_ui.backButtonPanel.setVisible(false);
 		*/
 	}
+	
+	public void hideTitleScreen() {
+		m_ui.titleNamePanel.setVisible(false);
+		m_ui.startButtonPanel.setVisible(false);
+	}
+	
 	public void showGameScreen() {
 		//hide title screen
 		m_ui.titleNamePanel.setVisible(false);

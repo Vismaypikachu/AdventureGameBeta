@@ -1,19 +1,24 @@
-package package01;
+package package04;
 
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import package01.Constants;
+import package01.UI;
+import package01.game;
+
 
 public class OptionsHandler implements ActionListener {
 	
-	UI m_ui = new UI();
 	game m_game;
-	Constants m_constants = new Constants();
+	UI m_ui;
+	Constants m_constants = new Constants(m_ui);
 	
-	public OptionsHandler(game g) {
+	public OptionsHandler(game g, UI userInterface) {
     // Constructor
 		m_game = g;
+		m_ui = userInterface;
 	}
  
 	public void actionPerformed(ActionEvent event) {

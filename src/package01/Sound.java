@@ -10,9 +10,12 @@ public class Sound {
 	
 	Clip clip;
 	//String clickSound, titleTrack, innTrack;
+	UI m_ui;
+	Constants m_constants = new Constants(m_ui);
 	
-	Constants m_constants = new Constants();
-	
+	public Sound(UI userInterface) {
+		m_ui = userInterface;
+	}
 	
 	public void setMusic(URL fileName) {
 		if(m_constants.musicOn == false){

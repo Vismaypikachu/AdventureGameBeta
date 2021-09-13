@@ -7,9 +7,12 @@ import javax.swing.border.Border;
 
 import package02.None;
 import package03.Potion;
+import package05.SuperEnemy;
 
 public class Constants {
-	Player m_player = new Player();
+	UI m_ui;
+	Player m_player = new Player(m_ui, this);
+	
 	
 	//UI
 	public static int currentScreenWidth = 1070;
@@ -39,9 +42,12 @@ public class Constants {
 	public static boolean fullScreenOn;
 	//BUTTONS
 	public static String text, b1text, b2text, b3text, b4text, b5text;
+	//ENEMIES
+	public static SuperEnemy currentEnemy;
 	//MISC
 	public static int inputcount, bisonCount, Ecount, timesGiven;
-	public static boolean inBattle, forkUsed, switchOn;
+	public static boolean inBattle, forkUsed, switchOn, specialUnlocked;
+	public static String position, savedPosition;
 	/*
 	public void initializeSounds() {
 		//clickSoundURL = getClass().getResource("ButtonPress.wav");
@@ -50,6 +56,11 @@ public class Constants {
 		//testImageURL = getClass().getResource("test.png");
 	}
 	*/
+	
+	public Constants(UI userInterface) {
+		m_ui = userInterface;
+	}
+	
 	public void reinitializeVars() {
 		inputcount = 0;
 		inBattle = false;
