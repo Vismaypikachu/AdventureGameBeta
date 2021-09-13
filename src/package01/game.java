@@ -36,7 +36,7 @@ public class game {
 		public void actionPerformed(ActionEvent event){
 			String yourChoice = event.getActionCommand();
 			switch(yourChoice){
-				case "start": vm.hideTitleScreen(); story.input(); break;
+				case "start": vm.hideTitleScreen(); ui.m_sound.stop(); story.input(); break;
 				case "c1": story.selectPosition(nextPosition1); break;
 				case "c2": story.selectPosition(nextPosition2); break;
 				case "c3": story.selectPosition(nextPosition3); break;

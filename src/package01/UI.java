@@ -74,7 +74,7 @@ public class UI {
 	VisibilityManager vm = new VisibilityManager(this);
 	Inventory m_inventory = new Inventory(m_game, this);
 	InventoryHandler iHandler = new InventoryHandler(this, m_game, m_constants, m_inventory);
-	Story m_story = new Story(m_game, this, vm, m_constants, m_inventory);
+	public Story m_story = new Story(m_game, this, vm, m_constants, m_inventory);
 	BackpackHandler bpHandler = new BackpackHandler(m_game, this);
 	CapsulesHandler cHandler = new CapsulesHandler(m_game, this);
 	GameoverHandler goHandler = new GameoverHandler();
@@ -1368,16 +1368,6 @@ public class UI {
 		for(int j = 0; j < inGameOptionsButtons.length; j++) {
 			inGameOptionsPanel.add(inGameOptionsButtons[j]);
 		}
-	}
-	
-	public void statschange() {
-		hpLabelNumber.setText(""+ m_player.playerHP);
-		goldLabelNumber.setText(""+ m_player.gold);
-		xpLabelNumber.setText(""+ m_player.xp);
-		weaponLabelName.setText(""+ m_player.weapon.name);
-		attackLabelNumber.setText(""+ m_player.weapon.attackStat);
-		defenseLabelNumber.setText(""+ m_player.playerdefense);
-		capsuleLabelNumber.setText(""+ m_player.capsules);
 	}
 	
 }

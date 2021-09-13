@@ -51,7 +51,7 @@ public class Story {
 		gameOverPanel.setVisible(true);
 		con.add(gameOverPanel);
 		*/
-		m_ui.statschange();
+		statschange();
 		if(m_constants.position.equals("gameover")) {
 			m_ui.choice1.setText("Main Menu");
 			m_ui.choice2.setText("Exit Game");
@@ -73,6 +73,16 @@ public class Story {
 			m_ui.choice3.setText("------");
 			m_ui.choice4.setText("------");
 		}
+	}
+	
+	public void statschange() {
+		m_ui.hpLabelNumber.setText("" + m_player.playerHP);
+		m_ui.goldLabelNumber.setText("" + m_player.gold);
+		m_ui.xpLabelNumber.setText("" + m_player.xp);
+		m_ui.weaponLabelName.setText(m_player.weapon.name);
+		m_ui.attackLabelNumber.setText(""+ m_player.weapon.attackStat);
+		m_ui.defenseLabelNumber.setText(""+ m_player.playerdefense);
+		m_ui.capsuleLabelNumber.setText(""+ m_player.capsules);
 	}
 	
 	public void playerSetup() {	
@@ -179,7 +189,7 @@ public class Story {
 	
 	public void fork() {
 		m_ui.setImage(m_constants.testImageURL);
-		m_ui.statschange();
+		statschange();
 		if(m_player.playerHP <= 0) {
 			gameover();
 		}

@@ -28,7 +28,7 @@ public class CapsulesHandler implements ActionListener{
 	}
 	
 	public void actionPerformed(ActionEvent event) {
-		m_ui.statschange();
+		m_ui.m_story.statschange();
 		if(m_player.capsules == 0 && m_player.playerHP > 20) {
 			int attack = r.nextInt((m_player.weapon.attackStat*5)-10+1);
 			m_constants.currentEnemy.enemyHP -= attack;
@@ -50,7 +50,7 @@ public class CapsulesHandler implements ActionListener{
 	public void specialattack(int damage) {
 		m_ui.mainTextArea.setText("You attacked " + m_constants.currentEnemy.name + " with Special Attack\nYou dealt " + damage + " damage.\n"+ m_constants.currentEnemy.name + " has " + m_constants.currentEnemy.enemyHP + " health left.");
 		m_constants.currentEnemy.enemyHP -= damage;
-		m_ui.statschange();
+		m_ui.m_story.statschange();
 		m_ui.choice1.setText("Continue");
 		m_ui.choice2.setText("------");
 		m_ui.choice3.setText("------");

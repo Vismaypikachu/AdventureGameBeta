@@ -17,6 +17,6 @@ public class StatsHandler implements ActionListener{
 	}
 	
 	public void actionPerformed(ActionEvent event) {
-		m_ui.statschange();
+		m_ui.m_story.statschange();
 	}
 }
