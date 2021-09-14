@@ -754,7 +754,7 @@ public class UI {
 		choiceButtonPanel.add(inventoryButton);
 		
 		
-		m_game.m_inventory.inventory(cbp_x, cbp_w);
+		inventory(cbp_x, cbp_w);
 		
 		
 		//------------------------------------------------------------------
@@ -1080,9 +1080,10 @@ public class UI {
 		choiceButtonPanel.add(inventoryButton);
 		
 		
-		m_game.m_inventory.inventory(cbp_x, cbp_w);
+		inventory(cbp_x, cbp_w);
 	
 		//------------------------------------------------------------------
+		/*
 		inGameOptionsPanel = new JPanel();
 		int igop_x = (int)Math.round(cbp_x + cbp_w);
 		int igop_y = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.6811797752808989);
@@ -1092,12 +1093,11 @@ public class UI {
 		//inventoryPanel.setBounds(900, 485, 150, 188);
 		inGameOptionsPanel.setBackground(Color.black);
 		inGameOptionsPanel.setLayout(new GridLayout(5,1));
-		
+		*/
 		optionsButtons(cbp_x, cbp_y);
 		
 		inGameOptionsPanel.setVisible(false);
 	
-		
 		
 		playerPanel = new JPanel();
 		int pp_x = (int)Math.round(mtp_x + mtp_w);
@@ -1227,12 +1227,11 @@ public class UI {
 			choice4.setBorder(null);
 			specialattack.setBorder(null);
 			//
-			inGameOptionsButton.setBorder(null);
+			inGameOptionsButtons[0].setBorder(null);
 			inGameOptionsButtons[1].setBorder(null);
 			inGameOptionsButtons[2].setBorder(null);
 			inGameOptionsButtons[3].setBorder(null);
 			inGameOptionsButtons[4].setBorder(null);
-			inGameOptionsButtons[5].setBorder(null);
 			//
 			inventoryButton.setBorder(null);
 			//
@@ -1326,7 +1325,37 @@ public class UI {
 		con.add(backpackTextAreaPanel);
 	}
 	
+	public void inventory(int cbp_x, int cbp_w) {
+		inventoryPanel = new JPanel();
+		int inp_x = (int)Math.round(cbp_x + cbp_w);
+		int inp_y = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.6811797752808989);
+		int inp_w = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.1401869158878505);
+		int inp_h = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.2640449438202247);
+		inventoryPanel.setBounds(inp_x, inp_y, inp_w, inp_h);
+		//inventoryPanel.setBounds(900, 485, 150, 188);
+		inventoryPanel.setBackground(Color.black);
+		inventoryPanel.setLayout(new GridLayout(5,1));
+		
+		for (int i = 0; i < inventoryButtons.length; i++) {
+			inventoryButtons[i] = new JButton();
+			inventoryButtons[i].setBackground(Color.black);
+			inventoryButtons[i].setForeground(Color.white);
+			//itemButton1.setLayout(new GridLayout(5,1));
+			inventoryButtons[i].setFont(m_game.m_ui.normalFont);
+			inventoryButtons[i].setFocusPainted(false);
+			inventoryButtons[i].addActionListener(m_game.m_iHandler);
+			inventoryButtons[i].addActionListener(m_game.m_bHandler);
+			inventoryButtons[i].addActionListener(m_game.m_sHandler);
+			int lol = i+1;
+			inventoryButtons[i].setActionCommand("item"+lol);
+			
+			inventoryPanel.add(inventoryButtons[i]);
+		}
+		inventoryPanel.setVisible(false);
+	}
+	
 	public void optionsButtons(int cbp_x, int cbp_w) {
+		
 		inGameOptionsPanel = new JPanel();
 		int igop_x = (int)Math.round(cbp_x + cbp_w);
 		int igop_y = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.6811797752808989);
@@ -1336,7 +1365,7 @@ public class UI {
 		//inventoryPanel.setBounds(900, 485, 150, 188);
 		inGameOptionsPanel.setBackground(Color.black);
 		inGameOptionsPanel.setLayout(new GridLayout(5,1));
-
+		
 		
 		for (int i = 0; i < inGameOptionsButtons.length-1; i++) {
 			inGameOptionsButtons[i] = new JButton();
@@ -1348,15 +1377,15 @@ public class UI {
 			inGameOptionsButtons[i].addActionListener(m_game.m_oHandler);
 			inGameOptionsButtons[i].addActionListener(m_game.m_bpHandler);
 			int buttonListener = i+1;
-			backpackButtons[i].setActionCommand("option" + buttonListener);
-			backpackPanel.add(backpackButtons[i]);
+			inGameOptionsButtons[i].setActionCommand("option" + buttonListener);
+			inGameOptionsPanel.add(inGameOptionsButtons[i]);
 		}
 		
 		inGameOptionsButtons[1].setText("FULLSCREEN");
 		inGameOptionsButtons[2].setText("EXIT FULLSCREEN");
 		inGameOptionsButtons[3].setText("EXIT GAME");
 
-		inGameOptionsButtons[4] = new JButton();
+		inGameOptionsButtons[4] = new JButton("Show Backpack");
 		inGameOptionsButtons[4].setBackground(Color.black);
 		inGameOptionsButtons[4].setForeground(Color.white);
 		//itemButton5.setLayout(new GridLayout(5,1));
@@ -1367,9 +1396,6 @@ public class UI {
 		inGameOptionsButtons[4].addActionListener(m_game.m_bpHandler);
 		inGameOptionsButtons[4].setActionCommand("backpack");
 		
-		for(int j = 0; j < inGameOptionsButtons.length; j++) {
-			inGameOptionsPanel.add(inGameOptionsButtons[j]);
-		}
 	}
 	
 }

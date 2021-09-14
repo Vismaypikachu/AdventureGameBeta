@@ -29,6 +29,7 @@ public class InventoryHandler implements ActionListener{
 					m_game.m_ui.choice4.setVisible(false);
 					m_game.m_ui.specialattack.setVisible(false);
 					m_game.m_ui.inGameOptionsButton.setVisible(false);
+				//	m_game.m_ui.window.add(m_game.m_ui.inventoryPanel);
 					m_game.m_ui.inventoryPanel.setVisible(true);
 					//
 					m_game.m_inventory.updateInventory();
@@ -44,6 +45,7 @@ public class InventoryHandler implements ActionListener{
 					if(m_game.m_constants.inBattle == false) m_game.m_ui.inGameOptionsButton.setVisible(true);
 					else m_game.m_ui.inGameOptionsButton.setVisible(false);
 					m_game.m_ui.inventoryPanel.setVisible(false);
+				//	m_game.m_ui.window.remove(m_game.m_ui.inventoryPanel);
 					m_game.m_constants.InventoryStatus = "close";
 				}
 			break;
