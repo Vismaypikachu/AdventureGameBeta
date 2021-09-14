@@ -40,7 +40,7 @@ public class BackpackHandler implements ActionListener {
 						//
 						m_game.m_backpack.updateBackpack(1);
 						//
-						m_game.m_ui.inGameOptionsPanel.setVisible(true);
+						m_game.m_ui.sidePanel.setVisible(true);
 						m_game.m_ui.inGameOptionsButtons[1].setVisible(true);
 						m_game.m_ui.inGameOptionsButtons[2].setVisible(true);
 						m_game.m_ui.backpackPanel.setVisible(false);
@@ -86,7 +86,7 @@ public class BackpackHandler implements ActionListener {
 					}
 					else if(m_game.m_constants.BackpackStatus.equals("open")) {
 						m_game.m_backpack.updateBackpack(1);
-						m_game.m_ui.inGameOptionsPanel.setVisible(true);
+						m_game.m_ui.sidePanel.setVisible(true);
 						m_game.m_ui.inGameOptionsButtons[1].setVisible(true);
 						m_game.m_ui.inGameOptionsButtons[2].setVisible(true);
 						m_game.m_ui.backpackPanel.setVisible(false);

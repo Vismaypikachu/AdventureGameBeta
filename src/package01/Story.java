@@ -70,8 +70,8 @@ public class Story {
 			m_game.m_ui.choiceButtonPanel.remove(m_game.m_ui.specialattack);
 			m_game.m_ui.inventoryButton.setVisible(false);
 			m_game.m_ui.inGameOptionsButton.setVisible(false);
-			m_game.m_ui.inventoryPanel.setVisible(false);
-			m_game.m_ui.inGameOptionsPanel.setVisible(false);
+			m_game.m_ui.sidePanel.setVisible(false);
+			m_game.m_ui.sidePanel.setVisible(false);
 		}
 		else {
 			m_game.m_constants.position.equals("gameoverStart");

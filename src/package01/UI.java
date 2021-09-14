@@ -35,17 +35,13 @@ public class UI {
 	Container con;
 	JPanel titleNamePanel, startButtonPanel, optionsPanel, optionsPanel2, optionsLabelPanel, backButtonPanel, creditsTextAreaPanel, creditsPanel, creditsPanel2;
 	JPanel mainTextPanel, choiceButtonPanel;
-	public JPanel inventoryPanel;
-	JPanel playerPanel;
-	public JPanel imagePanel;
-	JPanel counterPanel;
-	public JPanel inGameOptionsPanel;
+	public JPanel sidePanel, playerPanel, counterPanel, imagePanel, backpackTextAreaPanel, backpackPanel;
 	JLabel titleNameLabel, imageLabel;
 	JButton startButton, loadButton, creditsButton, optionsButton;
 	//Game screen
 	public JTextArea mainTextArea;
 	public JTextArea backpackTextArea;
-	JLabel counterLabel, playerNameLabel, playerNameLabelString, hpLabel, hpLabelNumber, weaponLabel, weaponLabelName, goldLabel, goldLabelNumber, xpLabel, xpLabelNumber, attackLabel, attackLabelNumber, defenseLabel, defenseLabelNumber, capsuleLabel, capsuleLabelNumber;
+	public JLabel counterLabel, playerNameLabel, playerNameLabelString, hpLabel, hpLabelNumber, weaponLabel, weaponLabelName, goldLabel, goldLabelNumber, xpLabel, xpLabelNumber, attackLabel, attackLabelNumber, defenseLabel, defenseLabelNumber, capsuleLabel, capsuleLabelNumber;
 	public JButton specialattack;
 	public JButton inventoryButton;
 	public JButton inGameOptionsButton;
@@ -53,8 +49,6 @@ public class UI {
 	public JButton choice2;
 	public JButton choice3;
 	public JButton choice4;
-	public JPanel backpackPanel;
-	public JPanel backpackTextAreaPanel;
 	//Input
 	JPanel textPanel, inputPanel;
 	public JLabel textLabel;
@@ -149,11 +143,10 @@ public class UI {
 		try {
 			window.remove(mainTextPanel);
 			window.remove(choiceButtonPanel);
-			window.remove(inventoryPanel);
+			window.remove(sidePanel);
 			window.remove(playerPanel);
 			window.remove(imagePanel);
 			window.remove(counterPanel);
-			window.remove(inGameOptionsPanel);
 			window.dispose();
 		}
 		catch (Exception e) {
@@ -388,7 +381,7 @@ public class UI {
 		try {
 			window.remove(mainTextPanel);
 			window.remove(choiceButtonPanel);
-			window.remove(inventoryPanel);
+			window.remove(sidePanel);
 			window.remove(imagePanel);
 			window.remove(playerPanel);
 			window.remove(counterPanel);
@@ -507,7 +500,7 @@ public class UI {
 			window.remove(mainTextPanel);
 			window.remove(choiceButtonPanel);
 			window.remove(playerPanel);
-			window.remove(inventoryPanel);
+			window.remove(sidePanel);
 			window.remove(imagePanel);
 			window.remove(backpackPanel);
 			window.remove(backpackTextAreaPanel);
@@ -553,11 +546,10 @@ public class UI {
 		try {
 			window.remove(mainTextPanel);
 			window.remove(playerPanel);
-			window.remove(inGameOptionsPanel);
 			window.remove(choiceButtonPanel);
 			window.remove(imagePanel);
-			window.remove(inventoryPanel);
-			window.remove(backpackPanel);
+			window.remove(sidePanel);
+			window.remove(sidePanel);
 			window.remove(backpackTextAreaPanel);
 			window.dispose();
 		}
@@ -754,14 +746,27 @@ public class UI {
 		choiceButtonPanel.add(inventoryButton);
 		
 		
-		inventory(cbp_x, cbp_w);
-		
 		
 		//------------------------------------------------------------------
+		//Shared inGame panel
+		sidePanel = new JPanel();
+		int sp_x = (int)Math.round(cbp_x + cbp_w);
+		int sp_y = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.6811797752808989);
+		int sp_w = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.1401869158878505);
+		int sp_h = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.2640449438202247);
+		sidePanel.setBounds(sp_x, sp_y, sp_w, sp_h);
+		//sidePanel.setBounds(900, 485, 150, 188);
+		sidePanel.setBackground(Color.black);
+		sidePanel.setLayout(new GridLayout(5,1));
 		
+		con.add(sidePanel);
+		
+		sidePanel.setVisible(false);
+		//------------------------------------------------------------------
+		
+		inventory(cbp_x, cbp_w);
 		optionsButtons(cbp_x, cbp_y);
 		
-		inGameOptionsPanel.setVisible(false);
 		
 		playerPanel = new JPanel();
 		int pp_x = (int)Math.round(mtp_x + mtp_w);
@@ -921,9 +926,7 @@ public class UI {
 			m_game.m_story.positionCheck();
 		}	
 		//statschange();
-		con.add(inGameOptionsPanel);
 		con.add(choiceButtonPanel);
-		con.add(inventoryPanel);
 		con.add(playerPanel);
 		
 		window.setVisible(true);
@@ -1079,24 +1082,26 @@ public class UI {
 		inventoryButton.setActionCommand("inventoryButton");
 		choiceButtonPanel.add(inventoryButton);
 		
-		
-		inventory(cbp_x, cbp_w);
 	
 		//------------------------------------------------------------------
-		/*
-		inGameOptionsPanel = new JPanel();
-		int igop_x = (int)Math.round(cbp_x + cbp_w);
-		int igop_y = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.6811797752808989);
-		int igop_w = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.1401869158878505);
-		int igop_h = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.2640449438202247);
-		inGameOptionsPanel.setBounds(igop_x, igop_y, igop_w, igop_h);
-		//inventoryPanel.setBounds(900, 485, 150, 188);
-		inGameOptionsPanel.setBackground(Color.black);
-		inGameOptionsPanel.setLayout(new GridLayout(5,1));
-		*/
+		//Shared inGame panel
+		sidePanel = new JPanel();
+		int sp_x = (int)Math.round(cbp_x + cbp_w);
+		int sp_y = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.6811797752808989);
+		int sp_w = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.1401869158878505);
+		int sp_h = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.2640449438202247);
+		sidePanel.setBounds(sp_x, sp_y, sp_w, sp_h);
+		//sidePanel.setBounds(900, 485, 150, 188);
+		sidePanel.setBackground(Color.black);
+		sidePanel.setLayout(new GridLayout(5,1));
+				
+		con.add(sidePanel);
+				
+		sidePanel.setVisible(false);
+		//------------------------------------------------------------------
+				
+		inventory(cbp_x, cbp_w);
 		optionsButtons(cbp_x, cbp_y);
-		
-		inGameOptionsPanel.setVisible(false);
 	
 		
 		playerPanel = new JPanel();
@@ -1246,9 +1251,7 @@ public class UI {
 		}
 		
 		//statschange();
-		con.add(inGameOptionsPanel);
 		con.add(choiceButtonPanel);
-		con.add(inventoryPanel);
 		con.add(playerPanel);
 		con.add(imagePanel);
 		
@@ -1326,16 +1329,6 @@ public class UI {
 	}
 	
 	public void inventory(int cbp_x, int cbp_w) {
-		inventoryPanel = new JPanel();
-		int inp_x = (int)Math.round(cbp_x + cbp_w);
-		int inp_y = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.6811797752808989);
-		int inp_w = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.1401869158878505);
-		int inp_h = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.2640449438202247);
-		inventoryPanel.setBounds(inp_x, inp_y, inp_w, inp_h);
-		//inventoryPanel.setBounds(900, 485, 150, 188);
-		inventoryPanel.setBackground(Color.black);
-		inventoryPanel.setLayout(new GridLayout(5,1));
-		
 		for (int i = 0; i < inventoryButtons.length; i++) {
 			inventoryButtons[i] = new JButton();
 			inventoryButtons[i].setBackground(Color.black);
@@ -1349,23 +1342,11 @@ public class UI {
 			int lol = i+1;
 			inventoryButtons[i].setActionCommand("item"+lol);
 			
-			inventoryPanel.add(inventoryButtons[i]);
+			sidePanel.add(inventoryButtons[i]);
 		}
-		inventoryPanel.setVisible(false);
 	}
 	
 	public void optionsButtons(int cbp_x, int cbp_w) {
-		
-		inGameOptionsPanel = new JPanel();
-		int igop_x = (int)Math.round(cbp_x + cbp_w);
-		int igop_y = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.6811797752808989);
-		int igop_w = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.1401869158878505);
-		int igop_h = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.2640449438202247);
-		inGameOptionsPanel.setBounds(igop_x, igop_y, igop_w, igop_h);
-		//inventoryPanel.setBounds(900, 485, 150, 188);
-		inGameOptionsPanel.setBackground(Color.black);
-		inGameOptionsPanel.setLayout(new GridLayout(5,1));
-		
 		
 		for (int i = 0; i < inGameOptionsButtons.length-1; i++) {
 			inGameOptionsButtons[i] = new JButton();
@@ -1378,7 +1359,6 @@ public class UI {
 			inGameOptionsButtons[i].addActionListener(m_game.m_bpHandler);
 			int buttonListener = i+1;
 			inGameOptionsButtons[i].setActionCommand("option" + buttonListener);
-			inGameOptionsPanel.add(inGameOptionsButtons[i]);
 		}
 		
 		inGameOptionsButtons[1].setText("FULLSCREEN");

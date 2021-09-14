@@ -30,7 +30,10 @@ public class InventoryHandler implements ActionListener{
 					m_game.m_ui.specialattack.setVisible(false);
 					m_game.m_ui.inGameOptionsButton.setVisible(false);
 				//	m_game.m_ui.window.add(m_game.m_ui.inventoryPanel);
-					m_game.m_ui.inventoryPanel.setVisible(true);
+					for(int i = 0; i < m_game.m_ui.inventoryButtons.length; i++) {
+						m_game.m_ui.sidePanel.add(m_game.m_ui.inventoryButtons[i]);
+					}
+					m_game.m_ui.sidePanel.setVisible(true);
 					//
 					m_game.m_inventory.updateInventory();
 					//
@@ -44,7 +47,10 @@ public class InventoryHandler implements ActionListener{
 					m_game.m_ui.specialattack.setVisible(true);
 					if(m_game.m_constants.inBattle == false) m_game.m_ui.inGameOptionsButton.setVisible(true);
 					else m_game.m_ui.inGameOptionsButton.setVisible(false);
-					m_game.m_ui.inventoryPanel.setVisible(false);
+					for(int i = 0; i < m_game.m_ui.inventoryButtons.length; i++) {
+						m_game.m_ui.sidePanel.remove(m_game.m_ui.inventoryButtons[i]);
+					}
+					m_game.m_ui.sidePanel.setVisible(false);
 				//	m_game.m_ui.window.remove(m_game.m_ui.inventoryPanel);
 					m_game.m_constants.InventoryStatus = "close";
 				}
