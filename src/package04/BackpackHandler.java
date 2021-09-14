@@ -26,8 +26,8 @@ public class BackpackHandler implements ActionListener {
 				case "backpack":
 					if(m_game.m_constants.BackpackStatus.equals("close")) {
 						m_game.m_ui.imagePanel.setVisible(false);
+						m_game.m_ui.inGameOptionsButtons[0].setVisible(false);
 						m_game.m_ui.inGameOptionsButtons[1].setVisible(false);
-						m_game.m_ui.inGameOptionsButtons[2].setVisible(false);
 						m_game.m_ui.inGameOptionsButton.setVisible(false);
 						m_game.m_ui.backpackPanel.setVisible(true);
 						m_game.m_ui.backpackTextAreaPanel.setVisible(true);
@@ -41,8 +41,8 @@ public class BackpackHandler implements ActionListener {
 						m_game.m_backpack.updateBackpack(1);
 						//
 						m_game.m_ui.sidePanel.setVisible(true);
+						m_game.m_ui.inGameOptionsButtons[0].setVisible(true);
 						m_game.m_ui.inGameOptionsButtons[1].setVisible(true);
-						m_game.m_ui.inGameOptionsButtons[2].setVisible(true);
 						m_game.m_ui.backpackPanel.setVisible(false);
 						m_game.m_ui.backpackTextAreaPanel.setVisible(false);
 						m_game.m_ui.imagePanel.setVisible(true);
@@ -75,8 +75,8 @@ public class BackpackHandler implements ActionListener {
 				case "backpack":
 					if(m_game.m_constants.BackpackStatus.equals("close")) {
 						m_game.m_ui.imagePanel.setVisible(false);
+						m_game.m_ui.inGameOptionsButtons[0].setVisible(false);
 						m_game.m_ui.inGameOptionsButtons[1].setVisible(false);
-						m_game.m_ui.inGameOptionsButtons[2].setVisible(false);
 						m_game.m_ui.backpackPanel.setVisible(true);
 						m_game.m_ui.backpackTextAreaPanel.setVisible(true);
 						//
@@ -87,8 +87,8 @@ public class BackpackHandler implements ActionListener {
 					else if(m_game.m_constants.BackpackStatus.equals("open")) {
 						m_game.m_backpack.updateBackpack(1);
 						m_game.m_ui.sidePanel.setVisible(true);
+						m_game.m_ui.inGameOptionsButtons[0].setVisible(true);
 						m_game.m_ui.inGameOptionsButtons[1].setVisible(true);
-						m_game.m_ui.inGameOptionsButtons[2].setVisible(true);
 						m_game.m_ui.backpackPanel.setVisible(false);
 						m_game.m_ui.backpackTextAreaPanel.setVisible(false);
 						m_game.m_ui.imagePanel.setVisible(true);

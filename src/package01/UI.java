@@ -41,14 +41,9 @@ public class UI {
 	//Game screen
 	public JTextArea mainTextArea;
 	public JTextArea backpackTextArea;
-	public JLabel counterLabel, playerNameLabel, playerNameLabelString, hpLabel, hpLabelNumber, weaponLabel, weaponLabelName, goldLabel, goldLabelNumber, xpLabel, xpLabelNumber, attackLabel, attackLabelNumber, defenseLabel, defenseLabelNumber, capsuleLabel, capsuleLabelNumber;
-	public JButton specialattack;
-	public JButton inventoryButton;
-	public JButton inGameOptionsButton;
-	public JButton choice1;
-	public JButton choice2;
-	public JButton choice3;
-	public JButton choice4;
+	public JLabel counterLabel, playerNameLabel, playerNameLabelString, hpLabel, hpLabelNumber, weaponLabel, weaponLabelName, goldLabel, goldLabelNumber, xpLabel, xpLabelNumber, attackLabel, attackLabelNumber, defenseLabel, defenseLabelNumber, capsuleLabel, capsuleLabelNumber, optionsPanelLabel, fullScreenLabel, fullScreenLabelString, buttonBorderLabel, buttonBorderLabelString;
+	public JButton specialattack, inGameOptionsButton, inventoryButton, choice1, choice2, choice3, choice4, fullScreenButton, buttonBorderButton, backButton;
+	
 	//Input
 	JPanel textPanel, inputPanel;
 	public JLabel textLabel;
@@ -92,7 +87,7 @@ public class UI {
 	ImageIcon image;
 	
 	
-	JButton [] backpackButtons = new JButton[15];
+	JButton [] backpackButtons = new JButton[16];
 	public JButton [] inGameOptionsButtons = new JButton[5];
 	public JButton [] inventoryButtons = new JButton[5];
 	
@@ -143,6 +138,8 @@ public class UI {
 		try {
 			window.remove(mainTextPanel);
 			window.remove(choiceButtonPanel);
+			window.remove(backpackPanel);
+			window.remove(backpackTextAreaPanel);
 			window.remove(sidePanel);
 			window.remove(playerPanel);
 			window.remove(imagePanel);
@@ -205,7 +202,7 @@ public class UI {
 		loadButton.setFocusPainted(false); //gets rid of small text box
 		loadButton.addActionListener(m_game.m_choiceHandler);
 		loadButton.addActionListener(m_game.m_bHandler);
-		loadButton.setActionCommand("c2");
+		loadButton.setActionCommand("load");
 		
 		creditsButton = new JButton("CREDITS");
 		creditsButton.setBackground(Color.black);
@@ -214,7 +211,7 @@ public class UI {
 		creditsButton.setFocusPainted(false); //gets rid of small text box
 		creditsButton.addActionListener(m_game.m_choiceHandler);
 		creditsButton.addActionListener(m_game.m_bHandler);
-		creditsButton.setActionCommand("c3");
+		creditsButton.setActionCommand("credits");
 		
 		optionsButton = new JButton("OPTIONS");
 		optionsButton.setBackground(Color.black);
@@ -223,7 +220,7 @@ public class UI {
 		optionsButton.setFocusPainted(false); //gets rid of small text box
 		optionsButton.addActionListener(m_game.m_choiceHandler);
 		optionsButton.addActionListener(m_game.m_bHandler);
-		optionsButton.setActionCommand("c4");
+		optionsButton.setActionCommand("options");
 		
 		titleNamePanel.add(titleNameLabel);
 		startButtonPanel.add(startButton);
@@ -313,7 +310,7 @@ public class UI {
 		startButton.setFont(normalFont);
 		startButton.setFocusPainted(false); //gets rid of small text box
 		startButton.addActionListener(m_game.m_bHandler);
-		startButton.setActionCommand("b1");
+		startButton.setActionCommand("start");
 		
 		
 		loadButton = new JButton("CONTINUE");
@@ -322,7 +319,7 @@ public class UI {
 		loadButton.setFont(normalFont);
 		loadButton.setFocusPainted(false); //gets rid of small text box
 		loadButton.addActionListener(m_game.m_bHandler);
-		loadButton.setActionCommand("b2");
+		loadButton.setActionCommand("load");
 		
 		creditsButton = new JButton("CREDITS");
 		creditsButton.setBackground(Color.black);
@@ -330,7 +327,7 @@ public class UI {
 		creditsButton.setFont(normalFont);
 		creditsButton.setFocusPainted(false); //gets rid of small text box
 		creditsButton.addActionListener(m_game.m_bHandler);
-		creditsButton.setActionCommand("b3");
+		creditsButton.setActionCommand("credits");
 		
 		optionsButton = new JButton("OPTIONS");
 		optionsButton.setBackground(Color.black);
@@ -338,7 +335,7 @@ public class UI {
 		optionsButton.setFont(normalFont);
 		optionsButton.setFocusPainted(false); //gets rid of small text box
 		optionsButton.addActionListener(m_game.m_bHandler);
-		optionsButton.setActionCommand("b4");
+		optionsButton.setActionCommand("options");
 		
 		titleNamePanel.add(titleNameLabel);
 		startButtonPanel.add(startButton);
@@ -423,7 +420,7 @@ public class UI {
 		startButton.setFont(normalFont);
 		startButton.setFocusPainted(false); //gets rid of small text box
 		startButton.addActionListener(m_game.m_bHandler);
-		startButton.setActionCommand("b1");
+		startButton.setActionCommand("start");
 		
 		
 		loadButton = new JButton("CONTINUE");
@@ -432,7 +429,7 @@ public class UI {
 		loadButton.setFont(normalFont);
 		loadButton.setFocusPainted(false); //gets rid of small text box
 		loadButton.addActionListener(m_game.m_bHandler);
-		loadButton.setActionCommand("b2");
+		loadButton.setActionCommand("load");
 		
 		creditsButton = new JButton("CREDITS");
 		creditsButton.setBackground(Color.black);
@@ -440,7 +437,7 @@ public class UI {
 		creditsButton.setFont(normalFont);
 		creditsButton.setFocusPainted(false); //gets rid of small text box
 		creditsButton.addActionListener(m_game.m_bHandler);
-		creditsButton.setActionCommand("b3");
+		creditsButton.setActionCommand("credits");
 		
 		optionsButton = new JButton("OPTIONS");
 		optionsButton.setBackground(Color.black);
@@ -448,7 +445,7 @@ public class UI {
 		optionsButton.setFont(normalFont);
 		optionsButton.setFocusPainted(false); //gets rid of small text box
 		optionsButton.addActionListener(m_game.m_bHandler);
-		optionsButton.setActionCommand("b4");
+		optionsButton.setActionCommand("options");
 		
 		titleNamePanel.add(titleNameLabel);
 		startButtonPanel.add(startButton);
@@ -500,9 +497,9 @@ public class UI {
 			window.remove(mainTextPanel);
 			window.remove(choiceButtonPanel);
 			window.remove(playerPanel);
+			window.remove(backpackPanel);
 			window.remove(sidePanel);
 			window.remove(imagePanel);
-			window.remove(backpackPanel);
 			window.remove(backpackTextAreaPanel);
 			window.dispose();
 		}
@@ -876,7 +873,12 @@ public class UI {
 			inGameOptionsButtons[2].setBorder(m_game.m_constants.blackline);
 			inGameOptionsButtons[3].setBorder(m_game.m_constants.blackline);
 			inGameOptionsButtons[4].setBorder(m_game.m_constants.blackline);
-			inGameOptionsButtons[5].setBorder(m_game.m_constants.blackline);
+			//
+			inventoryButtons[0].setBorder(m_game.m_constants.blackline);
+			inventoryButtons[1].setBorder(m_game.m_constants.blackline);
+			inventoryButtons[2].setBorder(m_game.m_constants.blackline);
+			inventoryButtons[3].setBorder(m_game.m_constants.blackline);
+			inventoryButtons[4].setBorder(m_game.m_constants.blackline);
 			//
 			inventoryButton.setBorder(m_game.m_constants.blackline);
 			//
@@ -902,6 +904,12 @@ public class UI {
 			inGameOptionsButtons[2].setBorder(null);
 			inGameOptionsButtons[3].setBorder(null);
 			inGameOptionsButtons[4].setBorder(null);
+			//
+			inventoryButtons[0].setBorder(null);
+			inventoryButtons[1].setBorder(null);
+			inventoryButtons[2].setBorder(null);
+			inventoryButtons[3].setBorder(null);
+			inventoryButtons[4].setBorder(null);
 			//
 			inventoryButton.setBorder(null);
 			//
@@ -1012,6 +1020,7 @@ public class UI {
 		choice1.addActionListener(m_game.m_choiceHandler);
 		choice1.addActionListener(m_game.m_bHandler);
 		choice1.addActionListener(m_game.m_goHandler);
+		choice1.addActionListener(m_game.m_sHandler);
 		choice1.setActionCommand("c1");
 		choiceButtonPanel.add(choice1);
 		
@@ -1023,6 +1032,7 @@ public class UI {
 		choice2.addActionListener(m_game.m_choiceHandler);
 		choice2.addActionListener(m_game.m_bHandler);
 		choice2.addActionListener(m_game.m_goHandler);
+		choice2.addActionListener(m_game.m_sHandler);
 		choice2.setActionCommand("c2");
 		choiceButtonPanel.add(choice2);
 		
@@ -1034,6 +1044,7 @@ public class UI {
 		choice3.addActionListener(m_game.m_choiceHandler);
 		choice3.addActionListener(m_game.m_bHandler);
 		choice3.addActionListener(m_game.m_goHandler);
+		choice3.addActionListener(m_game.m_sHandler);
 		choice3.setActionCommand("c3");
 		choiceButtonPanel.add(choice3);
 		
@@ -1045,6 +1056,7 @@ public class UI {
 		choice4.addActionListener(m_game.m_choiceHandler);
 		choice4.addActionListener(m_game.m_bHandler);
 		choice4.addActionListener(m_game.m_goHandler);
+		choice4.addActionListener(m_game.m_sHandler);
 		choice4.setActionCommand("c4");
 		choiceButtonPanel.add(choice4);
 		
@@ -1052,10 +1064,18 @@ public class UI {
 		specialattack.setBackground(Color.black);
 		specialattack.setForeground(Color.white);
 		specialattack.setFont(normalFont);
+		if(m_game.m_constants.position.equals("loadData") && m_game.m_player.specialUnlocked == true) {	
+			specialattack.setVisible(true);	
+			choiceButtonPanel.setLayout(new GridLayout(7,1));	
+			choiceButtonPanel.add(specialattack);	
+			specialattack.addActionListener(m_game.m_cHandler);	
+		}	
+		else specialattack.setVisible(false);
 		specialattack.setFocusPainted(false);
 		specialattack.addActionListener(m_game.m_choiceHandler);
 		specialattack.addActionListener(m_game.m_bHandler);
 		specialattack.addActionListener(m_game.m_goHandler);
+		specialattack.addActionListener(m_game.m_sHandler);
 		specialattack.setActionCommand("c5");
 		//not added yet
 		
@@ -1207,12 +1227,17 @@ public class UI {
 			choice4.setBorder(m_game.m_constants.blackline);
 			specialattack.setBorder(m_game.m_constants.blackline);
 			//
-			inGameOptionsButton.setBorder(m_game.m_constants.blackline);
+			inGameOptionsButtons[0].setBorder(m_game.m_constants.blackline);
 			inGameOptionsButtons[1].setBorder(m_game.m_constants.blackline);
 			inGameOptionsButtons[2].setBorder(m_game.m_constants.blackline);
 			inGameOptionsButtons[3].setBorder(m_game.m_constants.blackline);
 			inGameOptionsButtons[4].setBorder(m_game.m_constants.blackline);
-			inGameOptionsButtons[5].setBorder(m_game.m_constants.blackline);
+			//
+			inventoryButtons[0].setBorder(m_game.m_constants.blackline);	
+			inventoryButtons[1].setBorder(m_game.m_constants.blackline);	
+			inventoryButtons[2].setBorder(m_game.m_constants.blackline);	
+			inventoryButtons[3].setBorder(m_game.m_constants.blackline);	
+			inventoryButtons[4].setBorder(m_game.m_constants.blackline);	
 			//
 			inventoryButton.setBorder(m_game.m_constants.blackline);
 			//
@@ -1223,7 +1248,7 @@ public class UI {
 			for(int i = 0; i < 15; i++){
 				backpackButtons[i].setBorder(m_game.m_constants.blackline);
 			}
-			backpackButtons[16].setBorder(m_game.m_constants.blackline);
+			backpackButtons[15].setBorder(m_game.m_constants.blackline);
 		}
 		else if(m_game.m_constants.buttonBorderOn == false) {
 			choice1.setBorder(null);
@@ -1238,6 +1263,12 @@ public class UI {
 			inGameOptionsButtons[3].setBorder(null);
 			inGameOptionsButtons[4].setBorder(null);
 			//
+			inventoryButtons[0].setBorder(null);	
+			inventoryButtons[1].setBorder(null);	
+			inventoryButtons[2].setBorder(null);	
+			inventoryButtons[3].setBorder(null);	
+			inventoryButtons[4].setBorder(null);	
+			//
 			inventoryButton.setBorder(null);
 			//
 			for(int i = 0; i < 5; i++){
@@ -1247,7 +1278,18 @@ public class UI {
 			for(int i = 0; i < 15; i++){
 				backpackButtons[i].setBorder(null);
 			}
-			backpackButtons[16].setBorder(null);
+			backpackButtons[15].setBorder(null);
+		}
+		
+		if(m_game.m_constants.position.equals("noLoad")) {	
+			m_game.m_story.gameover();	
+		}	
+		if(m_game.m_constants.position.equals("newGame")) {	
+			m_game.m_story.playerSetup();	
+		}	
+		else if(m_game.m_constants.position.equals("loadData")) {	
+			//statschange();	
+			m_game.m_story.positionCheck();	
 		}
 		
 		//statschange();
@@ -1291,7 +1333,7 @@ public class UI {
 		con.add(backpackPanel);
 		backpackPanel.setVisible(false);
 		
-		for (int i = 0; i < backpackButtons.length; i++) {
+		for (int i = 0; i < backpackButtons.length-1; i++) {
 			backpackButtons[i] = new JButton();
 			backpackButtons[i].setBackground(Color.black);
 			backpackButtons[i].setForeground(Color.white);
@@ -1305,6 +1347,18 @@ public class UI {
 			backpackButtons[i].setActionCommand("backpackButton" + buttonListener);
 			backpackPanel.add(backpackButtons[i]);
 		}
+		
+		backpackButtons[15] = new JButton("SWITCH");
+		backpackButtons[15].setBackground(Color.black);
+		backpackButtons[15].setForeground(Color.white);
+		backpackButtons[15].setFont(normalFont);
+		backpackButtons[15].setFocusPainted(false);
+		backpackButtons[15].addActionListener(m_game.m_bHandler);
+		backpackButtons[15].addActionListener(m_game.m_goHandler);
+		backpackButtons[15].addActionListener(m_game.m_sHandler);
+		backpackButtons[15].addActionListener(m_game.m_bpHandler);
+		backpackButtons[15].setActionCommand("backpackSwitchButton");
+		backpackPanel.add(backpackButtons[15]);
 		
 		backpackTextAreaPanel = new JPanel();
 		int btap_y = bp_y + bp_h;
@@ -1378,4 +1432,128 @@ public class UI {
 		
 	}
 	
+	public void options() {
+		m_game.m_constants.position = "options";
+		titleNamePanel.setVisible(false);
+		startButtonPanel.setVisible(false);
+		try {
+			inputPanel.setVisible(false);
+			jtf.setVisible(false);	
+			creditsPanel.setVisible(false);
+			creditsTextAreaPanel.setVisible(false);
+			creditsPanel2.setVisible(false);
+		}
+		catch(Exception e) {
+			
+		}
+		
+		optionsLabelPanel = new JPanel();
+		optionsLabelPanel.setBackground(Color.blue);
+		int olp_x = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.2196261682242991);
+		int olp_y = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.1404494382022472);
+		int olp_w = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.5607476635514019);
+		int olp_h = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.0707476635514019);
+		optionsLabelPanel.setBounds(olp_x, olp_y, olp_w, olp_h);
+		//title
+		optionsPanelLabel = new JLabel("OPTIONS");
+		optionsPanelLabel.setForeground(Color.white);
+		optionsPanelLabel.setFont(titleFont);
+		optionsLabelPanel.add(optionsPanelLabel);
+		
+		//first panel
+		optionsPanel = new JPanel();
+		optionsPanel.setBackground(Color.red);
+		int op_x = olp_x;
+		int op_y = olp_y + olp_h + 20;
+		int op_w = olp_w + 200;
+		int op_h = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.1007476635514019);
+		optionsPanel.setBounds(op_x, op_y, op_w, op_h);
+		optionsPanel.setLayout(new GridLayout(1,3));
+		//full screen option
+		fullScreenLabel = new JLabel("Full Screen is ");
+		fullScreenLabel.setFont(normalFont);
+		fullScreenLabel.setForeground(Color.white);
+		optionsPanel.add(fullScreenLabel);
+		//playerNameLabelString
+		if(m_game.m_constants.fullScreenOn == true) {
+			fullScreenLabelString = new JLabel("ON");
+		}
+		else if(m_game.m_constants.fullScreenOn == false) {
+			fullScreenLabelString = new JLabel("OFF");
+		}
+		fullScreenLabelString.setFont(normalFont);
+		fullScreenLabelString.setForeground(Color.white);
+		optionsPanel.add(fullScreenLabelString);
+		//hpLabel
+		
+		fullScreenButton = new JButton("Full Screen Toggle");
+		fullScreenButton.setFont(normalFont);
+		fullScreenButton.setForeground(Color.white);
+		fullScreenButton.setBackground(Color.black);
+		fullScreenButton.addActionListener(m_game.m_choiceHandler);
+		fullScreenButton.addActionListener(m_game.m_bHandler);
+		fullScreenButton.setFocusPainted(false);
+		fullScreenButton.setActionCommand("fullScreen");
+		optionsPanel.add(fullScreenButton);
+		
+		//second panel
+		optionsPanel2 = new JPanel();
+		optionsPanel2.setBackground(Color.red);
+		int op2_x = op_x;
+		int op2_y = op_y + op_h + 20;
+		int op2_w = op_w;
+		int op2_h = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.1007476635514019);
+		optionsPanel2.setBounds(op2_x, op2_y, op2_w, op2_h);
+		optionsPanel2.setLayout(new GridLayout(1,3));
+		
+		buttonBorderLabel = new JLabel("Button borders are ");
+		buttonBorderLabel.setFont(normalFont);
+		buttonBorderLabel.setForeground(Color.white);
+		optionsPanel2.add(buttonBorderLabel);
+		
+		if(m_game.m_constants.buttonBorderOn == true) {
+			buttonBorderLabelString = new JLabel("ON");
+		}
+		else if(m_game.m_constants.buttonBorderOn == false) {
+			buttonBorderLabelString = new JLabel("OFF");
+		}
+		buttonBorderLabelString.setFont(normalFont);
+		buttonBorderLabelString.setForeground(Color.white);
+		optionsPanel2.add(buttonBorderLabelString);
+		
+		buttonBorderButton = new JButton("Toggle Border");
+		buttonBorderButton.setFont(normalFont);
+		buttonBorderButton.setForeground(Color.white);
+		buttonBorderButton.setBackground(Color.black);
+		buttonBorderButton.addActionListener(m_game.m_bHandler);
+		buttonBorderButton.setFocusPainted(false);
+		buttonBorderButton.addActionListener(m_game.m_bHandler);
+		buttonBorderButton.addActionListener(m_game.m_choiceHandler);
+		buttonBorderButton.setActionCommand("buttonBorder");
+		optionsPanel2.add(buttonBorderButton);
+		
+		backButtonPanel = new JPanel();
+		int sbp_x = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.4065420560747664);
+		int sbp_y = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.7017977528089888);
+		int sbp_w = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.1869158878504673);
+		int sbp_h = (int)Math.round(1.5 * m_game.m_constants.currentScreenHeight * 0.1804494382022472);
+		backButtonPanel.setBounds(sbp_x, sbp_y, sbp_w, sbp_h);
+		//startButtonPanel.setBounds(300, 400, 200, 100);
+		backButtonPanel.setBackground(Color.blue);
+		
+		backButton = new JButton("GO BACK");
+		backButton.setFont(normalFont);
+		backButton.setForeground(Color.white);
+		backButton.setBackground(Color.black);
+		backButton.setFocusPainted(false);
+		backButton.addActionListener(m_game.m_bHandler);
+		backButton.addActionListener(m_game.m_choiceHandler);
+		backButton.setActionCommand("optionsBack");
+		backButtonPanel.add(backButton);
+		
+		con.add(optionsLabelPanel);
+		con.add(optionsPanel);
+		con.add(optionsPanel2);
+		con.add(backButtonPanel);
+	}
 }

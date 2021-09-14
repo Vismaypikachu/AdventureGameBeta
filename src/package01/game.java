@@ -61,6 +61,12 @@ public class game {
 			String yourChoice = event.getActionCommand();
 			switch(yourChoice){
 				case "start": m_vm.hideTitleScreen(); m_sound.stop(); m_story.input(); break;
+				case "load": break;
+				case "credits": break;
+				case "fullScreen": m_ui.setFullScreen(); break;
+				case "buttonBorder": m_constants.buttonBorderOn = true; break;
+				case "optionsBack": m_ui.createUIComponent(); break;
+				case "options": m_ui.options(); break;
 				case "c1": m_story.selectPosition(nextPosition1); break;
 				case "c2": m_story.selectPosition(nextPosition2); break;
 				case "c3": m_story.selectPosition(nextPosition3); break;
