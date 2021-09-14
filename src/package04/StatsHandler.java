@@ -9,14 +9,12 @@ import package01.game;
 public class StatsHandler implements ActionListener{
 	
 	game m_game;
-	UI m_ui;
 	
-	public StatsHandler(game g, UI userInterface) {
+	public StatsHandler(game g) {
 		m_game = g;
-		m_ui = userInterface;
 	}
-	
+
 	public void actionPerformed(ActionEvent event) {
-		m_ui.m_story.statschange();
+		m_game.m_story.statschange();
 	}
 }

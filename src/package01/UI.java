@@ -63,7 +63,7 @@ public class UI {
 	
 	
 	Font titleFont, normalFont, credits1Font, credits2Font, credits3Font, backpackFont;
-	
+	/*
 	game m_game;
 	Random r = new Random();
 	Enemy m_enemy = new Enemy();
@@ -81,27 +81,29 @@ public class UI {
 	InputHandler inHandler = new InputHandler(m_game, this);
 	OptionsHandler oHandler = new OptionsHandler(m_game, this);
 	StatsHandler sHandler = new StatsHandler(m_game, this);
+	ButtonHandler bHandler = new ButtonHandler(m_game, this);
 	ImageIcon image;
 	
-	ChoiceHandler m_choiceHandler;
+	*/
+	game m_game;
+	
+	public UI(game g) {
+		m_game = g;
+	}	
 	
 	GraphicsDevice gDevice;
 	
-	//ChoiceHandler m_choiceHandler;
-	ButtonHandler bHandler = new ButtonHandler(m_game, this);
+	//NEW
+	Random r = new Random();
+	ImageIcon image;
 	
 	
 	JButton [] backpackButtons = new JButton[15];
 	public JButton [] inGameOptionsButtons = new JButton[5];
 	public JButton [] inventoryButtons = new JButton[5];
 	
-	public UI(game g) {
-		m_game = g;
-	}
-	
-	public void createUI(ChoiceHandler cHandler) {
-		
-		m_choiceHandler = cHandler;
+	//previously passed in choiceHandler
+	public void createUI() {
 		
 		GraphicsEnvironment gEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		gDevice = gEnvironment.getDefaultScreenDevice();
@@ -116,8 +118,8 @@ public class UI {
 		window.setResizable(false);
 		con = window.getContentPane();
 		
-		m_enemy.initializeEnemy();
-		m_images.initializeImages();
+		m_game.m_enemy.initializeEnemy();
+		m_game.m_images.initializeImages();
 		
 		
 		createFont();
@@ -126,14 +128,14 @@ public class UI {
 	}
 	
 	public void createUIComponent() {
-		m_constants.position = "title";
+		m_game.m_constants.position = "title";
 		
 		m_game.nextPosition1 = "input";
 		m_game.nextPosition2 = "load";
 		m_game.nextPosition3 = "credits";
 		m_game.nextPosition4 = "options";
 		
-		m_sound.setMusic(m_constants.titleTrackURL);
+		m_game.m_sound.setMusic(m_game.m_constants.titleTrackURL);
 		try {
 			window.remove(optionsPanel);
 			window.remove(optionsPanel2);
@@ -169,10 +171,10 @@ public class UI {
 		
 		
 		titleNamePanel = new JPanel();
-		int tnp_x = (int)Math.round(m_constants.currentScreenWidth * 0.2196261682242991);
-		int tnp_y = (int)Math.round(m_constants.currentScreenHeight * 0.1404494382022472);
-		int tnp_w = (int)Math.round(m_constants.currentScreenWidth * 0.5607476635514019);
-		int tnp_h = (int)Math.round(m_constants.currentScreenHeight * 0.2106741573033708);
+		int tnp_x = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.2196261682242991);
+		int tnp_y = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.1404494382022472);
+		int tnp_w = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.5607476635514019);
+		int tnp_h = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.2106741573033708);
 		titleNamePanel.setBounds(tnp_x, tnp_y, tnp_w, tnp_h);
 		//titleNamePanel.setBounds(100, 100, 600, 150);
 		titleNamePanel.setBackground(Color.red);
@@ -184,10 +186,10 @@ public class UI {
 		
 		
 		startButtonPanel = new JPanel();
-		int sbp_x = (int)Math.round(m_constants.currentScreenWidth * 0.4065420560747664);
-		int sbp_y = (int)Math.round(m_constants.currentScreenHeight * 0.5617977528089888);
-		int sbp_w = (int)Math.round(m_constants.currentScreenWidth * 0.1869158878504673);
-		int sbp_h = (int)Math.round(1.5 * m_constants.currentScreenHeight * 0.1804494382022472);
+		int sbp_x = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.4065420560747664);
+		int sbp_y = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.5617977528089888);
+		int sbp_w = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.1869158878504673);
+		int sbp_h = (int)Math.round(1.5 * m_game.m_constants.currentScreenHeight * 0.1804494382022472);
 		startButtonPanel.setBounds(sbp_x, sbp_y, sbp_w, sbp_h);
 		//startButtonPanel.setBounds(300, 400, 200, 100);
 		startButtonPanel.setBackground(Color.blue);
@@ -198,8 +200,8 @@ public class UI {
 		startButton.setForeground(Color.white);
 		startButton.setFont(normalFont);
 		startButton.setFocusPainted(false); //gets rid of small text box
-		startButton.addActionListener(m_choiceHandler);
-		startButton.addActionListener(bHandler);
+		startButton.addActionListener(m_game.m_choiceHandler);
+		startButton.addActionListener(m_game.m_bHandler);
 		startButton.setActionCommand("start");
 		
 		
@@ -208,8 +210,8 @@ public class UI {
 		loadButton.setForeground(Color.white);
 		loadButton.setFont(normalFont);
 		loadButton.setFocusPainted(false); //gets rid of small text box
-		loadButton.addActionListener(m_choiceHandler);
-		loadButton.addActionListener(bHandler);
+		loadButton.addActionListener(m_game.m_choiceHandler);
+		loadButton.addActionListener(m_game.m_bHandler);
 		loadButton.setActionCommand("c2");
 		
 		creditsButton = new JButton("CREDITS");
@@ -217,8 +219,8 @@ public class UI {
 		creditsButton.setForeground(Color.white);
 		creditsButton.setFont(normalFont);
 		creditsButton.setFocusPainted(false); //gets rid of small text box
-		creditsButton.addActionListener(m_choiceHandler);
-		creditsButton.addActionListener(bHandler);
+		creditsButton.addActionListener(m_game.m_choiceHandler);
+		creditsButton.addActionListener(m_game.m_bHandler);
 		creditsButton.setActionCommand("c3");
 		
 		optionsButton = new JButton("OPTIONS");
@@ -226,8 +228,8 @@ public class UI {
 		optionsButton.setForeground(Color.white);
 		optionsButton.setFont(normalFont);
 		optionsButton.setFocusPainted(false); //gets rid of small text box
-		optionsButton.addActionListener(m_choiceHandler);
-		optionsButton.addActionListener(bHandler);
+		optionsButton.addActionListener(m_game.m_choiceHandler);
+		optionsButton.addActionListener(m_game.m_bHandler);
 		optionsButton.setActionCommand("c4");
 		
 		titleNamePanel.add(titleNameLabel);
@@ -237,13 +239,13 @@ public class UI {
 		startButtonPanel.add(optionsButton);
 		
 		
-		if(m_constants.buttonBorderOn == true) {
-			startButton.setBorder(m_constants.blackline);
-			loadButton.setBorder(m_constants.blackline);
-			creditsButton.setBorder(m_constants.blackline);
-			optionsButton.setBorder(m_constants.blackline);
+		if(m_game.m_constants.buttonBorderOn == true) {
+			startButton.setBorder(m_game.m_constants.blackline);
+			loadButton.setBorder(m_game.m_constants.blackline);
+			creditsButton.setBorder(m_game.m_constants.blackline);
+			optionsButton.setBorder(m_game.m_constants.blackline);
 		}
-		else if(m_constants.buttonBorderOn == false) {
+		else if(m_game.m_constants.buttonBorderOn == false) {
 			startButton.setBorder(null);
 			loadButton.setBorder(null);
 			creditsButton.setBorder(null);
@@ -258,14 +260,14 @@ public class UI {
 	}
 	
 	public void createUIComponent2() {
-		m_constants.position = "title";
+		m_game.m_constants.position = "title";
 		
 		m_game.nextPosition1 = "input";
 		m_game.nextPosition2 = "load";
 		m_game.nextPosition3 = "credits";
 		m_game.nextPosition4 = "options";
 		
-		m_sound.setMusic(m_constants.titleTrackURL);
+		m_game.m_sound.setMusic(m_game.m_constants.titleTrackURL);
 		try {
 			window.remove(optionsPanel);
 			window.remove(optionsPanel2);
@@ -288,10 +290,10 @@ public class UI {
 		
 		
 		titleNamePanel = new JPanel();
-		int tnp_x = (int)Math.round(m_constants.currentScreenWidth * 0.2196261682242991);
-		int tnp_y = (int)Math.round(m_constants.currentScreenHeight * 0.1404494382022472);
-		int tnp_w = (int)Math.round(m_constants.currentScreenWidth * 0.5607476635514019);
-		int tnp_h = (int)Math.round(m_constants.currentScreenHeight * 0.2106741573033708);
+		int tnp_x = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.2196261682242991);
+		int tnp_y = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.1404494382022472);
+		int tnp_w = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.5607476635514019);
+		int tnp_h = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.2106741573033708);
 		titleNamePanel.setBounds(tnp_x, tnp_y, tnp_w, tnp_h);
 		//titleNamePanel.setBounds(100, 100, 600, 150);
 		titleNamePanel.setBackground(Color.red);
@@ -303,10 +305,10 @@ public class UI {
 		
 		
 		startButtonPanel = new JPanel();
-		int sbp_x = (int)Math.round(m_constants.currentScreenWidth * 0.4065420560747664);
-		int sbp_y = (int)Math.round(m_constants.currentScreenHeight * 0.5617977528089888);
-		int sbp_w = (int)Math.round(m_constants.currentScreenWidth * 0.1869158878504673);
-		int sbp_h = (int)Math.round(1.5 * m_constants.currentScreenHeight * 0.1804494382022472);
+		int sbp_x = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.4065420560747664);
+		int sbp_y = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.5617977528089888);
+		int sbp_w = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.1869158878504673);
+		int sbp_h = (int)Math.round(1.5 * m_game.m_constants.currentScreenHeight * 0.1804494382022472);
 		startButtonPanel.setBounds(sbp_x, sbp_y, sbp_w, sbp_h);
 		//startButtonPanel.setBounds(300, 400, 200, 100);
 		startButtonPanel.setBackground(Color.blue);
@@ -317,7 +319,7 @@ public class UI {
 		startButton.setForeground(Color.white);
 		startButton.setFont(normalFont);
 		startButton.setFocusPainted(false); //gets rid of small text box
-		startButton.addActionListener(bHandler);
+		startButton.addActionListener(m_game.m_bHandler);
 		startButton.setActionCommand("b1");
 		
 		
@@ -326,7 +328,7 @@ public class UI {
 		loadButton.setForeground(Color.white);
 		loadButton.setFont(normalFont);
 		loadButton.setFocusPainted(false); //gets rid of small text box
-		loadButton.addActionListener(bHandler);
+		loadButton.addActionListener(m_game.m_bHandler);
 		loadButton.setActionCommand("b2");
 		
 		creditsButton = new JButton("CREDITS");
@@ -334,7 +336,7 @@ public class UI {
 		creditsButton.setForeground(Color.white);
 		creditsButton.setFont(normalFont);
 		creditsButton.setFocusPainted(false); //gets rid of small text box
-		creditsButton.addActionListener(bHandler);
+		creditsButton.addActionListener(m_game.m_bHandler);
 		creditsButton.setActionCommand("b3");
 		
 		optionsButton = new JButton("OPTIONS");
@@ -342,7 +344,7 @@ public class UI {
 		optionsButton.setForeground(Color.white);
 		optionsButton.setFont(normalFont);
 		optionsButton.setFocusPainted(false); //gets rid of small text box
-		optionsButton.addActionListener(bHandler);
+		optionsButton.addActionListener(m_game.m_bHandler);
 		optionsButton.setActionCommand("b4");
 		
 		titleNamePanel.add(titleNameLabel);
@@ -352,13 +354,13 @@ public class UI {
 		startButtonPanel.add(optionsButton);
 		
 		
-		if(m_constants.buttonBorderOn == true) {
-			startButton.setBorder(m_constants.blackline);
-			loadButton.setBorder(m_constants.blackline);
-			creditsButton.setBorder(m_constants.blackline);
-			optionsButton.setBorder(m_constants.blackline);
+		if(m_game.m_constants.buttonBorderOn == true) {
+			startButton.setBorder(m_game.m_constants.blackline);
+			loadButton.setBorder(m_game.m_constants.blackline);
+			creditsButton.setBorder(m_game.m_constants.blackline);
+			optionsButton.setBorder(m_game.m_constants.blackline);
 		}
-		else if(m_constants.buttonBorderOn == false) {
+		else if(m_game.m_constants.buttonBorderOn == false) {
 			startButton.setBorder(null);
 			loadButton.setBorder(null);
 			creditsButton.setBorder(null);
@@ -375,14 +377,14 @@ public class UI {
 	}
 	
 	public void createUIComponent3() {
-		m_constants.position = "title";
+		m_game.m_constants.position = "title";
 		
 		m_game.nextPosition1 = "input";
 		m_game.nextPosition2 = "load";
 		m_game.nextPosition3 = "credits";
 		m_game.nextPosition4 = "options";
 		
-		m_sound.setMusic(m_constants.titleTrackURL);
+		m_game.m_sound.setMusic(m_game.m_constants.titleTrackURL);
 		try {
 			window.remove(mainTextPanel);
 			window.remove(choiceButtonPanel);
@@ -398,10 +400,10 @@ public class UI {
 		
 		
 		titleNamePanel = new JPanel();
-		int tnp_x = (int)Math.round(m_constants.currentScreenWidth * 0.2196261682242991);
-		int tnp_y = (int)Math.round(m_constants.currentScreenHeight * 0.1404494382022472);
-		int tnp_w = (int)Math.round(m_constants.currentScreenWidth * 0.5607476635514019);
-		int tnp_h = (int)Math.round(m_constants.currentScreenHeight * 0.2106741573033708);
+		int tnp_x = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.2196261682242991);
+		int tnp_y = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.1404494382022472);
+		int tnp_w = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.5607476635514019);
+		int tnp_h = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.2106741573033708);
 		titleNamePanel.setBounds(tnp_x, tnp_y, tnp_w, tnp_h);
 		//titleNamePanel.setBounds(100, 100, 600, 150);
 		titleNamePanel.setBackground(Color.red);
@@ -413,10 +415,10 @@ public class UI {
 		
 		
 		startButtonPanel = new JPanel();
-		int sbp_x = (int)Math.round(m_constants.currentScreenWidth * 0.4065420560747664);
-		int sbp_y = (int)Math.round(m_constants.currentScreenHeight * 0.5617977528089888);
-		int sbp_w = (int)Math.round(m_constants.currentScreenWidth * 0.1869158878504673);
-		int sbp_h = (int)Math.round(1.5 * m_constants.currentScreenHeight * 0.1804494382022472);
+		int sbp_x = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.4065420560747664);
+		int sbp_y = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.5617977528089888);
+		int sbp_w = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.1869158878504673);
+		int sbp_h = (int)Math.round(1.5 * m_game.m_constants.currentScreenHeight * 0.1804494382022472);
 		startButtonPanel.setBounds(sbp_x, sbp_y, sbp_w, sbp_h);
 		//startButtonPanel.setBounds(300, 400, 200, 100);
 		startButtonPanel.setBackground(Color.blue);
@@ -427,7 +429,7 @@ public class UI {
 		startButton.setForeground(Color.white);
 		startButton.setFont(normalFont);
 		startButton.setFocusPainted(false); //gets rid of small text box
-		startButton.addActionListener(bHandler);
+		startButton.addActionListener(m_game.m_bHandler);
 		startButton.setActionCommand("b1");
 		
 		
@@ -436,7 +438,7 @@ public class UI {
 		loadButton.setForeground(Color.white);
 		loadButton.setFont(normalFont);
 		loadButton.setFocusPainted(false); //gets rid of small text box
-		loadButton.addActionListener(bHandler);
+		loadButton.addActionListener(m_game.m_bHandler);
 		loadButton.setActionCommand("b2");
 		
 		creditsButton = new JButton("CREDITS");
@@ -444,7 +446,7 @@ public class UI {
 		creditsButton.setForeground(Color.white);
 		creditsButton.setFont(normalFont);
 		creditsButton.setFocusPainted(false); //gets rid of small text box
-		creditsButton.addActionListener(bHandler);
+		creditsButton.addActionListener(m_game.m_bHandler);
 		creditsButton.setActionCommand("b3");
 		
 		optionsButton = new JButton("OPTIONS");
@@ -452,7 +454,7 @@ public class UI {
 		optionsButton.setForeground(Color.white);
 		optionsButton.setFont(normalFont);
 		optionsButton.setFocusPainted(false); //gets rid of small text box
-		optionsButton.addActionListener(bHandler);
+		optionsButton.addActionListener(m_game.m_bHandler);
 		optionsButton.setActionCommand("b4");
 		
 		titleNamePanel.add(titleNameLabel);
@@ -462,13 +464,13 @@ public class UI {
 		startButtonPanel.add(optionsButton);
 		
 		
-		if(m_constants.buttonBorderOn == true) {
-			startButton.setBorder(m_constants.blackline);
-			loadButton.setBorder(m_constants.blackline);
-			creditsButton.setBorder(m_constants.blackline);
-			optionsButton.setBorder(m_constants.blackline);
+		if(m_game.m_constants.buttonBorderOn == true) {
+			startButton.setBorder(m_game.m_constants.blackline);
+			loadButton.setBorder(m_game.m_constants.blackline);
+			creditsButton.setBorder(m_game.m_constants.blackline);
+			optionsButton.setBorder(m_game.m_constants.blackline);
 		}
-		else if(m_constants.buttonBorderOn == false) {
+		else if(m_game.m_constants.buttonBorderOn == false) {
 			startButton.setBorder(null);
 			loadButton.setBorder(null);
 			creditsButton.setBorder(null);
@@ -493,8 +495,8 @@ public class UI {
 	
 		gDevice.setFullScreenWindow(null);
 		
-		m_constants.currentScreenWidth = 1070;
-		m_constants.currentScreenHeight = 712;
+		m_game.m_constants.currentScreenWidth = 1070;
+		m_game.m_constants.currentScreenHeight = 712;
 		
 		createFont();
 		createUIComponent();
@@ -517,10 +519,10 @@ public class UI {
 	
 		gDevice.setFullScreenWindow(null);
 		
-		m_constants.currentScreenWidth = 1070;
-		m_constants.currentScreenHeight = 712;
+		m_game.m_constants.currentScreenWidth = 1070;
+		m_game.m_constants.currentScreenHeight = 712;
 		
-		m_images.initializeImages();
+		m_game.m_images.initializeImages();
 		createFont();
 		createGameScreen2();
 	}
@@ -538,8 +540,8 @@ public class UI {
 			
 		}
 		gDevice.setFullScreenWindow(window);
-		m_constants.currentScreenWidth = window.getWidth();
-		m_constants.currentScreenHeight = window.getHeight();
+		m_game.m_constants.currentScreenWidth = window.getWidth();
+		m_game.m_constants.currentScreenHeight = window.getHeight();
 		
 		
 		createFont();
@@ -563,18 +565,18 @@ public class UI {
 			
 		}
 		gDevice.setFullScreenWindow(window);
-		m_constants.currentScreenWidth = window.getWidth();
-		m_constants.currentScreenHeight = window.getHeight();
+		m_game.m_constants.currentScreenWidth = window.getWidth();
+		m_game.m_constants.currentScreenHeight = window.getHeight();
 		
-		m_images.initializeImages();
+		m_game.m_images.initializeImages();
 		createFont();
 		createGameScreen2();
 	}
 	
 	public void createGameScreen() {
-		if(!m_constants.position.equals("loadData") && !m_constants.position.equals("noLoad")) {
+		if(!m_game.m_constants.position.equals("loadData") && !m_game.m_constants.position.equals("noLoad")) {
 			try {
-				m_constants.position = "newGame";
+				m_game.m_constants.position = "newGame";
 				textPanel.setVisible(false);
 				textLabel.setVisible(false);
 				inputPanel.setVisible(false);
@@ -592,9 +594,9 @@ public class UI {
 		
 		mainTextPanel = new JPanel();
 		int mtp_x = 0;
-		int mtp_y = (int)Math.round(m_constants.currentScreenHeight * 0.5617977528089888);
-		int mtp_w = (int)Math.round(m_constants.currentScreenWidth * 0.5597014925373134);
-		int mtp_h = (int)Math.round(m_constants.currentScreenHeight * 0.3792134831460674);
+		int mtp_y = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.5617977528089888);
+		int mtp_w = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.5597014925373134);
+		int mtp_h = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.3792134831460674);
 		mainTextPanel.setBounds(0, mtp_y, mtp_w, mtp_h);
 		//mainTextPanel.setBounds(0, 400, 600, 270);
 		mainTextPanel.setBackground(Color.blue);
@@ -602,10 +604,10 @@ public class UI {
 		con.add(mainTextPanel);
 		
 		mainTextArea = new JTextArea();
-		int mta_x = (int)Math.round(m_constants.currentScreenHeight * 0.0934579439252336);
-		int mta_y = (int)Math.round(m_constants.currentScreenHeight * 0.1404494382022472);
-		int mta_w = (int)Math.round(m_constants.currentScreenWidth * 0.5607476635514019);
-		int mta_h = (int)Math.round(m_constants.currentScreenHeight * 0.351123595505618);
+		int mta_x = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.0934579439252336);
+		int mta_y = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.1404494382022472);
+		int mta_w = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.5607476635514019);
+		int mta_h = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.351123595505618);
 		mainTextArea.setBounds(mta_x, mta_y, mta_w, mta_h);
 		//mainTextArea.setBounds(100, 100, 600, 250);
 		mainTextArea.setBackground(Color.black);
@@ -617,8 +619,8 @@ public class UI {
 		mainTextPanel.add(mainTextArea);
 		
 		imagePanel = new JPanel();
-		int ip_w = (int)Math.round(m_constants.currentScreenWidth * 0.5597014925373134);
-		int ip_h = (int)Math.round(m_constants.currentScreenHeight * 0.5555555555555556);
+		int ip_w = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.5597014925373134);
+		int ip_h = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.5555555555555556);
 		imagePanel.setBounds(0, 0, ip_w, ip_h);
 		imagePanel.setBackground(Color.green);
 		con.add(imagePanel);
@@ -632,9 +634,9 @@ public class UI {
 		//timer
 		
 		int cp_x = (int)Math.round(mtp_x + mtp_w);
-		int cp_h = (int)Math.round(m_constants.currentScreenHeight * 0.1039325842696629);
-		int cp_y = (int)Math.round(m_constants.currentScreenHeight * 0.2674157303370787 - cp_h);
-		int cp_w = (int)Math.round(m_constants.currentScreenWidth * 0.3327102803738318);
+		int cp_h = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.1039325842696629);
+		int cp_y = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.2674157303370787 - cp_h);
+		int cp_w = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.3327102803738318);
 		
 		
 		counterPanel = new JPanel();
@@ -652,9 +654,9 @@ public class UI {
 		//--------------------------------------------------------------------------------------------------------------------------------------------
 		choiceButtonPanel = new JPanel();
 		int cbp_x = (int)Math.round(mtp_x + mtp_w);
-		int cbp_y = (int)Math.round(m_constants.currentScreenHeight * 0.6283707865168539);
-		int cbp_w = (int)Math.round(m_constants.currentScreenWidth * 0.2803738317757009);
-		int cbp_h = (int)Math.round(m_constants.currentScreenHeight * 0.3168539325842697);
+		int cbp_y = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.6283707865168539);
+		int cbp_w = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.2803738317757009);
+		int cbp_h = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.3168539325842697);
 		choiceButtonPanel.setBounds(cbp_x, cbp_y, cbp_w, cbp_h);
 		//choiceButtonPanel.setBounds(600, 485, 300, 188);
 		choiceButtonPanel.setBackground(Color.black);
@@ -668,10 +670,10 @@ public class UI {
 		choice1.setForeground(Color.white);
 		choice1.setFont(normalFont);
 		choice1.setFocusPainted(false);
-		choice1.addActionListener(m_choiceHandler);
-		choice1.addActionListener(bHandler);
-		choice1.addActionListener(goHandler);
-		choice1.addActionListener(sHandler);
+		choice1.addActionListener(m_game.m_choiceHandler);
+		choice1.addActionListener(m_game.m_bHandler);
+		choice1.addActionListener(m_game.m_goHandler);
+		choice1.addActionListener(m_game.m_sHandler);
 		choice1.setActionCommand("c1");
 		choiceButtonPanel.add(choice1);
 		
@@ -680,10 +682,10 @@ public class UI {
 		choice2.setForeground(Color.white);
 		choice2.setFont(normalFont);
 		choice2.setFocusPainted(false);
-		choice2.addActionListener(m_choiceHandler);
-		choice2.addActionListener(bHandler);
-		choice2.addActionListener(goHandler);
-		choice2.addActionListener(sHandler);
+		choice2.addActionListener(m_game.m_choiceHandler);
+		choice2.addActionListener(m_game.m_bHandler);
+		choice2.addActionListener(m_game.m_goHandler);
+		choice2.addActionListener(m_game.m_sHandler);
 		choice2.setActionCommand("c2");
 		choiceButtonPanel.add(choice2);
 		
@@ -692,10 +694,10 @@ public class UI {
 		choice3.setForeground(Color.white);
 		choice3.setFont(normalFont);
 		choice3.setFocusPainted(false);
-		choice3.addActionListener(m_choiceHandler);
-		choice3.addActionListener(bHandler);
-		choice3.addActionListener(goHandler);
-		choice3.addActionListener(sHandler);
+		choice3.addActionListener(m_game.m_choiceHandler);
+		choice3.addActionListener(m_game.m_bHandler);
+		choice3.addActionListener(m_game.m_goHandler);
+		choice3.addActionListener(m_game.m_sHandler);
 		choice3.setActionCommand("c3");
 		choiceButtonPanel.add(choice3);
 		
@@ -704,10 +706,10 @@ public class UI {
 		choice4.setForeground(Color.white);
 		choice4.setFont(normalFont);
 		choice4.setFocusPainted(false);
-		choice4.addActionListener(m_choiceHandler);
-		choice4.addActionListener(bHandler);
-		choice4.addActionListener(goHandler);
-		choice4.addActionListener(sHandler);
+		choice4.addActionListener(m_game.m_choiceHandler);
+		choice4.addActionListener(m_game.m_bHandler);
+		choice4.addActionListener(m_game.m_goHandler);
+		choice4.addActionListener(m_game.m_sHandler);
 		choice4.setActionCommand("c4");
 		choiceButtonPanel.add(choice4);
 		
@@ -715,18 +717,18 @@ public class UI {
 		specialattack.setBackground(Color.black);
 		specialattack.setForeground(Color.white);
 		specialattack.setFont(normalFont);
-		if(m_constants.position.equals("loadData") && m_player.specialUnlocked == true) {
+		if(m_game.m_constants.position.equals("loadData") && m_game.m_player.specialUnlocked == true) {
 			specialattack.setVisible(true);
 			choiceButtonPanel.setLayout(new GridLayout(7,1));
 			choiceButtonPanel.add(specialattack);
-			specialattack.addActionListener(cHandler);
+			specialattack.addActionListener(m_game.m_cHandler);
 		}
 		else specialattack.setVisible(false);
 		specialattack.setFocusPainted(false);
-		specialattack.addActionListener(m_choiceHandler);
-		specialattack.addActionListener(bHandler);
-		specialattack.addActionListener(goHandler);
-		specialattack.addActionListener(sHandler);
+		specialattack.addActionListener(m_game.m_choiceHandler);
+		specialattack.addActionListener(m_game.m_bHandler);
+		specialattack.addActionListener(m_game.m_goHandler);
+		specialattack.addActionListener(m_game.m_sHandler);
 		specialattack.setActionCommand("c5");
 		//not added yet
 		
@@ -735,8 +737,8 @@ public class UI {
 		inGameOptionsButton.setForeground(Color.black);
 		inGameOptionsButton.setFont(normalFont);
 		inGameOptionsButton.setFocusPainted(false);
-		inGameOptionsButton.addActionListener(oHandler);
-		inGameOptionsButton.addActionListener(bHandler);
+		inGameOptionsButton.addActionListener(m_game.m_oHandler);
+		inGameOptionsButton.addActionListener(m_game.m_bHandler);
 		inGameOptionsButton.setActionCommand("inGameOptions");
 		choiceButtonPanel.add(inGameOptionsButton);
 
@@ -746,13 +748,13 @@ public class UI {
 		inventoryButton.setForeground(Color.black);
 		inventoryButton.setFont(normalFont);
 		inventoryButton.setFocusPainted(false);
-		inventoryButton.addActionListener(iHandler);
-		inventoryButton.addActionListener(bHandler);
+		inventoryButton.addActionListener(m_game.m_iHandler);
+		inventoryButton.addActionListener(m_game.m_bHandler);
 		inventoryButton.setActionCommand("inventoryButton");
 		choiceButtonPanel.add(inventoryButton);
 		
 		
-		m_inventory.inventory(cbp_x, cbp_w);
+		m_game.m_inventory.inventory(cbp_x, cbp_w);
 		
 		
 		//------------------------------------------------------------------
@@ -763,27 +765,27 @@ public class UI {
 		
 		playerPanel = new JPanel();
 		int pp_x = (int)Math.round(mtp_x + mtp_w);
-		int pp_y = (int)Math.round(m_constants.currentScreenHeight * 0.2574157303370787);
-		int pp_w = (int)Math.round(m_constants.currentScreenWidth * 0.3327102803738318);
-		int pp_h = (int)Math.round(m_constants.currentScreenHeight * 0.3689325842696629);
+		int pp_y = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.2574157303370787);
+		int pp_w = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.3327102803738318);
+		int pp_h = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.3689325842696629);
 		playerPanel.setBounds(pp_x, pp_y, pp_w, pp_h);
 		//playerPanel.setBounds(600, 300, 356, 180);
 		playerPanel.setBackground(Color.red);
 		playerPanel.setLayout(new GridLayout(7,2));
 		//playerNameLabel 
 		playerNameLabel = new JLabel();
-		playerNameLabel.setIcon(m_images.PlayerIcon);
+		playerNameLabel.setIcon(m_game.m_images.PlayerIcon);
 		playerNameLabel.setFont(normalFont);
 		playerNameLabel.setForeground(Color.white);
 		playerPanel.add(playerNameLabel);
 		//playerNameLabelString
-		playerNameLabelString = new JLabel(""+m_player.playerName);
+		playerNameLabelString = new JLabel(""+m_game.m_player.playerName);
 		playerNameLabelString.setFont(normalFont);
 		playerNameLabelString.setForeground(Color.white);
 		playerPanel.add(playerNameLabelString);
 		//hpLabel
 		hpLabel = new JLabel();
-		hpLabel.setIcon(m_images.HealthIcon);
+		hpLabel.setIcon(m_game.m_images.HealthIcon);
 		hpLabel.setFont(normalFont);
 		hpLabel.setForeground(Color.white);
 		playerPanel.add(hpLabel);
@@ -794,7 +796,7 @@ public class UI {
 		playerPanel.add(hpLabelNumber);
 		//weaponLabel
 		weaponLabel = new JLabel();
-		weaponLabel.setIcon(m_images.WeaponIcon);
+		weaponLabel.setIcon(m_game.m_images.WeaponIcon);
 		weaponLabel.setFont(normalFont);
 		weaponLabel.setForeground(Color.white);
 		playerPanel.add(weaponLabel);
@@ -805,7 +807,7 @@ public class UI {
 		playerPanel.add(weaponLabelName);
 		//goldLabel
 		goldLabel = new JLabel();
-		goldLabel.setIcon(m_images.GoldIcon);
+		goldLabel.setIcon(m_game.m_images.GoldIcon);
 		goldLabel.setFont(normalFont);
 		goldLabel.setForeground(Color.white);
 		playerPanel.add(goldLabel);
@@ -816,7 +818,7 @@ public class UI {
 		playerPanel.add(goldLabelNumber);
 		//xpLabel
 		xpLabel = new JLabel();
-		xpLabel.setIcon(m_images.XPIcon);
+		xpLabel.setIcon(m_game.m_images.XPIcon);
 		xpLabel.setFont(normalFont);
 		xpLabel.setForeground(Color.white);
 		playerPanel.add(xpLabel);
@@ -827,7 +829,7 @@ public class UI {
 		playerPanel.add(xpLabelNumber);
 		//attack stat label
 		attackLabel = new JLabel();
-		attackLabel.setIcon(m_images.AttackIcon);
+		attackLabel.setIcon(m_game.m_images.AttackIcon);
 		attackLabel.setFont(normalFont);
 		attackLabel.setForeground(Color.white);
 		playerPanel.add(attackLabel);
@@ -838,7 +840,7 @@ public class UI {
 		playerPanel.add(attackLabelNumber);
 		//defense stat label
 		defenseLabel = new JLabel();
-		defenseLabel.setIcon(m_images.DefenseIcon);
+		defenseLabel.setIcon(m_game.m_images.DefenseIcon);
 		defenseLabel.setFont(normalFont);
 		defenseLabel.setForeground(Color.white);
 		playerPanel.add(defenseLabel);
@@ -849,7 +851,7 @@ public class UI {
 		playerPanel.add(defenseLabelNumber);
 		//defense stat label
 		capsuleLabel = new JLabel();
-		capsuleLabel.setIcon(m_images.CapsulesIcon);
+		capsuleLabel.setIcon(m_game.m_images.CapsulesIcon);
 		capsuleLabel.setFont(normalFont);
 		capsuleLabel.setForeground(Color.white);
 		//defense stat number
@@ -857,32 +859,32 @@ public class UI {
 		capsuleLabelNumber.setFont(normalFont);
 		capsuleLabelNumber.setForeground(Color.white);
 	
-		if(m_constants.buttonBorderOn == true) {
-			choice1.setBorder(m_constants.blackline);
-			choice2.setBorder(m_constants.blackline);
-			choice3.setBorder(m_constants.blackline);
-			choice4.setBorder(m_constants.blackline);
-			specialattack.setBorder(m_constants.blackline);
+		if(m_game.m_constants.buttonBorderOn == true) {
+			choice1.setBorder(m_game.m_constants.blackline);
+			choice2.setBorder(m_game.m_constants.blackline);
+			choice3.setBorder(m_game.m_constants.blackline);
+			choice4.setBorder(m_game.m_constants.blackline);
+			specialattack.setBorder(m_game.m_constants.blackline);
 			//
-			inGameOptionsButton.setBorder(m_constants.blackline);
-			inGameOptionsButtons[1].setBorder(m_constants.blackline);
-			inGameOptionsButtons[2].setBorder(m_constants.blackline);
-			inGameOptionsButtons[3].setBorder(m_constants.blackline);
-			inGameOptionsButtons[4].setBorder(m_constants.blackline);
-			inGameOptionsButtons[5].setBorder(m_constants.blackline);
+			inGameOptionsButtons[0].setBorder(m_game.m_constants.blackline);
+			inGameOptionsButtons[1].setBorder(m_game.m_constants.blackline);
+			inGameOptionsButtons[2].setBorder(m_game.m_constants.blackline);
+			inGameOptionsButtons[3].setBorder(m_game.m_constants.blackline);
+			inGameOptionsButtons[4].setBorder(m_game.m_constants.blackline);
+			inGameOptionsButtons[5].setBorder(m_game.m_constants.blackline);
 			//
-			inventoryButton.setBorder(m_constants.blackline);
+			inventoryButton.setBorder(m_game.m_constants.blackline);
 			//
 			for(int i = 0; i < 5; i++) {
-				inGameOptionsButtons[i].setBorder(m_constants.blackline);
+				inGameOptionsButtons[i].setBorder(m_game.m_constants.blackline);
 			}
 			//
 			for(int i = 0; i < 15; i++) {
-				backpackButtons[i].setBorder(m_constants.blackline);
+				backpackButtons[i].setBorder(m_game.m_constants.blackline);
 			}
-			inGameOptionsButtons[16].setBorder(m_constants.blackline);
+			inGameOptionsButtons[16].setBorder(m_game.m_constants.blackline);
 		}
-		else if(m_constants.buttonBorderOn == false) {
+		else if(m_game.m_constants.buttonBorderOn == false) {
 			choice1.setBorder(null);
 			choice2.setBorder(null);
 			choice3.setBorder(null);
@@ -908,15 +910,15 @@ public class UI {
 			backpackButtons[14].setBorder(null);
 		}
 		
-		if(m_constants.position.equals("noLoad")) {
-			m_story.gameover();
+		if(m_game.m_constants.position.equals("noLoad")) {
+			m_game.m_story.gameover();
 		}
-		if(m_constants.position.equals("newGame")) {
-			m_story.playerSetup();
+		if(m_game.m_constants.position.equals("newGame")) {
+			m_game.m_story.playerSetup();
 		}
-		else if(m_constants.position.equals("loadData")) {
+		else if(m_game.m_constants.position.equals("loadData")) {
 			//statschange();
-			m_story.positionCheck();
+			m_game.m_story.positionCheck();
 		}	
 		//statschange();
 		con.add(inGameOptionsPanel);
@@ -928,12 +930,12 @@ public class UI {
 	}
 	
 	public void createGameScreen2() {
-		m_images.initializeImages();
+		m_game.m_images.initializeImages();
 		mainTextPanel = new JPanel();
 		int mtp_x = 0;
-		int mtp_y = (int)Math.round(m_constants.currentScreenHeight * 0.5617977528089888);
-		int mtp_w = (int)Math.round(m_constants.currentScreenWidth * 0.5597014925373134);
-		int mtp_h = (int)Math.round(m_constants.currentScreenHeight * 0.3792134831460674);
+		int mtp_y = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.5617977528089888);
+		int mtp_w = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.5597014925373134);
+		int mtp_h = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.3792134831460674);
 		mainTextPanel.setBounds(0, mtp_y, mtp_w, mtp_h);
 		//mainTextPanel.setBounds(0, 400, 600, 270);
 		mainTextPanel.setBackground(Color.blue);
@@ -941,11 +943,11 @@ public class UI {
 		con.add(mainTextPanel);
 	
 		
-		mainTextArea = new JTextArea(m_constants.text);
-		int mta_x = (int)Math.round(m_constants.currentScreenHeight * 0.0934579439252336);
-		int mta_y = (int)Math.round(m_constants.currentScreenHeight * 0.1404494382022472);
-		int mta_w = (int)Math.round(m_constants.currentScreenWidth * 0.5607476635514019);
-		int mta_h = (int)Math.round(m_constants.currentScreenHeight * 0.351123595505618);
+		mainTextArea = new JTextArea(m_game.m_constants.text);
+		int mta_x = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.0934579439252336);
+		int mta_y = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.1404494382022472);
+		int mta_w = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.5607476635514019);
+		int mta_h = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.351123595505618);
 		mainTextArea.setBounds(mta_x, mta_y, mta_w, mta_h);
 		//mainTextArea.setBounds(100, 100, 600, 250);
 		mainTextArea.setBackground(Color.black);
@@ -957,8 +959,8 @@ public class UI {
 		mainTextPanel.add(mainTextArea);
 		
 		imagePanel = new JPanel();
-		int ip_w = (int)Math.round(m_constants.currentScreenWidth * 0.5597014925373134);
-		int ip_h = (int)Math.round(m_constants.currentScreenHeight * 0.5555555555555556);
+		int ip_w = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.5597014925373134);
+		int ip_h = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.5555555555555556);
 		imagePanel.setBounds(0, 0, ip_w, ip_h);
 		imagePanel.setBackground(Color.green);
 		
@@ -967,9 +969,9 @@ public class UI {
 		
 		choiceButtonPanel = new JPanel();
 		int cbp_x = (int)Math.round(mtp_x + mtp_w);
-		int cbp_y = (int)Math.round(m_constants.currentScreenHeight * 0.6283707865168539);
-		int cbp_w = (int)Math.round(m_constants.currentScreenWidth * 0.2803738317757009);
-		int cbp_h = (int)Math.round(m_constants.currentScreenHeight * 0.3168539325842697);
+		int cbp_y = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.6283707865168539);
+		int cbp_w = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.2803738317757009);
+		int cbp_h = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.3168539325842697);
 		choiceButtonPanel.setBounds(cbp_x, cbp_y, cbp_w, cbp_h);
 		//choiceButtonPanel.setBounds(600, 485, 300, 188);
 		choiceButtonPanel.setBackground(Color.black);
@@ -980,9 +982,9 @@ public class UI {
 		//timer
 		
 		int cp_x = (int)Math.round(mtp_x + mtp_w);
-		int cp_h = (int)Math.round(m_constants.currentScreenHeight * 0.1039325842696629);
-		int cp_y = (int)Math.round(m_constants.currentScreenHeight * 0.2674157303370787 - cp_h);
-		int cp_w = (int)Math.round(m_constants.currentScreenWidth * 0.3327102803738318);
+		int cp_h = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.1039325842696629);
+		int cp_y = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.2674157303370787 - cp_h);
+		int cp_w = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.3327102803738318);
 				
 				
 		counterPanel = new JPanel();
@@ -999,58 +1001,58 @@ public class UI {
 		//----------------------------------------------------------------------------------------------------------------------
 		//create buttons
 		
-		choice1 = new JButton(m_constants.b1text);
+		choice1 = new JButton(m_game.m_constants.b1text);
 		choice1.setBackground(Color.black);
 		choice1.setForeground(Color.white);
 		choice1.setFont(normalFont);
 		choice1.setFocusPainted(false);
-		choice1.addActionListener(m_choiceHandler);
-		choice1.addActionListener(bHandler);
-		choice1.addActionListener(goHandler);
+		choice1.addActionListener(m_game.m_choiceHandler);
+		choice1.addActionListener(m_game.m_bHandler);
+		choice1.addActionListener(m_game.m_goHandler);
 		choice1.setActionCommand("c1");
 		choiceButtonPanel.add(choice1);
 		
-		choice2 = new JButton(m_constants.b2text);
+		choice2 = new JButton(m_game.m_constants.b2text);
 		choice2.setBackground(Color.black);
 		choice2.setForeground(Color.white);
 		choice2.setFont(normalFont);
 		choice2.setFocusPainted(false);
-		choice2.addActionListener(m_choiceHandler);
-		choice2.addActionListener(bHandler);
-		choice2.addActionListener(goHandler);
+		choice2.addActionListener(m_game.m_choiceHandler);
+		choice2.addActionListener(m_game.m_bHandler);
+		choice2.addActionListener(m_game.m_goHandler);
 		choice2.setActionCommand("c2");
 		choiceButtonPanel.add(choice2);
 		
-		choice3 = new JButton(m_constants.b3text);
+		choice3 = new JButton(m_game.m_constants.b3text);
 		choice3.setBackground(Color.black);
 		choice3.setForeground(Color.white);
 		choice3.setFont(normalFont);
 		choice3.setFocusPainted(false);
-		choice3.addActionListener(m_choiceHandler);
-		choice3.addActionListener(bHandler);
-		choice3.addActionListener(goHandler);
+		choice3.addActionListener(m_game.m_choiceHandler);
+		choice3.addActionListener(m_game.m_bHandler);
+		choice3.addActionListener(m_game.m_goHandler);
 		choice3.setActionCommand("c3");
 		choiceButtonPanel.add(choice3);
 		
-		choice4 = new JButton(m_constants.b4text);
+		choice4 = new JButton(m_game.m_constants.b4text);
 		choice4.setBackground(Color.black);
 		choice4.setForeground(Color.white);
 		choice4.setFont(normalFont);
 		choice4.setFocusPainted(false);
-		choice4.addActionListener(m_choiceHandler);
-		choice4.addActionListener(bHandler);
-		choice4.addActionListener(goHandler);
+		choice4.addActionListener(m_game.m_choiceHandler);
+		choice4.addActionListener(m_game.m_bHandler);
+		choice4.addActionListener(m_game.m_goHandler);
 		choice4.setActionCommand("c4");
 		choiceButtonPanel.add(choice4);
 		
-		specialattack = new JButton(m_constants.b5text);
+		specialattack = new JButton(m_game.m_constants.b5text);
 		specialattack.setBackground(Color.black);
 		specialattack.setForeground(Color.white);
 		specialattack.setFont(normalFont);
 		specialattack.setFocusPainted(false);
-		specialattack.addActionListener(m_choiceHandler);
-		specialattack.addActionListener(bHandler);
-		specialattack.addActionListener(goHandler);
+		specialattack.addActionListener(m_game.m_choiceHandler);
+		specialattack.addActionListener(m_game.m_bHandler);
+		specialattack.addActionListener(m_game.m_goHandler);
 		specialattack.setActionCommand("c5");
 		//not added yet
 		
@@ -1059,9 +1061,9 @@ public class UI {
 		inGameOptionsButton.setForeground(Color.black);
 		inGameOptionsButton.setFont(normalFont);
 		inGameOptionsButton.setFocusPainted(false);
-		inGameOptionsButton.addActionListener(oHandler);
-		inGameOptionsButton.addActionListener(bHandler);
-		inGameOptionsButton.addActionListener(goHandler);
+		inGameOptionsButton.addActionListener(m_game.m_oHandler);
+		inGameOptionsButton.addActionListener(m_game.m_bHandler);
+		inGameOptionsButton.addActionListener(m_game.m_goHandler);
 		inGameOptionsButton.setActionCommand("inGameOptions");
 		choiceButtonPanel.add(inGameOptionsButton);
 
@@ -1071,21 +1073,21 @@ public class UI {
 		inventoryButton.setForeground(Color.black);
 		inventoryButton.setFont(normalFont);
 		inventoryButton.setFocusPainted(false);
-		inventoryButton.addActionListener(iHandler);
-		inventoryButton.addActionListener(bHandler);
-		inventoryButton.addActionListener(goHandler);
+		inventoryButton.addActionListener(m_game.m_iHandler);
+		inventoryButton.addActionListener(m_game.m_bHandler);
+		inventoryButton.addActionListener(m_game.m_goHandler);
 		inventoryButton.setActionCommand("inventoryButton");
 		choiceButtonPanel.add(inventoryButton);
 		
 		
-		m_inventory.inventory(cbp_x, cbp_w);
+		m_game.m_inventory.inventory(cbp_x, cbp_w);
 	
 		//------------------------------------------------------------------
 		inGameOptionsPanel = new JPanel();
 		int igop_x = (int)Math.round(cbp_x + cbp_w);
-		int igop_y = (int)Math.round(m_constants.currentScreenHeight * 0.6811797752808989);
-		int igop_w = (int)Math.round(m_constants.currentScreenWidth * 0.1401869158878505);
-		int igop_h = (int)Math.round(m_constants.currentScreenHeight * 0.2640449438202247);
+		int igop_y = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.6811797752808989);
+		int igop_w = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.1401869158878505);
+		int igop_h = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.2640449438202247);
 		inGameOptionsPanel.setBounds(igop_x, igop_y, igop_w, igop_h);
 		//inventoryPanel.setBounds(900, 485, 150, 188);
 		inGameOptionsPanel.setBackground(Color.black);
@@ -1099,27 +1101,27 @@ public class UI {
 		
 		playerPanel = new JPanel();
 		int pp_x = (int)Math.round(mtp_x + mtp_w);
-		int pp_y = (int)Math.round(m_constants.currentScreenHeight * 0.2574157303370787);
-		int pp_w = (int)Math.round(m_constants.currentScreenWidth * 0.3327102803738318);
-		int pp_h = (int)Math.round(m_constants.currentScreenHeight * 0.3689325842696629);
+		int pp_y = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.2574157303370787);
+		int pp_w = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.3327102803738318);
+		int pp_h = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.3689325842696629);
 		playerPanel.setBounds(pp_x, pp_y, pp_w, pp_h);
 		//playerPanel.setBounds(600, 300, 356, 180);
 		playerPanel.setBackground(Color.red);
 		playerPanel.setLayout(new GridLayout(7,2));
 		//playerNameLabel 
 		playerNameLabel = new JLabel();
-		playerNameLabel.setIcon(m_images.PlayerIcon);
+		playerNameLabel.setIcon(m_game.m_images.PlayerIcon);
 		playerNameLabel.setFont(normalFont);
 		playerNameLabel.setForeground(Color.white);
 		playerPanel.add(playerNameLabel);
 		//playerNameLabelString
-		playerNameLabelString = new JLabel(""+ m_player.playerName);
+		playerNameLabelString = new JLabel(""+ m_game.m_player.playerName);
 		playerNameLabelString.setFont(normalFont);
 		playerNameLabelString.setForeground(Color.white);
 		playerPanel.add(playerNameLabelString);
 		//hpLabel
 		hpLabel = new JLabel();
-		hpLabel.setIcon(m_images.HealthIcon);
+		hpLabel.setIcon(m_game.m_images.HealthIcon);
 		hpLabel.setFont(normalFont);
 		hpLabel.setForeground(Color.white);
 		playerPanel.add(hpLabel);
@@ -1130,7 +1132,7 @@ public class UI {
 		playerPanel.add(hpLabelNumber);
 		//weaponLabel
 		weaponLabel = new JLabel();
-		weaponLabel.setIcon(m_images.WeaponIcon);
+		weaponLabel.setIcon(m_game.m_images.WeaponIcon);
 		weaponLabel.setFont(normalFont);
 		weaponLabel.setForeground(Color.white);
 		playerPanel.add(weaponLabel);
@@ -1141,7 +1143,7 @@ public class UI {
 		playerPanel.add(weaponLabelName);
 		//goldLabel
 		goldLabel = new JLabel();
-		goldLabel.setIcon(m_images.GoldIcon);
+		goldLabel.setIcon(m_game.m_images.GoldIcon);
 		goldLabel.setFont(normalFont);
 		goldLabel.setForeground(Color.white);
 		playerPanel.add(goldLabel);
@@ -1152,7 +1154,7 @@ public class UI {
 		playerPanel.add(goldLabelNumber);
 		//xpLabel
 		xpLabel = new JLabel();
-		xpLabel.setIcon(m_images.XPIcon);
+		xpLabel.setIcon(m_game.m_images.XPIcon);
 		xpLabel.setFont(normalFont);
 		xpLabel.setForeground(Color.white);
 		playerPanel.add(xpLabel);
@@ -1163,7 +1165,7 @@ public class UI {
 		playerPanel.add(xpLabelNumber);
 		//attack stat label
 		attackLabel = new JLabel();
-		attackLabel.setIcon(m_images.AttackIcon);
+		attackLabel.setIcon(m_game.m_images.AttackIcon);
 		attackLabel.setFont(normalFont);
 		attackLabel.setForeground(Color.white);
 		playerPanel.add(attackLabel);
@@ -1174,7 +1176,7 @@ public class UI {
 		playerPanel.add(attackLabelNumber);
 		//defense stat label
 		defenseLabel = new JLabel();
-		defenseLabel.setIcon(m_images.DefenseIcon);
+		defenseLabel.setIcon(m_game.m_images.DefenseIcon);
 		defenseLabel.setFont(normalFont);
 		defenseLabel.setForeground(Color.white);
 		playerPanel.add(defenseLabel);
@@ -1185,7 +1187,7 @@ public class UI {
 		playerPanel.add(defenseLabelNumber);
 		//defense stat label
 		capsuleLabel = new JLabel();
-		capsuleLabel.setIcon(m_images.CapsulesIcon);
+		capsuleLabel.setIcon(m_game.m_images.CapsulesIcon);
 		capsuleLabel.setFont(normalFont);
 		capsuleLabel.setForeground(Color.white);
 		//defense stat number
@@ -1193,32 +1195,32 @@ public class UI {
 		capsuleLabelNumber.setFont(normalFont);
 		capsuleLabelNumber.setForeground(Color.white);
 	
-		if(m_constants.buttonBorderOn == true) {
-			choice1.setBorder(m_constants.blackline);
-			choice2.setBorder(m_constants.blackline);
-			choice3.setBorder(m_constants.blackline);
-			choice4.setBorder(m_constants.blackline);
-			specialattack.setBorder(m_constants.blackline);
+		if(m_game.m_constants.buttonBorderOn == true) {
+			choice1.setBorder(m_game.m_constants.blackline);
+			choice2.setBorder(m_game.m_constants.blackline);
+			choice3.setBorder(m_game.m_constants.blackline);
+			choice4.setBorder(m_game.m_constants.blackline);
+			specialattack.setBorder(m_game.m_constants.blackline);
 			//
-			inGameOptionsButton.setBorder(m_constants.blackline);
-			inGameOptionsButtons[1].setBorder(m_constants.blackline);
-			inGameOptionsButtons[2].setBorder(m_constants.blackline);
-			inGameOptionsButtons[3].setBorder(m_constants.blackline);
-			inGameOptionsButtons[4].setBorder(m_constants.blackline);
-			inGameOptionsButtons[5].setBorder(m_constants.blackline);
+			inGameOptionsButton.setBorder(m_game.m_constants.blackline);
+			inGameOptionsButtons[1].setBorder(m_game.m_constants.blackline);
+			inGameOptionsButtons[2].setBorder(m_game.m_constants.blackline);
+			inGameOptionsButtons[3].setBorder(m_game.m_constants.blackline);
+			inGameOptionsButtons[4].setBorder(m_game.m_constants.blackline);
+			inGameOptionsButtons[5].setBorder(m_game.m_constants.blackline);
 			//
-			inventoryButton.setBorder(m_constants.blackline);
+			inventoryButton.setBorder(m_game.m_constants.blackline);
 			//
 			for(int i = 0; i < 5; i++){
-				inventoryButtons[i].setBorder(m_constants.blackline);
+				inventoryButtons[i].setBorder(m_game.m_constants.blackline);
 			}
 			//
 			for(int i = 0; i < 15; i++){
-				backpackButtons[i].setBorder(m_constants.blackline);
+				backpackButtons[i].setBorder(m_game.m_constants.blackline);
 			}
-			backpackButtons[16].setBorder(m_constants.blackline);
+			backpackButtons[16].setBorder(m_game.m_constants.blackline);
 		}
-		else if(m_constants.buttonBorderOn == false) {
+		else if(m_game.m_constants.buttonBorderOn == false) {
 			choice1.setBorder(null);
 			choice2.setBorder(null);
 			choice3.setBorder(null);
@@ -1253,7 +1255,7 @@ public class UI {
 		
 		window.setVisible(true);
 		
-		setImage(m_constants.currentImage);
+		setImage(m_game.m_constants.currentImage);
 	}
 	
 	public void createFont() {
@@ -1266,10 +1268,10 @@ public class UI {
 	}
 
 	public void setImage(URL ImageURL) {
-		m_constants.currentImage = ImageURL;
+		m_game.m_constants.currentImage = ImageURL;
 		image = new ImageIcon(ImageURL);
-		int image_w = (int)Math.round(m_constants.currentScreenWidth * 0.5555555555555556);
-		int image_h = (int)Math.round(m_constants.currentScreenHeight * 0.5617977528089888);
+		int image_w = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.5555555555555556);
+		int image_h = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.5617977528089888);
 		
 		Image im = image.getImage().getScaledInstance(image_w, image_h, Image.SCALE_DEFAULT);
 		image = new ImageIcon(im);
@@ -1279,8 +1281,8 @@ public class UI {
 	public void backpack() {
 		backpackPanel = new JPanel();
 		int bp_y = 0;
-		int bp_w = (int)Math.round(m_constants.currentScreenWidth * 0.5597014925373134);
-		int bp_h = (int)Math.round(m_constants.currentScreenHeight * 0.4213483146067416);
+		int bp_w = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.5597014925373134);
+		int bp_h = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.4213483146067416);
 		backpackPanel.setBounds(0, bp_y, bp_w, bp_h);
 		backpackPanel.setBackground(Color.orange);
 		backpackPanel.setLayout(new GridLayout(4, 4));
@@ -1293,10 +1295,10 @@ public class UI {
 			backpackButtons[i].setForeground(Color.white);
 			backpackButtons[i].setFont(normalFont);
 			backpackButtons[i].setFocusPainted(false);
-			backpackButtons[i].addActionListener(bHandler);
-			backpackButtons[i].addActionListener(goHandler);
-			backpackButtons[i].addActionListener(sHandler);
-			backpackButtons[i].addActionListener(bpHandler);
+			backpackButtons[i].addActionListener(m_game.m_bHandler);
+			backpackButtons[i].addActionListener(m_game.m_goHandler);
+			backpackButtons[i].addActionListener(m_game.m_sHandler);
+			backpackButtons[i].addActionListener(m_game.m_bpHandler);
 			int buttonListener = i+1;
 			backpackButtons[i].setActionCommand("backpackButton" + buttonListener);
 			backpackPanel.add(backpackButtons[i]);
@@ -1304,8 +1306,8 @@ public class UI {
 		
 		backpackTextAreaPanel = new JPanel();
 		int btap_y = bp_y + bp_h;
-		int btap_w = (int) Math.round(m_constants.currentScreenWidth * 0.555555556);
-		int btap_h = (int) Math.round(m_constants.currentScreenHeight * 0.1404494382022472);
+		int btap_w = (int) Math.round(m_game.m_constants.currentScreenWidth * 0.555555556);
+		int btap_h = (int) Math.round(m_game.m_constants.currentScreenHeight * 0.1404494382022472);
 		backpackTextAreaPanel.setBounds(0, btap_y, btap_w, btap_h);
 		backpackTextAreaPanel.setBackground(Color.blue);
 		backpackTextAreaPanel.setVisible(false);
@@ -1327,9 +1329,9 @@ public class UI {
 	public void optionsButtons(int cbp_x, int cbp_w) {
 		inGameOptionsPanel = new JPanel();
 		int igop_x = (int)Math.round(cbp_x + cbp_w);
-		int igop_y = (int)Math.round(m_constants.currentScreenHeight * 0.6811797752808989);
-		int igop_w = (int)Math.round(m_constants.currentScreenWidth * 0.1401869158878505);
-		int igop_h = (int)Math.round(m_constants.currentScreenHeight * 0.2640449438202247);
+		int igop_y = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.6811797752808989);
+		int igop_w = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.1401869158878505);
+		int igop_h = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.2640449438202247);
 		inGameOptionsPanel.setBounds(igop_x, igop_y, igop_w, igop_h);
 		//inventoryPanel.setBounds(900, 485, 150, 188);
 		inGameOptionsPanel.setBackground(Color.black);
@@ -1342,9 +1344,9 @@ public class UI {
 			inGameOptionsButtons[i].setForeground(Color.white);
 			inGameOptionsButtons[i].setFont(normalFont);
 			inGameOptionsButtons[i].setFocusPainted(false);
-			inGameOptionsButtons[i].addActionListener(bHandler);
-			inGameOptionsButtons[i].addActionListener(oHandler);
-			inGameOptionsButtons[i].addActionListener(bpHandler);
+			inGameOptionsButtons[i].addActionListener(m_game.m_bHandler);
+			inGameOptionsButtons[i].addActionListener(m_game.m_oHandler);
+			inGameOptionsButtons[i].addActionListener(m_game.m_bpHandler);
 			int buttonListener = i+1;
 			backpackButtons[i].setActionCommand("option" + buttonListener);
 			backpackPanel.add(backpackButtons[i]);
@@ -1360,9 +1362,9 @@ public class UI {
 		//itemButton5.setLayout(new GridLayout(5,1));
 		inGameOptionsButtons[4].setFont(backpackFont);
 		inGameOptionsButtons[4].setFocusPainted(false);
-		inGameOptionsButtons[4].addActionListener(oHandler);
-		inGameOptionsButtons[4].addActionListener(bHandler);
-		inGameOptionsButtons[4].addActionListener(bpHandler);
+		inGameOptionsButtons[4].addActionListener(m_game.m_oHandler);
+		inGameOptionsButtons[4].addActionListener(m_game.m_bHandler);
+		inGameOptionsButtons[4].addActionListener(m_game.m_bpHandler);
 		inGameOptionsButtons[4].setActionCommand("backpack");
 		
 		for(int j = 0; j < inGameOptionsButtons.length; j++) {

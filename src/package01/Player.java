@@ -6,9 +6,6 @@ import package03.SuperItem;
 
 public class Player {
 	
-	UI m_ui;
-	Constants m_constants;
-	
 	public static String playerName;
 	public static int playerHP;
 	public static SuperWeapon weapon;
@@ -20,32 +17,34 @@ public class Player {
 	public static SuperItem [] playerItem = new SuperItem[5];
 	public static SuperItem [] backpackItem = new SuperItem[15];
 	
-	public Player(UI userInterface, Constants c) {
-		m_ui = userInterface;
-		m_constants = c;
+	
+	game m_game;
+	
+	public Player(game g) {
+		m_game = g;
 	}
 	
 	public void itemUsed(int slotNumber) {
 		switch(playerItem[slotNumber].name) {
 			case "Potion": 
 				playerHP += 20; 
-				m_ui.m_story.statschange();
+				m_game.m_story.statschange();
 				playerItem[slotNumber] = new Empty();
 			break;
 			case "Fork": 
-				m_constants.forkUsed = true;
+				m_game.m_constants.forkUsed = true;
 				playerHP -= 10; 
-				m_ui.m_story.statschange();
+				m_game.m_story.statschange();
 				playerItem[slotNumber] = new Empty();
 			break;
 			case "C. Bar": 
 				playerHP += 10; 
-				m_ui.m_story.statschange();
+				m_game.m_story.statschange();
 				playerItem[slotNumber] = new Empty();
 			break;
 			case "Apple":
 				playerHP += 15;
-				m_ui.m_story.statschange();
+				m_game.m_story.statschange();
 				playerItem[slotNumber] = new Empty();
 			break;
 		}	

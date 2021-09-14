@@ -12,18 +12,17 @@ import package01.VisibilityManager;
 import package01.game;
 
 public class GameoverHandler implements ActionListener{
+	
+	game m_game;
+	
+	public GameoverHandler(game g) {
+		m_game = g;
+	}
+
 	public void actionPerformed(ActionEvent event) {
 		
-		game m_game = new game();
-		UI m_ui = new UI(m_game);
-		Constants m_constants = new Constants(m_ui);
-		Player m_player = new Player(m_ui, m_constants);
-		VisibilityManager vm = new VisibilityManager(m_ui);
-		Inventory m_inventory = new Inventory(m_game, m_ui);
-		Story m_story = new Story(m_game, m_ui, vm, m_constants, m_inventory);
-		
-		if(m_player.playerHP <= 0) {
-			m_story.gameover();
+		if(m_game.m_player.playerHP <= 0) {
+			m_game.m_story.gameover();
 		}
 	}
 }

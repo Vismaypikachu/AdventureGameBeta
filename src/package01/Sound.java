@@ -10,24 +10,25 @@ public class Sound {
 	
 	Clip clip;
 	//String clickSound, titleTrack, innTrack;
-	UI m_ui;
-	Constants m_constants = new Constants(m_ui);
 	
-	public Sound(UI userInterface) {
-		m_ui = userInterface;
+	
+	game m_game;
+	
+	public Sound(game g) {
+		m_game = g;
 	}
 	
 	public void setMusic(URL fileName) {
-		if(m_constants.musicOn == false){
+		if(m_game.m_constants.musicOn == false){
 			setURL(fileName);
-			m_constants.currentMusic = fileName;
+			m_game.m_constants.currentMusic = fileName;
 			play();
 			loop();
 		}
-		else if(m_constants.musicOn == true && !fileName.equals(m_constants.currentMusic)){
+		else if(m_game.m_constants.musicOn == true && !fileName.equals(m_game.m_constants.currentMusic)){
 			stop();
-			m_constants.currentMusic = fileName;
-			m_constants.musicOn = true;
+			m_game.m_constants.currentMusic = fileName;
+			m_game.m_constants.musicOn = true;
 			setURL(fileName);
 			play();
 			loop();
@@ -50,7 +51,7 @@ public class Sound {
 	}
 	
 	public void play() {
-		m_constants.musicOn = true;
+		m_game.m_constants.musicOn = true;
 		clip.setFramePosition(0);
 		clip.start();
 		
@@ -61,7 +62,7 @@ public class Sound {
 	}
 	
 	public void stop() {
-		m_constants.musicOn = false;
+		m_game.m_constants.musicOn = false;
 		clip.setFramePosition(0);
 		clip.loop(-1);
 		clip.stop();

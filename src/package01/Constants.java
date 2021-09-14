@@ -10,9 +10,16 @@ import package03.Potion;
 import package05.SuperEnemy;
 
 public class Constants {
+	
+	game m_game;
+	
+	public Constants(game g) {
+		m_game = g;
+	}
+	/*
 	UI m_ui;
 	Player m_player = new Player(m_ui, this);
-	
+	*/
 	
 	//UI
 	public static int currentScreenWidth = 1070;
@@ -55,12 +62,12 @@ public class Constants {
 		//innTrackURL = getClass().getResource("InnTrack.wav");
 		//testImageURL = getClass().getResource("test.png");
 	}
-	*/
+	
 	
 	public Constants(UI userInterface) {
 		m_ui = userInterface;
 	}
-	
+	*/
 	public void reinitializeVars() {
 		inputcount = 0;
 		inBattle = false;
@@ -70,18 +77,18 @@ public class Constants {
 		forkUsed = false;
 		switchOn = false;
 		
-		m_player.playerHP = 100;
-		m_player.weapon = new None();
-		m_player.playerHP = 100;
-		m_player.gold = 0;
-		m_player.xp = 0;
+		m_game.m_player.playerHP = 100;
+		m_game.m_player.weapon = new None();
+		m_game.m_player.playerHP = 100;
+		m_game.m_player.gold = 0;
+		m_game.m_player.xp = 0;
 		InventoryStatus = "close";
 		OptionsStatus = "close";
 		BackpackStatus = "close";
-		m_player.playerdefense = 0;
-		m_player.capsules = 0;
+		m_game.m_player.playerdefense = 0;
+		m_game.m_player.capsules = 0;
 		savedPosition = "";
 		
-		m_player.backpackItem [0] = new Potion();
+		m_game.m_player.backpackItem [0] = new Potion();
 	}
 }

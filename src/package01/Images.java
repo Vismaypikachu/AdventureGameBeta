@@ -9,6 +9,14 @@ public class Images {
 	
 	ImageIcon PlayerIcon, HealthIcon, WeaponIcon, GoldIcon, XPIcon, AttackIcon, DefenseIcon, CapsulesIcon;
 	
+	
+	game m_game;
+	
+	public Images(game g) {
+		m_game = g;
+	}
+
+	/*
 	UI m_ui;
 	Constants m_constants = new Constants(m_ui);
 	
@@ -16,11 +24,11 @@ public class Images {
 	public Images(UI userInterface) {
 		m_ui = userInterface;
 	}
-	
+	*/
 	public void initializeImages() {
 		//icons
-		int iconwidth = (int) Math.round(m_constants.currentScreenWidth * 0.03592592592592592592592592592593);
-		int iconheight = (int) Math.round(m_constants.currentScreenWidth * 0.032932584269662921348314606741573);
+		int iconwidth = (int) Math.round(m_game.m_constants.currentScreenWidth * 0.03592592592592592592592592592593);
+		int iconheight = (int) Math.round(m_game.m_constants.currentScreenWidth * 0.032932584269662921348314606741573);
 		
 		PlayerIcon = new ImageIcon(getClass().getClassLoader().getResource("PlayerIcon.png"));
 		Image image = PlayerIcon.getImage(); // transform it 

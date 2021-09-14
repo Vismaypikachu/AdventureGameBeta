@@ -1,15 +1,17 @@
 package package01;
 
 public class VisibilityManager {
-	UI m_ui;
 	
-	public VisibilityManager(UI userInterface) {
-		m_ui = userInterface;
-	}
+	game m_game;
+	
+	public VisibilityManager(game g) {
+		m_game = g;
+	}	
+	
 	public void showTitleScreen() {
 		//show title screen
-		m_ui.titleNamePanel.setVisible(true);
-		m_ui.startButtonPanel.setVisible(true);
+		m_game.m_ui.titleNamePanel.setVisible(true);
+		m_game.m_ui.startButtonPanel.setVisible(true);
 		//hide game screen
 		/*
 		m_ui.mainTextPanel.setVisible(false);
@@ -21,14 +23,14 @@ public class VisibilityManager {
 	}
 	
 	public void hideTitleScreen() {
-		m_ui.titleNamePanel.setVisible(false);
-		m_ui.startButtonPanel.setVisible(false);
+		m_game.m_ui.titleNamePanel.setVisible(false);
+		m_game.m_ui.startButtonPanel.setVisible(false);
 	}
 	
 	public void showGameScreen() {
 		//hide title screen
-		m_ui.titleNamePanel.setVisible(false);
-		m_ui.startButtonPanel.setVisible(false);
+		m_game.m_ui.titleNamePanel.setVisible(false);
+		m_game.m_ui.startButtonPanel.setVisible(false);
 		//show game screen
 		/*
 		m_ui.mainTextPanel.setVisible(true);
