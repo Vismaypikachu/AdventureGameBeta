@@ -1,6 +1,7 @@
 package package04;
 
 
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -35,9 +36,18 @@ public class OptionsHandler implements ActionListener {
 					m_game.m_ui.choice4.setVisible(false);	
 					m_game.m_ui.specialattack.setVisible(false);
 					m_game.m_ui.inventoryButton.setVisible(false);
+					try {
+						for(int i = 0; i < m_game.m_ui.inventoryButtons.length; i++) {
+							m_game.m_ui.sidePanel.remove(m_game.m_ui.inventoryButtons[i]);
+						}
+					}
+					catch (Exception e) {
+						
+					}
 					for(int i = 0; i < m_game.m_ui.inGameOptionsButtons.length; i++) {
 						m_game.m_ui.sidePanel.add(m_game.m_ui.inGameOptionsButtons[i]);
 					}
+					m_game.m_ui.sidePanel.setLayout(new GridLayout(5,1));
 					m_game.m_ui.sidePanel.setVisible(true);
 					m_game.m_ui.inGameOptionsButtons[0].setText("Full Screen");
 					m_game.m_ui.inGameOptionsButtons[1].setText("Small Screen");
@@ -54,8 +64,9 @@ public class OptionsHandler implements ActionListener {
 					m_game.m_ui.specialattack.setVisible(true);
 					m_game.m_ui.inventoryButton.setVisible(true);
 					for(int i = 0; i < m_game.m_ui.inGameOptionsButtons.length; i++) {
-						m_game.m_ui.sidePanel.add(m_game.m_ui.inGameOptionsButtons[i]);
+						m_game.m_ui.sidePanel.remove(m_game.m_ui.inGameOptionsButtons[i]);
 					}
+					m_game.m_ui.sidePanel.setLayout(new GridLayout(5,1));
 					m_game.m_ui.sidePanel.setVisible(false);
 					m_game.m_constants.OptionsStatus = "close";
 				}
@@ -63,7 +74,7 @@ public class OptionsHandler implements ActionListener {
 			case "option1": m_game.m_ui.sidePanel.setVisible(false); m_game.m_constants.OptionsStatus = "close"; m_game.m_ui.setFullScreen2(); break;
 			case "option2": m_game.m_ui.sidePanel.setVisible(false); m_game.m_constants.OptionsStatus = "close"; m_game.m_ui.endFullScreen2(); break;
 			case "option3": 
-				if(m_game.m_constants.fullScreenOn == true) { m_game.m_ui.endFullScreen2(); m_game.m_ui.window.remove(m_game.m_ui.sidePanel); m_game.m_ui.createUIComponent();}
+				if(m_game.m_constants.fullScreenOn == true) { m_game.m_ui.endFullScreen2(); m_game.m_constants.reinitializeVars(); m_game.m_ui.createUIComponent();}
 				else if(m_game.m_constants.fullScreenOn == false) { m_game.m_constants.reinitializeVars(); m_game.m_ui.createUIComponent();}
 			break;
 			case "option4": System.exit(0); break;

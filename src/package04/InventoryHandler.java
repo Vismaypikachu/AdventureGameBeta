@@ -1,5 +1,6 @@
 package package04;
 
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -33,6 +34,7 @@ public class InventoryHandler implements ActionListener{
 					for(int i = 0; i < m_game.m_ui.inventoryButtons.length; i++) {
 						m_game.m_ui.sidePanel.add(m_game.m_ui.inventoryButtons[i]);
 					}
+					m_game.m_ui.sidePanel.setLayout(new GridLayout(5,1));
 					m_game.m_ui.sidePanel.setVisible(true);
 					//
 					m_game.m_inventory.updateInventory();
@@ -50,6 +52,7 @@ public class InventoryHandler implements ActionListener{
 					for(int i = 0; i < m_game.m_ui.inventoryButtons.length; i++) {
 						m_game.m_ui.sidePanel.remove(m_game.m_ui.inventoryButtons[i]);
 					}
+					m_game.m_ui.sidePanel.setLayout(new GridLayout(5,1));
 					m_game.m_ui.sidePanel.setVisible(false);
 				//	m_game.m_ui.window.remove(m_game.m_ui.inventoryPanel);
 					m_game.m_constants.InventoryStatus = "close";

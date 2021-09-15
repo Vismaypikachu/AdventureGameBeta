@@ -24,14 +24,14 @@ public class Constants {
 	//UI
 	public static int currentScreenWidth = 1070;
 	public static int currentScreenHeight = 712;
-	public static boolean buttonBorderOn = false;
+	public static boolean buttonBorderOn = false;;
 	//FONT
-	public static int titleFontSize = (int)Math.round(currentScreenWidth * 0.0607476635514019);
-	public static int normalFontSize = (int)Math.round(currentScreenWidth * 0.0261682242990654);
-	public static int credits1FontSize = (int)Math.round(currentScreenWidth * 0.0407476635514019);
-	public static int credits2FontSize = (int)Math.round(currentScreenWidth * 0.0307476635514019);
-	public static int credits3FontSize = (int)Math.round(currentScreenWidth * 0.0157476635514019);
-	public static int backpackFontSize = (int)Math.round(currentScreenWidth * 0.020);
+	public static int titleFontSize;
+	public static int normalFontSize;
+	public static int credits1FontSize;
+	public static int credits2FontSize;
+	public static int credits3FontSize;
+	public static int backpackFontSize;
 	public static Border blackline = BorderFactory.createLineBorder(Color.white);
 	//SOUND
 	public URL clickSoundURL = getClass().getResource("/ButtonPress.wav");
