@@ -106,7 +106,6 @@ public class UI {
 		window.setResizable(false);
 		con = window.getContentPane();
 		
-		m_game.m_enemy.initializeEnemy();
 		m_game.m_images.initializeImages();
 		
 		

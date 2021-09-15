@@ -54,7 +54,7 @@ public class Constants {
 	//MISC
 	public static int inputcount, bisonCount, Ecount, timesGiven;
 	public static boolean inBattle, forkUsed, switchOn, specialUnlocked;
-	public static String position, savedPosition;
+	public static String position, savedPosition, enemyPosition;
 	/*
 	public void initializeSounds() {
 		//clickSoundURL = getClass().getResource("ButtonPress.wav");

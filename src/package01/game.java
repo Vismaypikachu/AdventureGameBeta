@@ -3,13 +3,13 @@ package package01;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import package04.*;
+import package05.Battle;
 
 public class game {
 	
 	//packge01
 	public Backpack m_backpack = new Backpack(this);
 	public Constants m_constants = new Constants(this);
-	Enemy m_enemy = new Enemy();
 	Images m_images = new Images(this);
 	public Inventory m_inventory = new Inventory(this);
 	public Player m_player = new Player(this);
@@ -29,6 +29,9 @@ public class game {
 	OptionsHandler m_oHandler = new OptionsHandler(this);
 	StatsHandler m_sHandler = new StatsHandler(this);
 	ChoiceHandler m_choiceHandler = new ChoiceHandler();
+	
+	//package05
+	Battle m_battle = new Battle(this);
 	/*
 	UI ui = new UI(this);
 	
