@@ -41,9 +41,9 @@ public class Inventory {
 	
 	public void addInventoryItem(SuperItem item) {
 		int slotNumber = 0;
-		while(m_game.m_player.playerItem[slotNumber] != new Empty() && slotNumber < 4) slotNumber++;
+		while(!m_game.m_player.playerItem[slotNumber].name.equals("[Empty]") && slotNumber < 4) slotNumber++;
 		
-		if(m_game.m_player.playerItem[slotNumber] == new Empty()) {
+		if(m_game.m_player.playerItem[slotNumber].name.equals("[Empty]")) {
 			m_game.m_player.playerItem[slotNumber] = item;
 		}
 		

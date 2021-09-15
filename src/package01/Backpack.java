@@ -34,7 +34,7 @@ public class Backpack {
 			if(m_game.m_constants.switchOn == true) m_game.m_ui.backpackTextArea.setText("Please select the item to move to your inventory.");
 			else m_game.m_ui.backpackTextArea.setText("Press Switch to move an item to your inventory. \nIf you do not have any space, the item will be dropped");
 			//
-			for(int i = 0; i < m_game.m_ui.backpackButtons.length; i++) {
+			for(int i = 0; i < m_game.m_ui.backpackButtons.length-1; i++) {
 				m_game.m_ui.backpackButtons[i].setText(m_game.m_player.backpackItem[i].name);
 			}
 			//
@@ -43,11 +43,11 @@ public class Backpack {
 		if(number == 0) {
 			m_game.m_ui.backpackTextArea.setText("Not a valid selection, please try again.");
 			//
-			for(int i = 0; i < m_game.m_ui.backpackButtons.length; i++) {
-				m_game.m_ui.inGameOptionsButtons[i].setText(m_game.m_player.backpackItem[i].name);
+			for(int i = 0; i < m_game.m_ui.backpackButtons.length-1; i++) {
+				m_game.m_ui.backpackButtons[i].setText(m_game.m_player.backpackItem[i].name);
 			}
 			//
-		}
+		}	
 		
 	}
 

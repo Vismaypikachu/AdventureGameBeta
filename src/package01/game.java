@@ -62,10 +62,28 @@ public class game {
 			switch(yourChoice){
 				case "start": m_vm.hideTitleScreen(); m_sound.stop(); m_story.input(); break;
 				case "load": break;
-				case "credits": break;
-				case "fullScreen": m_ui.setFullScreen(); break;
-				case "buttonBorder": m_constants.buttonBorderOn = true; break;
-				case "optionsBack": m_ui.createUIComponent(); break;
+				case "credits": m_ui.credits(); break;
+				case "fullScreen": 
+					if(m_constants.fullScreenOn == false) {
+						m_ui.setFullScreen(); break;
+					}
+					else {
+						m_ui.endFullScreen(); break;
+					}
+				case "buttonBorder": 
+					if(m_constants.buttonBorderOn == false) {
+						m_constants.buttonBorderOn = true; m_ui.createUIComponent(); break;
+					}
+					else {
+						m_constants.buttonBorderOn = false; m_ui.createUIComponent(); break;
+					}
+				case "backTitle":
+					if(m_constants.fullScreenOn == false) {
+						m_ui.createUIComponent(); break;
+					}
+					else {
+						m_ui.createUIComponent(); m_ui.setFullScreen(); break;
+					}
 				case "options": m_ui.options(); break;
 				case "c1": m_story.selectPosition(nextPosition1); break;
 				case "c2": m_story.selectPosition(nextPosition2); break;

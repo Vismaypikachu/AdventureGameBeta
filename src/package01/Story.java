@@ -11,6 +11,7 @@ import javax.swing.JTextField;
 
 import package02.None;
 import package03.Empty;
+import package03.Fork;
 import package03.Potion;
 
 public class Story {
@@ -143,6 +144,12 @@ public class Story {
 	public void selectPosition(String nextPosition) {
 		switch(nextPosition) {
 			case "fork": playerSetup(); fork(); break;
+			case "leftone": leftone(); break;
+			case "rightone": rightone(); break;
+			case "leftright": leftright(); break;
+			case "leftleft": leftleft(); break;
+			case "rightleft": rightleft(); break;
+			case "rightright": rightright(); break;
 		}
 	}
 	
@@ -208,6 +215,75 @@ public class Story {
 			m_game.m_ui.choice3.setText("------");
 			m_game.m_ui.choice4.setText("------");
 			m_game.m_ui.specialattack.setText("------");
+			
+			m_game.nextPosition1 = "leftone";
+			m_game.nextPosition2 = "rightone";
 		}
 	}
+
+	public void leftone() {
+		m_game.m_constants.position = "leftone";
+		m_game.m_ui.mainTextArea.setText("You picked up the fork. Fork added to inventory! \n\nYou chose the left path, you can now go left or right \n\nWhat do you choose?");
+		m_game.m_ui.choice1.setText("Left");
+		m_game.m_ui.choice2.setText("Right");
+		m_game.m_ui.choice3.setText("------");
+		m_game.m_ui.choice4.setText("------");
+		
+		m_game.nextPosition1 = "leftleft";
+		m_game.nextPosition2 = "leftright";
+		
+		m_game.m_inventory.addInventoryItem(new Fork());
+	}
+	
+	public void rightone() {
+		m_game.m_constants.position = "rightone";
+		m_game.m_ui.mainTextArea.setText("You picked up the fork. Fork added to inventory! \n\nYou chose the right path, you can now go left or right \n\nWhat do you choose?");
+		m_game.m_ui.choice1.setText("Left");
+		m_game.m_ui.choice2.setText("Right");
+		m_game.m_ui.choice3.setText("------");
+		m_game.m_ui.choice4.setText("------");
+		
+		m_game.nextPosition1 = "rightleft";
+		m_game.nextPosition2 = "rightright";
+		
+		m_game.m_inventory.addInventoryItem(new Fork());
+	}
+	
+	public void leftleft() {
+		m_game.m_constants.position = "leftleft";
+		m_game.m_ui.mainTextArea.setText("You chose the left then left path, lets continue!");
+		m_game.m_ui.choice1.setText("Continue!");
+		m_game.m_ui.choice2.setText("------");
+		m_game.m_ui.choice3.setText("------");
+		m_game.m_ui.choice4.setText("------");
+	}
+	
+	public void leftright() {
+		m_game.m_constants.position = "leftright";
+		m_game.m_ui.mainTextArea.setText("You chose the left then right path, lets continue!");
+		m_game.m_ui.choice1.setText("Continue");
+		m_game.m_ui.choice2.setText("------");
+		m_game.m_ui.choice3.setText("------");
+		m_game.m_ui.choice4.setText("------");
+	}
+	
+	public void rightleft() {
+		m_game.m_constants.position = "rightleft";
+		m_game.m_ui.mainTextArea.setText("You chose the right then left path, lets continue!");
+		m_game.m_ui.choice1.setText("Continue!");
+		m_game.m_ui.choice2.setText("------");
+		m_game.m_ui.choice3.setText("------");
+		m_game.m_ui.choice4.setText("------");
+	}
+	
+	public void rightright() {
+		m_game.m_constants.position = "rightright";
+		m_game.m_ui.mainTextArea.setText("You chose the right then right path, lets continue!");
+		m_game.m_ui.choice1.setText("Continue!");
+		m_game.m_ui.choice2.setText("------");
+		m_game.m_ui.choice3.setText("------");
+		m_game.m_ui.choice4.setText("------");
+	}
+	
+	
 }
