@@ -3,11 +3,6 @@ package package04;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import package01.Backpack;
-import package01.Constants;
-import package01.Images;
-import package01.Inventory;
-import package01.UI;
 import package01.game;
 
 public class BackpackHandler implements ActionListener {

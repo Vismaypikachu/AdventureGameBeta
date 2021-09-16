@@ -71,7 +71,7 @@ public class Battle {
 		m_game.m_player.xp += xpadd;
 		m_game.m_player.playerHP += healby;
 		m_game.m_story.statschange();
-		m_game.m_story.setNextPosition("", "", "", "");
+		m_game.m_story.setNextPosition("", "battlewon", "", "");
 		m_game.m_story.setChoices("", "Continue", "", "");
 		m_game.m_constants.currentEnemy = new EmptyAir();
 		m_game.m_constants.inBattle = false;

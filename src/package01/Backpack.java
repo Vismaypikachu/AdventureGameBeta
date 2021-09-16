@@ -63,11 +63,11 @@ public class Backpack {
 	
 	public void addBackpackItem(SuperItem item) {
 		int slotNumber = 0;
-		while(m_game.m_player.backpackItem[slotNumber] != new Empty() && slotNumber < 14) slotNumber++;
+		while(!m_game.m_player.backpackItem[slotNumber].name.equals("[Empty]") && slotNumber < 14) slotNumber++;
 		if(slotNumber == 14 && m_game.m_player.backpackItem[14] != new Empty()) noEmptySlots(item);
 		
 		else {
-			if(m_game.m_player.backpackItem[slotNumber] == new Empty()) m_game.m_player.backpackItem[slotNumber] = item;
+			if(m_game.m_player.backpackItem[slotNumber].name.equals("[Empty]")) m_game.m_player.backpackItem[slotNumber] = item;
 			else if (!m_game.m_player.backpackItem[slotNumber].name.equals("[Empty]")) noEmptySlots(item);
 		}
 	}

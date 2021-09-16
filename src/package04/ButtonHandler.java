@@ -3,9 +3,6 @@ package package04;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import package01.Constants;
-import package01.SoundEffect;
-import package01.UI;
 import package01.game;
 
 public class ButtonHandler implements ActionListener {

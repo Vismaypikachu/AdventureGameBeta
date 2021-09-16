@@ -4,12 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
 
-import package01.Constants;
-import package01.Inventory;
-import package01.Player;
-import package01.Story;
-import package01.UI;
-import package01.VisibilityManager;
 import package01.game;
 
 public class CapsulesHandler implements ActionListener{
