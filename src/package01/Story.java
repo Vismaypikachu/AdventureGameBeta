@@ -10,9 +10,12 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import package02.None;
+import package02.Sword;
+import package02.Wand;
 import package03.Empty;
 import package03.Fork;
 import package03.Potion;
+import package05.Guard;
 
 public class Story {
 	/*
@@ -141,8 +144,33 @@ public class Story {
 		}
 	}
 	
+	public void setNextPosition(String a, String b, String c, String d) {
+		m_game.nextPosition1 = a;
+		m_game.nextPosition2 = b;
+		m_game.nextPosition3 = c;
+		m_game.nextPosition4 = d;
+	}
+	
+	public void setChoices(String a, String b, String c, String d) {
+		if(a.equals("")) a = "------";
+		if(b.equals("")) b = "------";
+		if(c.equals("")) c = "------";
+		if(d.equals("")) d = "------";
+		m_game.m_ui.choice1.setText(a);
+		m_game.m_ui.choice2.setText(b);
+		m_game.m_ui.choice3.setText(c);
+		m_game.m_ui.choice4.setText(d);
+	}
+	
 	public void selectPosition(String nextPosition) {
 		switch(nextPosition) {
+			case "battlewon":
+				switch(m_game.m_constants.enemyPosition) {
+					case "practice": inn(); break;
+				}
+			break;
+			case "playerattack": m_game.m_battle.playerattack(); break;
+			case "enemyattack": m_game.m_battle.enemyattack(); break;
 			case "fork": playerSetup(); fork(); break;
 			case "leftone": leftone(); break;
 			case "rightone": rightone(); break;
@@ -150,6 +178,14 @@ public class Story {
 			case "leftleft": leftleft(); break;
 			case "rightleft": rightleft(); break;
 			case "rightright": rightright(); break;
+			case "monster": monster(); break;
+			case "monsteryes": monsteryes(); break;
+			case "monsterno": monsterno(); break;
+			case "town": town(); break;
+			case "wizard": wizard(); break;
+			case "blacksmith": blacksmith(); break;
+			case "guard": m_game.m_constants.enemyPosition = "practice"; m_game.m_constants.currentEnemy = new Guard(); m_game.m_battle.enemyattack(); break;
+			case "": break;
 		}
 	}
 	
@@ -210,27 +246,25 @@ public class Story {
 		else {
 			m_game.m_ui.mainTextArea.setText("You start out on a bright sunny day and think to yourself, lets go on an adventure. \n\nYou get out of your house and reach a fork in the road. \n\nYou can go left or right, which do you choose?");
 			m_game.m_constants.position = "fork";
+			/*
 			m_game.m_ui.choice1.setText("Left");
 			m_game.m_ui.choice2.setText("Right");
 			m_game.m_ui.choice3.setText("------");
 			m_game.m_ui.choice4.setText("------");
 			m_game.m_ui.specialattack.setText("------");
+			*/
 			
-			m_game.nextPosition1 = "leftone";
-			m_game.nextPosition2 = "rightone";
+			setChoices("Left", "Right", "", "");
+			setNextPosition("leftone", "rightone", "", "");
 		}
 	}
-
+	
 	public void leftone() {
 		m_game.m_constants.position = "leftone";
 		m_game.m_ui.mainTextArea.setText("You picked up the fork. Fork added to inventory! \n\nYou chose the left path, you can now go left or right \n\nWhat do you choose?");
-		m_game.m_ui.choice1.setText("Left");
-		m_game.m_ui.choice2.setText("Right");
-		m_game.m_ui.choice3.setText("------");
-		m_game.m_ui.choice4.setText("------");
 		
-		m_game.nextPosition1 = "leftleft";
-		m_game.nextPosition2 = "leftright";
+		setChoices("Left", "Right", "", "");
+		setNextPosition("leftleft", "leftright", "", "");
 		
 		m_game.m_inventory.addInventoryItem(new Fork());
 	}
@@ -238,13 +272,9 @@ public class Story {
 	public void rightone() {
 		m_game.m_constants.position = "rightone";
 		m_game.m_ui.mainTextArea.setText("You picked up the fork. Fork added to inventory! \n\nYou chose the right path, you can now go left or right \n\nWhat do you choose?");
-		m_game.m_ui.choice1.setText("Left");
-		m_game.m_ui.choice2.setText("Right");
-		m_game.m_ui.choice3.setText("------");
-		m_game.m_ui.choice4.setText("------");
 		
-		m_game.nextPosition1 = "rightleft";
-		m_game.nextPosition2 = "rightright";
+		setChoices("Left", "Right", "", "");	
+		setNextPosition("rightleft", "rightright", "", "");
 		
 		m_game.m_inventory.addInventoryItem(new Fork());
 	}
@@ -252,10 +282,9 @@ public class Story {
 	public void leftleft() {
 		m_game.m_constants.position = "leftleft";
 		m_game.m_ui.mainTextArea.setText("You chose the left then left path, lets continue!");
-		m_game.m_ui.choice1.setText("Continue!");
-		m_game.m_ui.choice2.setText("------");
-		m_game.m_ui.choice3.setText("------");
-		m_game.m_ui.choice4.setText("------");
+		
+		setChoices("Continue", "", "", "");
+		setNextPosition("town", "", "", "");
 	}
 	
 	public void leftright() {
@@ -265,6 +294,8 @@ public class Story {
 		m_game.m_ui.choice2.setText("------");
 		m_game.m_ui.choice3.setText("------");
 		m_game.m_ui.choice4.setText("------");
+		
+		setNextPosition("monster", "", "", "");
 	}
 	
 	public void rightleft() {
@@ -274,6 +305,8 @@ public class Story {
 		m_game.m_ui.choice2.setText("------");
 		m_game.m_ui.choice3.setText("------");
 		m_game.m_ui.choice4.setText("------");
+		
+		setNextPosition("town", "", "", "");
 	}
 	
 	public void rightright() {
@@ -283,7 +316,78 @@ public class Story {
 		m_game.m_ui.choice2.setText("------");
 		m_game.m_ui.choice3.setText("------");
 		m_game.m_ui.choice4.setText("------");
+		
+		setNextPosition("town", "", "", "");
 	}
 	
+	public void monster() {
+		m_game.m_constants.position = "monster";
+		m_game.m_ui.mainTextArea.setText("You see a monster in the middle of the road. Use the fork on him?");
+		
+
+		setChoices("Yes", "No", "", "");		
+		setNextPosition("monsteryes", "monsterno", "", "");
+	}
 	
+	public void monsteryes() {
+		m_game.m_constants.position = "monsteryes";
+		if(m_game.m_constants.forkUsed == true) {
+			m_game.m_ui.mainTextArea.setText("You didn't have a fork to use on the monster. You go around the monster slowly.");
+		}
+		else if(m_game.m_constants.forkUsed == false) {
+			m_game.m_ui.mainTextArea.setText("You give the fork to the monster, he is happy. He moves out of the way. \n\n You have gained 100 xp and 50 gold!!!");
+			m_game.m_player.xp += 100;
+			m_game.m_player.gold += 50;
+			m_game.m_player.playerItem[1] = new Empty();
+			statschange();
+		}
+		
+		setChoices("Continue", "", "", "");
+		setNextPosition("town", "", "", "");
+	}
+	
+	public void monsterno() {
+		m_game.m_constants.position = "monsterno";
+		m_game.m_ui.mainTextArea.setText("You go around the monster slowly.");
+		
+		setChoices("Continue", "", "", "");
+		setNextPosition("town", "", "", "");
+	}
+	
+	public void town() {
+		m_game.m_constants.position = "town";
+		m_game.m_ui.mainTextArea.setText("You head into town. \n\nWhere do you want to go? \nBlacksmith or Wizard?");
+
+		setChoices("Blacksmith", "Wizard", "", "");
+		setNextPosition("blacksmith", "wizard", "", "");
+	}
+	
+	public void blacksmith() {
+		m_game.m_constants.position = "blacksmith";
+		m_game.m_ui.mainTextArea.setText("You went to the Blacksmith and recieved a Sword!\n\nWeapon changed to Sword!\n\nLets have a practice battle!");
+		m_game.m_player.weapon = new Sword();
+		m_game.m_player.playerType = "Physical";
+		statschange();
+		
+		setChoices("Continue", "", "", "");
+		setNextPosition("guard", "", "", "");
+	}
+	
+	public void wizard() {
+		m_game.m_constants.position = "wizard";
+		m_game.m_ui.mainTextArea.setText("You went to the Wizard and recieved a Wand!\n\nWeapon changed to Wand!\n\nLets have a practice battle!");
+		m_game.m_player.weapon = new Wand();
+		m_game.m_player.playerType = "Magical";
+		statschange();
+		
+		setChoices("Continue", "", "", "");
+		setNextPosition("guard", "", "", "");
+	}
+
+	public void inn() {
+		m_game.m_constants.position = "inn";
+		m_game.m_ui.mainTextArea.setText("You continue on past the village and reach a rest stop just as night falls. \n\nYou can restore health in an inn or out in the open.\n\nCosts 15 gold");
+		
+		setChoices("Inside", "Outside", "", "");
+	}
 }

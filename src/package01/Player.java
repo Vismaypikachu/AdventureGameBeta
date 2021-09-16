@@ -16,7 +16,7 @@ public class Player {
 	public static boolean specialUnlocked;
 	public static SuperItem [] playerItem = new SuperItem[5];
 	public static SuperItem [] backpackItem = new SuperItem[15];
-	
+	public static String playerType;
 	
 	game m_game;
 	
