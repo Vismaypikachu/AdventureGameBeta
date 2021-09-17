@@ -19,6 +19,7 @@ import package03.ChocolateBar;
 import package03.Empty;
 import package03.Fork;
 import package03.Potion;
+import package05.Bandit;
 import package05.Guard;
 
 public class Story {
@@ -202,7 +203,9 @@ public class Story {
 			case "store1": checkgold(50, "Extra Health"); break;
 			case "store2": checkgold(105, "Shield"); break;
 			case "store3": checkgold(90, "XP Bottle"); break;
-			case "farmer": break;
+			case "farmer": farmer(); break;
+			case "farmer2": farmer2(); break;
+			case "farmerbattle": m_game.m_constants.enemyPosition = "farmer"; m_game.m_constants.currentEnemy = new Bandit(); m_game.m_battle.enemyattack(); break;
 		}
 	}
 	
@@ -667,7 +670,7 @@ public class Story {
 		}
 		
 		setChoices("Continue", "", "", "");
-		setNextPosition("Store", "", "", "");
+		setNextPosition("store", "", "", "");
 	}
 	
 	public void canyon() {
@@ -685,7 +688,7 @@ public class Story {
 		}
 		
 		setChoices("Continue", "", "", "");
-		setNextPosition("Store", "", "", "");
+		setNextPosition("store", "", "", "");
 	}
 	
 	public void storeask() {
@@ -746,4 +749,22 @@ public class Story {
 			store();
 		}
 	}
+
+	public void farmer() {
+		m_game.m_constants.position = "farmer";
+		m_game.m_ui.mainTextArea.setText("Having continued on your journey, you reach a small pasture. \nYou find a farm, with a farmer sitting on a chair. \nNoticing your " + m_game.m_player.weapon.name + " he asks you for help.");
+		
+		
+		setChoices("Continue", "", "", "");
+		setNextPosition("farmer2", "", "", "");
+	}
+	
+	public void farmer2() {
+		m_game.m_constants.position = "farmer2";
+		m_game.m_ui.mainTextArea.setText("Farmer: Could you please scare off the bandits attacking my farm, I will show you a secret treasure cave.\nFeeling confident in your abilities, you proceed to fight the bandits.");
+		
+		setChoices("Attack", "", "", "");
+		setNextPosition("farmerbattle", "", "", "");
+	}
+	
 }
