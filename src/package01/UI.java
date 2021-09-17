@@ -1,7 +1,6 @@
 package package01;
 
 import java.util.*;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
@@ -19,15 +18,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import package01.game.ChoiceHandler;
-import package04.BackpackHandler;
-import package04.ButtonHandler;
-import package04.CapsulesHandler;
-import package04.GameoverHandler;
-import package04.InputHandler;
-import package04.InventoryHandler;
-import package04.OptionsHandler;
-import package04.StatsHandler;
 
 public class UI {
 	

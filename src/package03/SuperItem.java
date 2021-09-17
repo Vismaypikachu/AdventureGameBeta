@@ -1,8 +1,5 @@
 package package03;
 
-import package01.Constants;
-import package01.Player;
-import package01.UI;
 
 public class SuperItem {
 	

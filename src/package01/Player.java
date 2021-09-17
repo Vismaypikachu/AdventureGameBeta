@@ -11,7 +11,7 @@ public class Player {
 	public static SuperWeapon weapon;
 	public static int gold;
 	public static int xp;
-	public static int playerdefense;
+	public static double playerdefense;
 	public static int capsules;
 	public static boolean specialUnlocked;
 	public static SuperItem [] playerItem = new SuperItem[5];
