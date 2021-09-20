@@ -25,6 +25,7 @@ public class CapsulesHandler implements ActionListener{
 		}
 		else if(m_game.m_player.capsules == 0 && m_game.m_player.playerHP <= 20) {
 			m_game.m_player.playerHP = 0;
+			m_game.m_story.statschange();
 			m_game.m_story.gameover();
 		}
 		else {
