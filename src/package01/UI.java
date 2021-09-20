@@ -350,6 +350,7 @@ public class UI {
 	
 	public void createUIComponent3() {
 		m_game.m_constants.position = "title";
+		m_game.m_constants.reinitializeVars();
 		
 		m_game.m_sound.setMusic(m_game.m_constants.titleTrackURL);
 		try {
@@ -695,11 +696,11 @@ public class UI {
 			specialattack.setVisible(true);
 			choiceButtonPanel.setLayout(new GridLayout(7,1));
 			choiceButtonPanel.add(specialattack);
-			specialattack.addActionListener(m_game.m_cHandler);
 		}
 		else specialattack.setVisible(false);
 		specialattack.setFocusPainted(false);
 		specialattack.addActionListener(m_game.m_choiceHandler);
+		specialattack.addActionListener(m_game.m_cHandler);
 		specialattack.addActionListener(m_game.m_bHandler);
 		specialattack.addActionListener(m_game.m_goHandler);
 		specialattack.addActionListener(m_game.m_sHandler);

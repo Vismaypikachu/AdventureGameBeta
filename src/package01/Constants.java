@@ -53,7 +53,7 @@ public class Constants {
 	public static SuperEnemy currentEnemy;
 	//MISC
 	public static int inputcount, bisonCount, Ncount, Ecount, timesGiven;
-	public static boolean inBattle, forkUsed, switchOn, specialUnlocked;
+	public static boolean inBattle, forkUsed, switchOn;
 	public static String position, savedPosition, enemyPosition;
 	/*
 	public void initializeSounds() {
@@ -82,13 +82,13 @@ public class Constants {
 		m_game.m_player.playerHP = 100;
 		m_game.m_player.gold = 0;
 		m_game.m_player.xp = 0;
+		m_game.m_player.playerdefense = 0;
+		m_game.m_player.capsules = 0;
 		InventoryStatus = "close";
 		OptionsStatus = "close";
 		BackpackStatus = "close";
-		m_game.m_player.playerdefense = 0;
-		m_game.m_player.capsules = 0;
 		savedPosition = "";
 		
-		m_game.m_player.backpackItem [0] = new Potion();
+		m_game.m_player.backpackItem[0] = new Potion();
 	}
 }
