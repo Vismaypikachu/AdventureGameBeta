@@ -12,13 +12,18 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+
 import package02.None;
 import package02.Sword;
 import package02.Wand;
+import package03.Apple;
 import package03.ChocolateBar;
 import package03.Empty;
 import package03.Fork;
 import package03.Potion;
+import package05.Bandit;
+import package05.EmptyAir;
+import package05.Goblin;
 import package05.Guard;
 
 public class Story {
@@ -68,7 +73,7 @@ public class Story {
 		con.add(gameOverPanel);
 		*/
 		statschange();
-		if(m_game.m_constants.position.equals("gameover")) {
+		//if(m_game.m_constants.position.equals("gameover")) {
 			m_game.m_ui.choice1.setText("Main Menu");
 			m_game.m_ui.choice2.setText("Exit Game");
 			m_game.m_ui.mainTextArea.setText("Seems like you died... Oh well. Lets go back");
@@ -81,14 +86,11 @@ public class Story {
 			m_game.m_ui.inGameOptionsButton.setVisible(false);
 			m_game.m_ui.sidePanel.setVisible(false);
 			m_game.m_ui.sidePanel.setVisible(false);
-		}
-		else {
+		//}
+		//else {
 			m_game.m_constants.position.equals("gameoverStart");
-			m_game.m_ui.choice1.setText("Continue");
-			m_game.m_ui.choice2.setText("------");
-			m_game.m_ui.choice3.setText("------");
-			m_game.m_ui.choice4.setText("------");
-		}
+			setChoices("Continue", "", "", "");
+		//}
 	}
 	
 	public void statschange() {
@@ -172,6 +174,8 @@ public class Story {
 			case "battlewon":
 				switch(m_game.m_constants.enemyPosition) {
 					case "practice": inn(); break;
+					case "farmer": farmerweaponask(); break; 
+					case "plateau": plateauFork(); break;
 				}
 			break;
 			case "playerattack": m_game.m_battle.playerattack(); break;
@@ -202,7 +206,25 @@ public class Story {
 			case "store1": checkgold(50, "Extra Health"); break;
 			case "store2": checkgold(105, "Shield"); break;
 			case "store3": checkgold(90, "XP Bottle"); break;
-			case "farmer": break;
+			case "farmer": farmer(); break;
+			case "farmer2": farmer2(); break;
+			case "farmerbattle": m_game.m_constants.enemyPosition = "farmer"; m_game.m_constants.currentEnemy = new Bandit(); m_game.m_battle.enemyattack(); break;
+			case "farmerbetrayalno": farmerbetrayal(true); break;
+			case "farmerbetrayalyes": farmerbetrayal(false); break;
+			case "greatplains": greatplains(); break;
+			case "theplateau": theplateau(); break;
+			case "oldman": oldman(); break;
+			case "oldman2": oldman2(); break;
+			case "oldman3": oldman3(); break;
+			case "oldman4": oldman4(); break;
+			case "oldman5": oldman5(); break;
+			case "oldman6": oldman6(); break;
+			case "plateaufork": plateauFork(); break;
+			case "plateaunorth": plateauNorth(); break;
+			case "plateauwest": plateauWest(); break;
+			case "plateaueast": plateauEast(); break;
+			case "plateausouth": plateauSouth(); break;
+			case "plateaubattle": m_game.m_constants.enemyPosition = "plateau"; m_game.m_constants.currentEnemy = new Goblin(); m_game.m_battle.enemyattack(); break; 
 		}
 	}
 	
@@ -667,7 +689,7 @@ public class Story {
 		}
 		
 		setChoices("Continue", "", "", "");
-		setNextPosition("Store", "", "", "");
+		setNextPosition("store", "", "", "");
 	}
 	
 	public void canyon() {
@@ -685,7 +707,7 @@ public class Story {
 		}
 		
 		setChoices("Continue", "", "", "");
-		setNextPosition("Store", "", "", "");
+		setNextPosition("store", "", "", "");
 	}
 	
 	public void storeask() {
@@ -745,5 +767,203 @@ public class Story {
 			m_game.m_constants.position = "failbuy";
 			store();
 		}
+	}
+
+	public void farmer() {
+		m_game.m_constants.position = "farmer";
+		m_game.m_ui.mainTextArea.setText("Having continued on your journey, you reach a small pasture. \nYou find a farm, with a farmer sitting on a chair. \nNoticing your " + m_game.m_player.weapon.name + " he asks you for help.");
+		
+		
+		setChoices("Continue", "", "", "");
+		setNextPosition("farmer2", "", "", "");
+	}
+	
+	public void farmer2() {
+		m_game.m_constants.position = "farmer2";
+		m_game.m_constants.enemyPosition = "farmer";
+		m_game.m_ui.mainTextArea.setText("Farmer: Could you please scare off the bandits attacking my farm, I will show you a secret treasure cave.\nFeeling confident in your abilities, you proceed to fight the bandits.");
+		
+		setChoices("Attack", "", "", "");
+		setNextPosition("farmerbattle", "", "", "");
+	}
+	
+	public void farmerweaponask() {
+		m_game.m_constants.position = "farmerweaponask";
+		m_game.m_ui.mainTextArea.setText("After finishing off the last bandit, you go back to the farmer.\n\nWhat do you do?");
+		
+		setChoices("Keep " + m_game.m_player.weapon.name + " Out", "Put " + m_game.m_player.weapon.name + " Away", "", "");
+		setNextPosition("farmerbetrayalno", "farmerbetrayalyes", "", "");
+	
+	}
+	
+	public void farmerbetrayal(boolean weaponout) {
+		if(weaponout == true) {
+			m_game.m_constants.position = "nobetrayal";
+			m_game.m_ui.mainTextArea.setText("You keep your " + m_game.m_player.weapon.name + " out.\nThe farmer notices your " + m_game.m_player.weapon.name + ", true to his word, he shows you to a treasure cave.\n\nYou find 20 Gold!!!");
+			m_game.m_player.gold+=20;
+			statschange();
+			
+			setChoices("Continue", "", "", "");
+		}
+		else {
+			m_game.m_constants.position = "yesbetrayal";
+			m_game.m_ui.mainTextArea.setText("You put your " + m_game.m_player.weapon.name + " away. \nThe farmer noticing you unarmed attacks you and deals 25 damage. \nYou attack him and deal 100 damage.");
+			m_game.m_player.playerHP -= 25;
+			statschange();
+			
+			setChoices("Continue", "", "", "");
+		}
+		setNextPosition("greatplains", "", "", "");
+	}
+	
+	public void greatplains() {
+		m_game.m_constants.position = "greatplains";
+		m_game.m_ui.mainTextArea.setText("You have reached the great plains biome\nIn here is the The Plateaus.\nLets continue!");
+		
+		
+		setChoices("Continue", "", "", "");
+		setNextPosition("theplateau", "", "", "");
+	}
+	
+	public void theplateau() {
+		m_game.m_constants.position = "theplateau";
+		m_game.m_ui.mainTextArea.setText("You trudge through The Plateaus. \nShall you talk to the weird old man?");
+		
+		setChoices("Yes", "No", "", ""); 
+		setNextPosition("oldman", "", "", "");
+	}
+	
+	public void oldman() {
+		m_game.m_constants.position = "oldman";
+		m_game.m_ui.mainTextArea.setText("Old Man: Ah Hello. Have you come to here my old tale?");
+		
+		setChoices("Yes", "No", "", ""); 
+		setNextPosition("oldman2", "", "", "");
+	}
+	
+	public void oldman2() {
+		m_game.m_constants.position = "oldman2";
+		m_game.m_ui.mainTextArea.setText("Old Man: This world was once a great colorful place.\n But then... THEY arrived. They took all our crops, plundered are lands, and destroyed our country. I was a young boy when this all happened. ");
+		
+		setChoices("Continue", "", "", ""); 
+		setNextPosition("oldman3", "", "", "");
+	}
+	
+	public void oldman3() {
+		m_game.m_constants.position = "oldman3";
+		m_game.m_ui.mainTextArea.setText("Old Man: The only hope now is to travel to the anchient shrines and collect each elemental crystal. But, you don't worry about that. You seem like a nice young child, here let me teach you something.");
+		
+		setChoices("Continue", "", "", ""); 
+		setNextPosition("oldman4", "", "", "");
+	}
+
+	public void oldman4() {
+		m_game.m_constants.position = "oldman4";
+		if(m_game.m_player.playerType.equals("Magical")) m_game.m_ui.mainTextArea.setText("Old Man: I will teach you a special magical attack. \n\n (You have learned special attack)\nThis attack uses capsules to deal damage!");
+		else m_game.m_ui.mainTextArea.setText("Old Man: I will teach you a special sword attack.\n\n (You have learned special attack)\nThis attack uses capsules to deal damage!");
+		
+		setChoices("Continue", "", "", ""); 
+		setNextPosition("oldman5", "", "", "");
+
+		m_game.m_ui.choiceButtonPanel.remove(m_game.m_ui.inGameOptionsButton);
+		m_game.m_ui.choiceButtonPanel.remove(m_game.m_ui.inventoryButton);
+		m_game.m_ui.choiceButtonPanel.add(m_game.m_ui.specialattack);
+		m_game.m_ui.specialattack.setText("Special Attack");
+		m_game.m_ui.choiceButtonPanel.add(m_game.m_ui.inGameOptionsButton);
+		m_game.m_ui.choiceButtonPanel.add(m_game.m_ui.inventoryButton);
+		m_game.m_ui.choiceButtonPanel.setLayout(new GridLayout(7,1));
+		m_game.m_ui.playerPanel.setLayout(new GridLayout(8,2));
+		m_game.m_ui.playerPanel.add(m_game.m_ui.capsuleLabel);
+		m_game.m_ui.playerPanel.add(m_game.m_ui.capsuleLabelNumber);
+		m_game.m_ui.specialattack.addActionListener(m_game.m_cHandler);
+		m_game.m_constants.specialUnlocked = true;
+		
+		m_game.m_constants.currentEnemy = new EmptyAir();
+	}
+	
+	public void oldman5() {
+		m_game.m_constants.position = "oldman5";
+		m_game.m_ui.mainTextArea.setText("Old Man: In order to use a special attack, you need energy capsules. Here, take some \n\n(You recieved 5 energy capsules)\n\nYou can convert XP into capsules when you find a wandering wizard.");
+		m_game.m_player.capsules += 5;
+		statschange();
+		
+
+		setChoices("Continue", "", "", ""); 
+		setNextPosition("oldman6", "", "", "");
+	}
+	
+	public void oldman6() {
+		m_game.m_constants.position = "oldman6";
+		m_game.m_ui.mainTextArea.setText("Old Man: You best be on your way now...by the way, that will be 20 gold please.");
+		m_game.m_player.gold -= 20;
+		statschange();
+		
+		setChoices("Continue", "", "", ""); 
+		setNextPosition("plateaufork", "", "", "");
+	}
+	
+	public void plateauFork() {
+		m_game.m_constants.position = "plateauFork";
+		m_game.m_ui.mainTextArea.setText("You have reached a fork. Which way shall you go?");
+		
+		setChoices("North", "West", "East - Leave", "South"); 
+		setNextPosition("plateaunorth", "plateauwest", "plateaueast", "plateausouth");
+		
+	
+		m_game.m_ui.playerPanel.add(m_game.m_ui.capsuleLabel);
+		m_game.m_ui.playerPanel.add(m_game.m_ui.capsuleLabelNumber);
+		
+	}
+	
+	public void plateauNorth(){
+		m_game.m_constants.Ncount++;
+		if(m_game.m_constants.Ncount <= 3) {
+			m_game.m_constants.position = "plateauNorth";
+			m_game.m_constants.enemyPosition = "plateauNorth";
+			
+			m_game.m_ui.mainTextArea.setText("You went North. A wild Goblin attacks!");
+			setChoices("Continue", "", "", "");
+			setNextPosition("plateaubattle", "", "", "");
+		}
+		else {
+			m_game.m_constants.position = "plateauNorthEasterEgg";
+			m_game.m_ui.mainTextArea.setText("You went North. You see a dead Goblin corpse pile...\nI wonder who did that.");
+			setChoices("Continue", "", "", "");
+			setNextPosition("plateaufork", "", "", "");
+		}
+	}
+	
+	public void plateauWest() {
+		m_game.m_constants.position = "plateauWest";
+		
+		if(m_game.m_constants.Ecount >= 10) m_game.m_ui.mainTextArea.setText("Fisherman: I am sorry... I am out of Apples...\nWould you care for a fish?");
+		
+		int slotNumber = 0;
+		while(!m_game.m_player.playerItem[slotNumber].name.equals("[Empty]") && slotNumber < 4) slotNumber++;
+		
+		if(m_game.m_constants.Ecount < 10) {
+			m_game.m_ui.mainTextArea.setText("Fisherman: Hello! You seem very nice. Please, take an Apple.\n\n(You recieved an Apple)");
+			m_game.m_inventory.addInventoryItem(new Apple());
+			m_game.m_constants.Ecount++;
+		}
+		setChoices("Continue", "", "", "");
+		setNextPosition("plateaufork", "", "", "");
+	}
+
+	public void plateauSouth() {
+		m_game.m_constants.position = "plateauSouth";
+		m_game.m_ui.mainTextArea.setText("Fisherman's Son: Hello, I am a save NPC. Don't talk to me. Just let me save the game for you.\n\n(Your progress has been saved)");
+		setChoices("Continue", "", "", "");
+		setNextPosition("plateaufork", "", "", "");
+		m_game.m_constants.savedPosition = "save2";
+		saveData();
+		statschange();
+	}
+	
+	public void plateauEast() {
+		m_game.m_constants.position = "plateauEast";
+		m_game.m_ui.mainTextArea.setText("Continuing onwards you trudge through The Plateaus. \nYou see a sign warning you of Bison Stampedes, you really want to get out of here.");
+		setChoices("Continue", "", "", "");
+		setNextPosition("plateaufork", "", "", "");
 	}
 }

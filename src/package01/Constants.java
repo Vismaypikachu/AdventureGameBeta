@@ -52,7 +52,7 @@ public class Constants {
 	//ENEMIES
 	public static SuperEnemy currentEnemy;
 	//MISC
-	public static int inputcount, bisonCount, Ecount, timesGiven;
+	public static int inputcount, bisonCount, Ncount, Ecount, timesGiven;
 	public static boolean inBattle, forkUsed, switchOn, specialUnlocked;
 	public static String position, savedPosition, enemyPosition;
 	/*
