@@ -3,7 +3,9 @@ package package01;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.Random;
 
@@ -14,6 +16,7 @@ import javax.swing.JTextField;
 
 
 import package02.None;
+import package02.SuperWeapon;
 import package02.Sword;
 import package02.Wand;
 import package03.Apple;
@@ -90,6 +93,7 @@ public class Story {
 		//else {
 			m_game.m_constants.position.equals("gameoverStart");
 			setChoices("Continue", "", "", "");
+			setNextPosition("gomenu", "", "", "");
 		//}
 	}
 	
@@ -134,8 +138,7 @@ public class Story {
 	
 	public void positionCheck() {
 		
-		m_game.m_constants.currentEnemy.name = "Empty Air";
-		m_game.m_constants.currentEnemy.enemyHP = 100;
+		m_game.m_constants.currentEnemy = new EmptyAir();
 		/*
 		itemButton1.setText(itemButton1Text);
 		itemButton2.setText(itemButton2Text);
@@ -144,10 +147,10 @@ public class Story {
 		itemButton5.setText(itemButton5Text);
 		*/
 		m_game.m_ui.playerPanel.setLayout(new GridLayout(8,2));
-		if(m_game.m_constants.specialUnlocked == true) m_game.m_ui.specialattack.setVisible(true);
+		if(m_game.m_player.specialUnlocked == true) m_game.m_ui.specialattack.setVisible(true);
 		switch(m_game.m_constants.savedPosition) {
-			//case "save1": m_ui.playerPanel.setLayout(new GridLayout(7,2)); innskeepwife(); break;
-			//case "save2": plateauFork(); break;
+			case "save1": m_game.m_ui.playerPanel.setLayout(new GridLayout(7,2)); innskeepwife(); break;
+			case "save2": plateauFork(); break;
 		}
 	}
 	
@@ -171,6 +174,13 @@ public class Story {
 	
 	public void selectPosition(String nextPosition) {
 		switch(nextPosition) {
+			case "gomenu": 
+				if(m_game.m_constants.fullScreenOn == false) {
+					m_game.m_ui.createUIComponent(); break;
+				}
+				else {
+					m_game.m_ui.createUIComponent(); m_game.m_ui.setFullScreen(); break;
+				}
 			case "battlewon":
 				switch(m_game.m_constants.enemyPosition) {
 					case "practice": inn(); break;
@@ -332,8 +342,6 @@ public class Story {
 			bw.newLine();
 			bw.write(""+m_game.m_player.capsules);
 			bw.newLine();
-			bw.write(""+m_game.m_player.weapon.attackStat);
-			bw.newLine();
 			bw.write(""+m_game.m_player.playerdefense);	
 			bw.newLine();
 			bw.write(x);
@@ -387,7 +395,7 @@ public class Story {
 			bw.write(""+backpackItem[15].name);
 			*/
 			bw.newLine();
-			bw.write(""+m_game.m_constants.specialUnlocked);
+			bw.write(""+m_game.m_player.specialUnlocked);
 			
 			
 			bw.close();
@@ -396,6 +404,99 @@ public class Story {
 		catch(Exception e){
 			
 		}
+	}
+	
+	public void loadData() {
+		m_game.m_constants.position = "loadData";
+		m_game.m_constants.InventoryStatus = "open";
+		m_game.m_constants.OptionsStatus = "close";
+		m_game.m_constants.BackpackStatus = "close";
+		
+
+		try {
+			BufferedReader br = new BufferedReader(new FileReader("saveFile.txt"));
+			
+			m_game.m_constants.savedPosition = br.readLine();
+			m_game.m_constants.musicOn = Boolean.parseBoolean(br.readLine());
+			m_game.m_player.playerName = br.readLine();
+			m_game.m_player.playerHP = Integer.parseInt(br.readLine());
+			setWeapon(br.readLine());
+			m_game.m_player.playerType = br.readLine();
+			m_game.m_player.gold = Integer.parseInt(br.readLine());
+			m_game.m_player.xp = Integer.parseInt(br.readLine());
+			m_game.m_player.capsules = Integer.parseInt(br.readLine());
+			m_game.m_player.playerdefense = Double.parseDouble(br.readLine());
+			//------------------
+		
+			for(int j = 0; j < 5; j++) {
+				setItem(br.readLine(), j, 1);
+			}
+			for(int i = 0; i < 15; i++) {
+				setItem(br.readLine(), i, 2);
+			}
+			
+			//-----------------------------------
+			m_game.m_player.specialUnlocked = Boolean.parseBoolean(br.readLine());
+			
+			
+			m_game.m_constants.currentEnemy = new EmptyAir();
+
+			
+			/*
+			stringToClass(br.readLine(), 0);
+			stringToClass(br.readLine(), 1);
+			stringToClass(br.readLine(), 2);
+			stringToClass(br.readLine(), 3);
+			stringToClass(br.readLine(), 4);
+			 */
+			br.close();
+			
+		}
+		catch(Exception e){
+			
+		}
+		if(m_game.m_player.playerHP == 0) {
+			m_game.m_constants.position = "noLoad";
+		}
+		/*
+		for(int i = 0; i < 5; i++) {
+			setItem(m_game.m_player.playerItem[i].name, i, 1);
+		}
+		for(int i = 0; i < 15; i++) {
+			setItem(m_game.m_player.backpackItem[i].name, i, 2);
+		}
+		*/
+		m_game.m_ui.createGameScreen();
+	}
+	
+	public void setWeapon(String w) {
+		switch(w) {
+			case "None": m_game.m_player.weapon = new None(); break;
+			case "Sword": m_game.m_player.weapon = new Sword(); break;
+			case "Wand": m_game.m_player.weapon = new Wand(); break;
+		}
+	}
+	
+	public void setItem(String name, int i, int num) {
+		if(num == 1) {
+			switch(name) {
+				case "[Empty]": m_game.m_player.playerItem[i] = new Empty(); break;
+				case "Fork": m_game.m_player.playerItem[i] = new Fork(); break;
+				case "Potion": m_game.m_player.playerItem[i] = new Potion(); break;
+				case "C. Bar": m_game.m_player.playerItem[i] = new ChocolateBar(); break;
+				case "Apple": m_game.m_player.playerItem[i] = new Apple(); break;
+			}
+		}
+		else {
+			switch(name) {
+				case "[Empty]": m_game.m_player.backpackItem[i] = new Empty(); break;
+				case "Fork": m_game.m_player.backpackItem[i] = new Fork(); break;
+				case "Potion": m_game.m_player.backpackItem[i] = new Potion(); break;
+				case "C. Bar": m_game.m_player.backpackItem[i] = new ChocolateBar(); break;
+				case "Apple": m_game.m_player.backpackItem[i] = new Apple(); break;
+			}
+		}
+		
 	}
 	
 	public void fork() {
@@ -864,19 +965,20 @@ public class Story {
 		
 		setChoices("Continue", "", "", ""); 
 		setNextPosition("oldman5", "", "", "");
-
+		m_game.m_player.specialUnlocked = true;
+		m_game.m_ui.specialattack.setText("Special Attack");
 		m_game.m_ui.choiceButtonPanel.remove(m_game.m_ui.inGameOptionsButton);
 		m_game.m_ui.choiceButtonPanel.remove(m_game.m_ui.inventoryButton);
+		m_game.m_ui.choiceButtonPanel.setLayout(new GridLayout(7,1));
 		m_game.m_ui.choiceButtonPanel.add(m_game.m_ui.specialattack);
-		m_game.m_ui.specialattack.setText("Special Attack");
+		m_game.m_ui.specialattack.setVisible(true);
 		m_game.m_ui.choiceButtonPanel.add(m_game.m_ui.inGameOptionsButton);
 		m_game.m_ui.choiceButtonPanel.add(m_game.m_ui.inventoryButton);
-		m_game.m_ui.choiceButtonPanel.setLayout(new GridLayout(7,1));
 		m_game.m_ui.playerPanel.setLayout(new GridLayout(8,2));
 		m_game.m_ui.playerPanel.add(m_game.m_ui.capsuleLabel);
 		m_game.m_ui.playerPanel.add(m_game.m_ui.capsuleLabelNumber);
 		m_game.m_ui.specialattack.addActionListener(m_game.m_cHandler);
-		m_game.m_constants.specialUnlocked = true;
+		
 		
 		m_game.m_constants.currentEnemy = new EmptyAir();
 	}

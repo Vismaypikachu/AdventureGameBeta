@@ -64,7 +64,7 @@ public class game {
 			String yourChoice = event.getActionCommand();
 			switch(yourChoice){
 				case "start": m_vm.hideTitleScreen(); m_sound.stop(); m_story.input(); break;
-				case "load": break;
+				case "load": m_story.loadData(); break;
 				case "credits": m_ui.credits(); break;
 				case "fullScreen": 
 					if(m_constants.fullScreenOn == false) {
