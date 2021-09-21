@@ -29,6 +29,7 @@ public class game {
 	OptionsHandler m_oHandler = new OptionsHandler(this);
 	StatsHandler m_sHandler = new StatsHandler(this);
 	ChoiceHandler m_choiceHandler = new ChoiceHandler();
+	MouseHandler m_mHandler = new MouseHandler(this);
 	
 	//package05
 	Battle m_battle = new Battle(this);

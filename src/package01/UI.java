@@ -24,7 +24,8 @@ public class UI {
 	public JFrame window;
 	Container con;
 	JPanel titleNamePanel, startButtonPanel, optionsPanel, optionsPanel2, optionsLabelPanel, backButtonPanel, creditsTextAreaPanel, creditsPanel, creditsPanel2;
-	JPanel mainTextPanel, choiceButtonPanel;
+	JPanel mainTextPanel;
+	public JPanel choiceButtonPanel;
 	public JPanel sidePanel, playerPanel, counterPanel, imagePanel, backpackTextAreaPanel, backpackPanel;
 	JLabel titleNameLabel, imageLabel;
 	JButton startButton, loadButton, creditsButton, optionsButton;
@@ -914,10 +915,10 @@ public class UI {
 			m_game.m_story.playerSetup();
 		}
 		else if(m_game.m_constants.position.equals("loadData")) {
-			//statschange();
+			m_game.m_story.statschange();
 			m_game.m_story.positionCheck();
 		}	
-		//statschange();
+		m_game.m_story.statschange();
 		con.add(choiceButtonPanel);
 		con.add(playerPanel);
 		

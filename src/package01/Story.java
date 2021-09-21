@@ -3,6 +3,8 @@ package package01;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -13,7 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
+import javax.swing.Timer;
 
 import package02.None;
 import package02.SuperWeapon;
@@ -235,6 +237,7 @@ public class Story {
 			case "plateaueast": plateauEast(); break;
 			case "plateausouth": plateauSouth(); break;
 			case "plateaubattle": m_game.m_constants.enemyPosition = "plateau"; m_game.m_constants.currentEnemy = new Goblin(); m_game.m_battle.enemyattack(); break; 
+			case "bisonStampede": bisonStampede(); break;
 		}
 	}
 	
@@ -1066,6 +1069,51 @@ public class Story {
 		m_game.m_constants.position = "plateauEast";
 		m_game.m_ui.mainTextArea.setText("Continuing onwards you trudge through The Plateaus. \nYou see a sign warning you of Bison Stampedes, you really want to get out of here.");
 		setChoices("Continue", "", "", "");
-		setNextPosition("plateaufork", "", "", "");
+		setNextPosition("bisonStampede", "", "", "");
 	}
+
+	public void bisonStampede() {
+		m_game.m_constants.position = "bison";
+		m_game.m_ui.mainTextArea.setText("BISON STAMPEDE!!!!!!!!!! \nClick the Bison before the time runs out!");
+		m_game.m_ui.imagePanel.addMouseListener(m_game.m_mHandler);
+		
+		setChoices("Continue", "", "", "");
+		setNextPosition("", "", "", "");
+		
+		m_game.m_ui.choiceButtonPanel.setVisible(false);
+	
+		m_game.m_constants.second = 20;
+		simpleTimer();
+		m_game.m_constants.timer.start();
+		
+	}
+	
+	public void bisonLost() {
+		m_game.m_constants.timer.stop();
+		m_game.m_constants.position = "bisonLost";
+		m_game.m_ui.choiceButtonPanel.setVisible(true);
+		m_game.m_ui.mainTextArea.setText("You lost...\n50 HP halved, try again");
+		if(m_game.m_player.playerHP > 20) m_game.m_player.playerHP/=2;
+		else m_game.m_player.playerHP = 0;
+		
+		statschange();
+	}
+	
+	public void simpleTimer() {
+		m_game.m_constants.timer = new Timer(1000, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				m_game.m_ui.counterPanel.setVisible(true);
+				m_game.m_ui.counterLabel.setText("Time Left: "+m_game.m_constants.second);
+				if(m_game.m_constants.second <= 0 && m_game.m_constants.bisonCount < 20) {
+					m_game.m_constants.second = 1;
+					bisonLost();
+				}
+				m_game.m_constants.second--;
+				
+			}
+		});	
+	}
+	
+	
 }

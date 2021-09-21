@@ -2,7 +2,9 @@ package package01;
 
 import java.awt.Color;
 import java.net.URL;
+
 import javax.swing.BorderFactory;
+import javax.swing.Timer;
 import javax.swing.border.Border;
 
 import package02.None;
@@ -52,9 +54,10 @@ public class Constants {
 	//ENEMIES
 	public static SuperEnemy currentEnemy;
 	//MISC
-	public static int inputcount, bisonCount, Ncount, Ecount, timesGiven;
+	public static int inputcount, bisonCount, second, Ncount, Ecount, timesGiven;
 	public static boolean inBattle, forkUsed, switchOn;
 	public static String position, savedPosition, enemyPosition;
+	public static Timer timer;
 	/*
 	public void initializeSounds() {
 		//clickSoundURL = getClass().getResource("ButtonPress.wav");
