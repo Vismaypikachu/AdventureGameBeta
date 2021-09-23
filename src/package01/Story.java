@@ -237,7 +237,7 @@ public class Story {
 			case "plateaueast": plateauEast(); break;
 			case "plateausouth": plateauSouth(); break;
 			case "plateaubattle": m_game.m_constants.enemyPosition = "plateau"; m_game.m_constants.currentEnemy = new Goblin(); m_game.m_battle.enemyattack(); break; 
-			case "bisonStampede": bisonStampede(); break;
+			case "bisonstampede": bisonStampede(); break;
 		}
 	}
 	
@@ -1069,7 +1069,7 @@ public class Story {
 		m_game.m_constants.position = "plateauEast";
 		m_game.m_ui.mainTextArea.setText("Continuing onwards you trudge through The Plateaus. \nYou see a sign warning you of Bison Stampedes, you really want to get out of here.");
 		setChoices("Continue", "", "", "");
-		setNextPosition("bisonStampede", "", "", "");
+		setNextPosition("bisonstampede", "", "", "");
 	}
 
 	public void bisonStampede() {
@@ -1097,6 +1097,11 @@ public class Story {
 		else m_game.m_player.playerHP = 0;
 		
 		statschange();
+	}
+	
+	public void waterfall() {
+		m_game.m_constants.position = "waterfall";
+		m_game.m_ui.mainTextArea.setText("You have reached The Waterfall, an anchient river cascades down the cliff.\nYou now have 2 choices, go across the river to the Salty Sea.\nOr go to the ");
 	}
 	
 	public void simpleTimer() {
