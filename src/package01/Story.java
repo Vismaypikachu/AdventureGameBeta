@@ -238,6 +238,14 @@ public class Story {
 			case "plateausouth": plateauSouth(); break;
 			case "plateaubattle": m_game.m_constants.enemyPosition = "plateau"; m_game.m_constants.currentEnemy = new Goblin(); m_game.m_battle.enemyattack(); break; 
 			case "bisonstampede": bisonStampede(); break;
+			case "waterfall": waterfall(); break;
+			case "checkchoice1": m_game.m_constants.saltySea = true; checkchoice(); break;
+			case "checkchoice2": m_game.m_constants.saltySea = false; checkchoice(); break;
+			//------------------------------SALTY SEA-------------------------------SALTY SEA--------------------------------SALTY SEA------------------------------
+			
+			
+			
+			//---------------------------SNOW MOUNTAINS---------------------------SNOW MOUNTAINS---------------------------SNOW MOUNTAINS---------------------------
 		}
 	}
 	
@@ -1078,7 +1086,7 @@ public class Story {
 		m_game.m_ui.imagePanel.addMouseListener(m_game.m_mHandler);
 		
 		setChoices("Continue", "", "", "");
-		setNextPosition("", "", "", "");
+		setNextPosition("waterfall", "", "", "");
 		
 		m_game.m_ui.choiceButtonPanel.setVisible(false);
 	
@@ -1099,11 +1107,6 @@ public class Story {
 		statschange();
 	}
 	
-	public void waterfall() {
-		m_game.m_constants.position = "waterfall";
-		m_game.m_ui.mainTextArea.setText("You have reached The Waterfall, an anchient river cascades down the cliff.\nYou now have 2 choices, go across the river to the Salty Sea.\nOr go to the ");
-	}
-	
 	public void simpleTimer() {
 		m_game.m_constants.timer = new Timer(1000, new ActionListener() {
 			@Override
@@ -1120,5 +1123,31 @@ public class Story {
 		});	
 	}
 	
+	public void waterfall() {
+		m_game.m_constants.position = "waterfall";
+		m_game.m_ui.counterPanel.setVisible(false);
+		m_game.m_ui.mainTextArea.setText("You have reached The Waterfall, an anchient river cascades down the cliff.\nYou now have 2 choices, go across the river to the Salty Sea. Or go to the Snow Mountains.\nWhich one do you choose?");
+	
+		setChoices("Salty Sea", "Snow Mountains", "", "");
+		setNextPosition("checkchoice1", "checkchoice2", "", "");
+	}
+	
+	public void checkchoice() {
+		m_game.m_constants.position = "checkchoice";
+		if(m_game.m_constants.saltySea == true) {
+			m_game.m_ui.mainTextArea.setText("Are you sure you want to go to the Salty Sea?\nThere is no going back. You will not be able to visit the Snow Mountains.");
+			setChoices("Yes", "No", "", "");
+			setNextPosition("", "waterfall", "", "");
+		}
+		else {
+			m_game.m_ui.mainTextArea.setText("Are you sure you want to go to the Snow Mountains?\nThere is no going back. You will not be able to visit the Salty Sea.");
+			setChoices("Yes", "No", "", "");
+			setNextPosition("", "waterfall", "", "");
+		}
+	}
+	//------------------------------SALTY SEA-------------------------------SALTY SEA--------------------------------SALTY SEA------------------------------
+	
+	
+	//---------------------------SNOW MOUNTAINS---------------------------SNOW MOUNTAINS---------------------------SNOW MOUNTAINS---------------------------
 	
 }
