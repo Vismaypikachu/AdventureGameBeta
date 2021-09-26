@@ -553,6 +553,7 @@ public class UI {
 		if(!m_game.m_constants.position.equals("loadData") && !m_game.m_constants.position.equals("noLoad")) {
 			try {
 				m_game.m_constants.position = "newGame";
+				m_game.m_constants.fishingPosition = "";
 				textPanel.setVisible(false);
 				textLabel.setVisible(false);
 				inputPanel.setVisible(false);
@@ -1204,6 +1205,12 @@ public class UI {
 		capsuleLabelNumber = new JLabel();
 		capsuleLabelNumber.setFont(normalFont);
 		capsuleLabelNumber.setForeground(Color.white);
+		
+		if(m_game.m_player.specialUnlocked == true) {
+			playerPanel.setLayout(new GridLayout(8,2));
+			playerPanel.add(m_game.m_ui.capsuleLabel);
+			playerPanel.add(m_game.m_ui.capsuleLabelNumber);
+		}
 	
 		if(m_game.m_constants.buttonBorderOn == true) {
 			choice1.setBorder(m_game.m_constants.blackline);

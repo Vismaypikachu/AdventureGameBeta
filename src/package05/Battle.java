@@ -57,11 +57,11 @@ public class Battle {
 	
 	public void battlewon() {
 		m_game.m_constants.position = "battlewon";
-		int goldadd = r.nextInt(m_game.m_constants.currentEnemy.enemyAttackStat+5);
+		int goldadd = r.nextInt((m_game.m_constants.currentEnemy.enemyAttackStat+5 - m_game.m_constants.currentEnemy.enemyAttackStat+1)+1) + m_game.m_constants.currentEnemy.enemyAttackStat+1;
 		int xpadd = r.nextInt(m_game.m_constants.currentEnemy.enemyAttackStat+20);
 		int healby;
 		if(!m_game.m_constants.enemyPosition.equals("practice")) {
-			healby = r.nextInt(m_game.m_constants.currentEnemy.enemyAttackStat*2);
+			healby = r.nextInt((m_game.m_constants.currentEnemy.enemyAttackStat*4 - m_game.m_constants.currentEnemy.enemyAttackStat*2)+1)+m_game.m_constants.currentEnemy.enemyAttackStat*2;
 		}
 		else {
 			healby = 100-m_game.m_player.playerHP;

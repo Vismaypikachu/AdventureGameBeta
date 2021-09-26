@@ -56,9 +56,12 @@ public class Constants {
 	public static SuperEnemy currentEnemy;
 	//MISC
 	public static int inputcount, bisonCount, second, Ncount, Ecount, timesGiven;
-	public static boolean inBattle, forkUsed, switchOn, saltySea;
-	public static String position, savedPosition, enemyPosition;
+	public static boolean inBattle, forkUsed, switchOn;
+	public static String position, savedPosition, enemyPosition, fishingPosition;
 	public static Timer timer;
+	//BIOME
+	public static boolean saltySea, shallows, brinyDeep;
+	
 	/*
 	public void initializeSounds() {
 		//clickSoundURL = getClass().getResource("ButtonPress.wav");

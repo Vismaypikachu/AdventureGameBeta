@@ -9,6 +9,7 @@ public class Player {
 	public static String playerName;
 	public static int playerHP;
 	public static SuperWeapon weapon;
+	public static SuperItem fishingRod;
 	public static int gold;
 	public static int xp;
 	public static double playerdefense;
@@ -25,28 +26,38 @@ public class Player {
 	}
 	
 	public void itemUsed(int slotNumber) {
-		switch(playerItem[slotNumber].name) {
-			case "Potion": 
-				playerHP += 20; 
-				m_game.m_story.statschange();
-				playerItem[slotNumber] = new Empty();
-			break;
-			case "Fork": 
-				m_game.m_constants.forkUsed = true;
-				playerHP -= 10; 
-				m_game.m_story.statschange();
-				playerItem[slotNumber] = new Empty();
-			break;
-			case "C. Bar": 
-				playerHP += 10; 
-				m_game.m_story.statschange();
-				playerItem[slotNumber] = new Empty();
-			break;
-			case "Apple":
-				playerHP += 15;
-				m_game.m_story.statschange();
-				playerItem[slotNumber] = new Empty();
-			break;
-		}	
+		if(playerItem[slotNumber].useable == true) {
+			switch(playerItem[slotNumber].name) {
+				case "Potion": 
+					playerHP += 20; 
+					m_game.m_story.statschange();
+					playerItem[slotNumber] = new Empty();
+				break;
+				case "Fork": 
+					m_game.m_constants.forkUsed = true;
+					playerHP -= 10; 
+					m_game.m_story.statschange();
+					playerItem[slotNumber] = new Empty();
+				break;
+				case "C. Bar": 
+					playerHP += 10; 
+					m_game.m_story.statschange();
+					playerItem[slotNumber] = new Empty();
+				break;
+				case "Apple":
+					playerHP += 15;
+					m_game.m_story.statschange();
+					playerItem[slotNumber] = new Empty();
+				break;
+				case "Fish":
+					playerHP += 20;
+					m_game.m_story.statschange();
+					playerItem[slotNumber] = new Empty();
+				break;
+			}	
+		}
+		else {
+			
+		}
 	}
 }

@@ -2,6 +2,8 @@ package package01;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import package03.Fishing;
 import package04.*;
 import package05.Battle;
 
@@ -18,6 +20,9 @@ public class game {
 	public Story m_story = new Story(this);
 	public UI m_ui = new UI(this);
 	public VisibilityManager m_vm = new VisibilityManager(this);
+	
+	//package03
+	Fishing m_fishing = new Fishing(this);
 	
 	//package04
 	BackpackHandler m_bpHandler = new BackpackHandler(this);
@@ -65,7 +70,7 @@ public class game {
 			String yourChoice = event.getActionCommand();
 			switch(yourChoice){
 				case "start": m_vm.hideTitleScreen(); m_sound.stop(); m_story.input(); break;
-				case "load": m_story.loadData(); break;
+				case "load": m_sound.stop(); m_story.loadData(); break;
 				case "credits": m_ui.credits(); break;
 				case "fullScreen": 
 					if(m_constants.fullScreenOn == false) {

@@ -4,5 +4,6 @@ public class Potion extends SuperItem {
 	public Potion() {
 		name = "Potion";
 		droppable = true;
+		useable = true;
 	}
 }
