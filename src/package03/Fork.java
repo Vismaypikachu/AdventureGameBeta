@@ -4,5 +4,6 @@ public class Fork extends SuperItem {
 	public Fork() {
 		name = "Fork";
 		droppable = false;
+		useable = true;
 	}
 }

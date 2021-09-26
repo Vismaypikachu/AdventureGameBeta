@@ -2,10 +2,13 @@ package package01;
 
 import java.awt.Color;
 import java.net.URL;
+
 import javax.swing.BorderFactory;
+import javax.swing.Timer;
 import javax.swing.border.Border;
 
 import package02.None;
+import package03.Empty;
 import package03.Potion;
 import package05.SuperEnemy;
 
@@ -52,9 +55,13 @@ public class Constants {
 	//ENEMIES
 	public static SuperEnemy currentEnemy;
 	//MISC
-	public static int inputcount, bisonCount, Ncount, Ecount, timesGiven;
+	public static int inputcount, bisonCount, second, Ncount, Ecount, timesGiven;
 	public static boolean inBattle, forkUsed, switchOn;
-	public static String position, savedPosition, enemyPosition;
+	public static String position, savedPosition, enemyPosition, fishingPosition;
+	public static Timer timer;
+	//BIOME
+	public static boolean saltySea, shallows, brinyDeep;
+	
 	/*
 	public void initializeSounds() {
 		//clickSoundURL = getClass().getResource("ButtonPress.wav");
@@ -76,6 +83,7 @@ public class Constants {
 		Ecount = 0;
 		forkUsed = false;
 		switchOn = false;
+		saltySea = false;
 		
 		m_game.m_player.playerHP = 100;
 		m_game.m_player.weapon = new None();
@@ -89,6 +97,8 @@ public class Constants {
 		BackpackStatus = "close";
 		savedPosition = "";
 		
-		m_game.m_player.backpackItem[0] = new Potion();
+		m_game.m_player.playerItem[0] = new Potion();
+		for(int i = 1; i < m_game.m_player.playerItem.length; i++) m_game.m_player.playerItem[i] = new Empty();
+		for(int i = 0; i < m_game.m_player.backpackItem.length; i++) m_game.m_player.backpackItem[i] = new Empty();
 	}
 }

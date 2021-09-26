@@ -3,6 +3,8 @@ package package01;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -13,7 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
+import javax.swing.Timer;
 
 import package02.None;
 import package02.SuperWeapon;
@@ -22,9 +24,11 @@ import package02.Wand;
 import package03.Apple;
 import package03.ChocolateBar;
 import package03.Empty;
+import package03.FishingRod;
 import package03.Fork;
 import package03.Potion;
 import package05.Bandit;
+import package05.Clam;
 import package05.EmptyAir;
 import package05.Goblin;
 import package05.Guard;
@@ -147,10 +151,15 @@ public class Story {
 		itemButton5.setText(itemButton5Text);
 		*/
 		m_game.m_ui.playerPanel.setLayout(new GridLayout(8,2));
-		if(m_game.m_player.specialUnlocked == true) m_game.m_ui.specialattack.setVisible(true);
+		if(m_game.m_player.specialUnlocked == true) {
+			m_game.m_ui.playerPanel.add(m_game.m_ui.capsuleLabel);
+			m_game.m_ui.playerPanel.add(m_game.m_ui.capsuleLabelNumber);
+			m_game.m_ui.capsuleLabelNumber.setVisible(true);
+		}
 		switch(m_game.m_constants.savedPosition) {
 			case "save1": m_game.m_ui.playerPanel.setLayout(new GridLayout(7,2)); innskeepwife(); break;
 			case "save2": plateauFork(); break;
+			case "save3": savePath(); break;
 		}
 	}
 	
@@ -186,6 +195,13 @@ public class Story {
 					case "practice": inn(); break;
 					case "farmer": farmerweaponask(); break; 
 					case "plateau": plateauFork(); break;
+					case "shallow": theShallows(); break;
+				}
+			break;
+			case "reel": m_game.m_fishing.reel(); break;
+			case "fishingdone":
+				switch(m_game.m_constants.fishingPosition) {
+					case "fishingunlock": theShallows(); break;
 				}
 			break;
 			case "playerattack": m_game.m_battle.playerattack(); break;
@@ -214,7 +230,7 @@ public class Story {
 			case "canyon": canyon(); break;
 			case "store": store(); break;
 			case "store1": checkgold(50, "Extra Health"); break;
-			case "store2": checkgold(105, "Shield"); break;
+			case "store2": checkgold(65, "Shield"); break;
 			case "store3": checkgold(90, "XP Bottle"); break;
 			case "farmer": farmer(); break;
 			case "farmer2": farmer2(); break;
@@ -235,6 +251,24 @@ public class Story {
 			case "plateaueast": plateauEast(); break;
 			case "plateausouth": plateauSouth(); break;
 			case "plateaubattle": m_game.m_constants.enemyPosition = "plateau"; m_game.m_constants.currentEnemy = new Goblin(); m_game.m_battle.enemyattack(); break; 
+			case "bisonstampede": bisonStampede(); break;
+			case "waterfall": waterfall(); break;
+			case "checkchoice1": m_game.m_constants.saltySea = true; checkchoice(); break;
+			case "checkchoice2": m_game.m_constants.saltySea = false; checkchoice(); break;
+			case "savepath": savePath(); break;
+			//------------------------------SALTY SEA-------------------------------SALTY SEA--------------------------------SALTY SEA------------------------------
+			case "saltysea": saltySea(); break;
+			case "theshallows": theShallows(); break;
+			case "siftgold": siftGold(); break;
+			case "shallowbattle": m_game.m_constants.enemyPosition = "shallow"; m_game.m_constants.currentEnemy = new Clam(); m_game.m_battle.enemyattack(); break;
+			case "sunbathe": sunbathe(); break;
+			case "unlockfishing": unlockFishing(); break;
+			case "fishing1": m_game.m_constants.fishingPosition = "fishingunlock"; m_game.m_fishing.cast(); break;
+			
+			
+			
+			
+			//---------------------------SNOW MOUNTAINS---------------------------SNOW MOUNTAINS---------------------------SNOW MOUNTAINS---------------------------
 		}
 	}
 	
@@ -396,7 +430,10 @@ public class Story {
 			*/
 			bw.newLine();
 			bw.write(""+m_game.m_player.specialUnlocked);
-			
+			bw.newLine();
+			bw.write(""+m_game.m_constants.saltySea);
+			bw.newLine();
+			bw.write(""+m_game.m_constants.fishingPosition);
 			
 			bw.close();
 			
@@ -437,10 +474,10 @@ public class Story {
 			
 			//-----------------------------------
 			m_game.m_player.specialUnlocked = Boolean.parseBoolean(br.readLine());
+			m_game.m_constants.saltySea = Boolean.parseBoolean(br.readLine());
+			m_game.m_constants.fishingPosition = br.readLine();
 			
 			
-			m_game.m_constants.currentEnemy = new EmptyAir();
-
 			
 			/*
 			stringToClass(br.readLine(), 0);
@@ -451,6 +488,7 @@ public class Story {
 			 */
 			br.close();
 			
+			m_game.m_constants.currentEnemy = new EmptyAir();
 		}
 		catch(Exception e){
 			
@@ -821,7 +859,7 @@ public class Story {
 	
 	public void store() {
 		if(m_game.m_constants.position.equals("failbuy")) {
-			m_game.m_ui.mainTextArea.setText("You do not have enough gold, please try again.\n\nYou reach a small store.\nThey have the following items to buy:\n100 Extra Health (50 Gold)\nShield (105 Gold)\n100 XP Bottle (115 Gold)");
+			m_game.m_ui.mainTextArea.setText("You do not have enough gold, please try again.\n\nYou reach a small store.\nThey have the following items to buy:\n100 Extra Health (50 Gold)\nShield (65 Gold)\n100 XP Bottle (115 Gold)");
 			m_game.m_constants.position = "store";
 			
 			setChoices("Buy Extra Health", "Buy Shield", "Buy XP Bottle", "Exit Store");
@@ -829,7 +867,7 @@ public class Story {
 		}
 		else {
 			m_game.m_constants.position = "store";
-			m_game.m_ui.mainTextArea.setText("You reach a small store.\nThey have the following items to buy:\n\n100 Extra Health (50 Gold)\nShield (105 Gold)\n100 XP Bottle (115 Gold)");
+			m_game.m_ui.mainTextArea.setText("You reach a small store.\nThey have the following items to buy:\n\n100 Extra Health (50 Gold)\nShield (65 Gold)\n100 XP Bottle (115 Gold)");
 			
 			setChoices("Buy Extra Health", "Buy Shield", "Buy XP Bottle", "Exit Store");
 			setNextPosition("store1", "store2", "store3", "farmer");
@@ -1000,8 +1038,8 @@ public class Story {
 		m_game.m_player.gold -= 20;
 		statschange();
 		
-		setChoices("Continue", "", "", ""); 
-		setNextPosition("plateaufork", "", "", "");
+		setChoices("", "Continue", "", ""); 
+		setNextPosition("", "plateaufork", "", "");
 	}
 	
 	public void plateauFork() {
@@ -1066,6 +1104,168 @@ public class Story {
 		m_game.m_constants.position = "plateauEast";
 		m_game.m_ui.mainTextArea.setText("Continuing onwards you trudge through The Plateaus. \nYou see a sign warning you of Bison Stampedes, you really want to get out of here.");
 		setChoices("Continue", "", "", "");
-		setNextPosition("plateaufork", "", "", "");
+		setNextPosition("bisonstampede", "", "", "");
 	}
+
+	public void bisonStampede() {
+		m_game.m_constants.position = "bison";
+		m_game.m_ui.mainTextArea.setText("BISON STAMPEDE!!!!!!!!!! \nClick the Bison before the time runs out!");
+		m_game.m_ui.imagePanel.addMouseListener(m_game.m_mHandler);
+		
+		setChoices("Continue", "", "", "");
+		setNextPosition("waterfall", "", "", "");
+		
+		m_game.m_ui.choiceButtonPanel.setVisible(false);
+	
+		m_game.m_constants.second = 20;
+		simpleTimer();
+		m_game.m_constants.timer.start();
+		
+	}
+	
+	public void bisonLost() {
+		m_game.m_constants.timer.stop();
+		m_game.m_constants.position = "bisonLost";
+		m_game.m_ui.choiceButtonPanel.setVisible(true);
+		m_game.m_ui.mainTextArea.setText("You lost...\n50 HP halved, try again");
+		if(m_game.m_player.playerHP > 20) m_game.m_player.playerHP/=2;
+		else m_game.m_player.playerHP = 0;
+		
+		statschange();
+	}
+	
+	public void simpleTimer() {
+		m_game.m_constants.timer = new Timer(1000, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				m_game.m_ui.counterPanel.setVisible(true);
+				m_game.m_ui.counterLabel.setText("Time Left: "+m_game.m_constants.second);
+				if(m_game.m_constants.second <= 0 && m_game.m_constants.bisonCount < 20) {
+					m_game.m_constants.second = 1;
+					bisonLost();
+				}
+				m_game.m_constants.second--;
+				
+			}
+		});	
+	}
+	
+	public void waterfall() {
+		m_game.m_constants.position = "waterfall";
+		m_game.m_ui.counterPanel.setVisible(false);
+		m_game.m_ui.mainTextArea.setText("You have reached The Waterfall, an anchient river cascades down the cliff.\nYou now have 2 choices, go across the river to the Salty Sea. Or go to the Snow Mountains.\nWhich one do you choose?");
+	
+		setChoices("Salty Sea", "Snow Mountains", "", "");
+		setNextPosition("checkchoice1", "checkchoice2", "", "");
+	}
+	
+	public void checkchoice() {
+		m_game.m_constants.position = "checkchoice";
+		if(m_game.m_constants.saltySea == true) {
+			m_game.m_ui.mainTextArea.setText("Are you sure you want to go to the Salty Sea?\nThere is no going back. You will not be able to visit the Snow Mountains.");
+			setChoices("Yes", "No", "", "");
+			setNextPosition("savepath", "waterfall", "", "");
+		}
+		else {
+			m_game.m_ui.mainTextArea.setText("Are you sure you want to go to the Snow Mountains?\nThere is no going back. You will not be able to visit the Salty Sea.");
+			setChoices("Yes", "No", "", "");
+			setNextPosition("savepath", "waterfall", "", "");
+		}
+	}
+	
+	public void savePath() {
+		m_game.m_constants.position = "savepath";
+		m_game.m_ui.mainTextArea.setText("Adventure Path Saved. You cannot go back. \n\n(Your progress has been saved)");
+		setChoices("Continue", "", "", "");
+		if(m_game.m_constants.saltySea == true) {
+			setNextPosition("saltysea", "", "", "");
+		}
+		else {
+			setNextPosition("snowmountains", "", "", "");
+		}
+		
+		m_game.m_constants.savedPosition = "save3";
+		saveData();
+		statschange();
+	}
+	//------------------------------SALTY SEA-------------------------------SALTY SEA--------------------------------SALTY SEA------------------------------
+	
+	public void saltySea() {
+		m_game.m_constants.position = "saltySea";
+		m_game.m_ui.mainTextArea.setText("You have reached the Salty Sea biome.\nYou cannot continue until you unlock the Twilight Zone.\nLets continue!");
+		
+		if(m_game.m_constants.shallows == false || m_game.m_constants.brinyDeep == false) {
+			setChoices("The Shallows", "The Briny Deep", "The Twilight Zone", "Seafood Market");
+			m_game.m_ui.choice3.setLayout(new GridLayout(1,2));
+			m_game.m_ui.choice3.setIcon(m_game.m_images.CapsulesIcon);
+			setNextPosition("theshallows", "thebrinydeep", "", "seafoodmarket");
+		}
+		else if(m_game.m_constants.shallows == true && m_game.m_constants.brinyDeep == true){
+			setChoices("The Shallows", "The Briny Deep", "The Twilight Zone", "Seafood Market");
+			setNextPosition("theshallows", "thebrinydeep", "thetwilightzone", "seafoodmarket");
+		}		
+	}
+	
+	public void theShallows() {
+		m_game.m_constants.position = "theShallows";
+		m_game.m_constants.shallows = true;
+		
+		m_game.m_ui.mainTextArea.setText("You have entered the Shallows. A calm and peaceful place, many a treasure lie under its yellow sand.\nWhere do you go next?");
+	
+		
+		setChoices("Sift for Gold", "Float Around", "Sunbathe", "Go Back to The Salty Sea");
+		setNextPosition("siftgold", "unlockfishing", "sunbathe", "saltysea");
+	}
+	
+	public void siftGold() {
+		int sift = r.nextInt(100);
+		if(sift % 5 != 0 && sift != 1) {
+			m_game.m_ui.mainTextArea.setText("You got attacked by a Clam!");
+			
+			setChoices("Continue", "", "", "");
+			setNextPosition("shallowbattle", "", "", "");
+			
+			System.out.println(sift);
+		}
+		else if(sift % 5 == 0 || sift % 5 == 1) {
+			int gold = r.nextInt((m_game.m_player.xp/25 - m_game.m_player.xp/40) + 1) + m_game.m_player.xp/50;
+			m_game.m_ui.mainTextArea.setText("You struck Gold!\nYou recieved " + gold + " Gold.");
+			m_game.m_player.gold += gold;
+			
+			setChoices("Continue", "", "", "");
+			setNextPosition("theshallows", "", "", "");
+		}
+	}
+	
+	public void unlockFishing() {
+		boolean fish = false;
+		m_game.m_constants.position = "unlockFishing";
+		for(int i = 0; i < m_game.m_player.backpackItem.length; i++) {
+			if(m_game.m_player.backpackItem[i].name.equals("Fishing Rod")) fish = true;
+		}
+		if(fish == false) {
+			int chance = r.nextInt((20-10)+1)+10;
+			m_game.m_player.fishingRod = new FishingRod(chance);
+			m_game.m_backpack.addBackpackItem(new FishingRod(chance));
+			m_game.m_ui.mainTextArea.setText("While floating around your knee brushes up against something solid.\nYou reach down and find and old fishing rod.\n(Fishing Unlocked)\nYour rod has a stat of "+chance);
+		}
+		else {
+			m_game.m_ui.mainTextArea.setText("You already have a Fishing Rod.");
+		}
+		
+		
+		setChoices("Try Fishing", "Go Back to The Shallows", "", "");
+		setNextPosition("fishing1", "theshallows", "", "");
+	}
+	
+	public void sunbathe() {
+		m_game.m_constants.position = "sunbathe";
+		m_game.m_ui.mainTextArea.setText("I guess we should relax or something...");
+		
+		setChoices("Continue", "", "", "");
+		setNextPosition("theshallows", "", "", "");
+	}
+	
+	//---------------------------SNOW MOUNTAINS---------------------------SNOW MOUNTAINS---------------------------SNOW MOUNTAINS---------------------------
+	
 }

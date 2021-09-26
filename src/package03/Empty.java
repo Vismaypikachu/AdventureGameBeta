@@ -4,5 +4,6 @@ public class Empty extends SuperItem {
 	public Empty() {
 		name = "[Empty]";
 		droppable = false;
+		useable = false;
 	}
 }
