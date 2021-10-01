@@ -5,5 +5,6 @@ public class Apple extends SuperItem {
 		name = "Apple";
 		droppable = true;
 		useable = true;
+		description = "DISCLAIMER: It may not keep the Doctor away...";
 	}
 }

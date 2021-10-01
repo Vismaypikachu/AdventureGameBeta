@@ -15,6 +15,8 @@ public class Battle {
 	
 	public void enemyattack(){
 		m_game.m_constants.position = "enemyattack";
+		m_game.m_constants.inBattle = true;
+		m_game.m_ui.inGameOptionsButton.setVisible(false);
 		int enemydamage = 0;
 		//magical player vs physical
 		if(m_game.m_player.playerType.equals("Magical") && m_game.m_constants.currentEnemy.enemyAttackType.equals("Physical")) {

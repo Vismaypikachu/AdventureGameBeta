@@ -3,6 +3,7 @@ package package01;
 import package03.Apple;
 import package03.ChocolateBar;
 import package03.Empty;
+import package03.Fish;
 import package03.Potion;
 import package03.SuperItem;
 
@@ -53,11 +54,16 @@ public class Backpack {
 
 	public void backpackSwitch(int slotNumber) {
 		updateBackpack(1);
-		switch(m_game.m_player.backpackItem[slotNumber].name) {
-			case "Potion":  m_game.m_player.backpackItem[slotNumber] = new Empty(); m_game.m_inventory.addInventoryItem(new Potion()); m_game.m_ui.backpackTextArea.setText("Press Switch to move an item to your inventory. If you do not have any space, the item will be dropped"); updateBackpack(1); break;
-			case "C. Bar": m_game.m_player.backpackItem[slotNumber] = new Empty(); m_game.m_inventory.addInventoryItem(new ChocolateBar()); m_game.m_ui.backpackTextArea.setText("Press Switch to move an item to your inventory. If you do not have any space, the item will be dropped"); updateBackpack(1); break;
-			case "Apple": m_game.m_player.backpackItem[slotNumber] = new Empty(); m_game.m_inventory.addInventoryItem(new Apple()); m_game.m_ui.backpackTextArea.setText("Press Switch to move an item to your inventory. If you do not have any space, the item will be dropped"); updateBackpack(1); break;
-			case "[Empty]": updateBackpack(0); break;
+		if(m_game.m_player.backpackItem[slotNumber].droppable == false) {
+			updateBackpack(0);
+		}
+		else {
+			switch(m_game.m_player.backpackItem[slotNumber].name) {
+				case "Potion":  m_game.m_player.backpackItem[slotNumber] = new Empty(); m_game.m_inventory.addInventoryItem(new Potion()); m_game.m_ui.backpackTextArea.setText("Press Switch to move an item to your inventory. If you do not have any space, the item will be dropped"); updateBackpack(1); break;
+				case "C. Bar": m_game.m_player.backpackItem[slotNumber] = new Empty(); m_game.m_inventory.addInventoryItem(new ChocolateBar()); m_game.m_ui.backpackTextArea.setText("Press Switch to move an item to your inventory. If you do not have any space, the item will be dropped"); updateBackpack(1); break;
+				case "Apple": m_game.m_player.backpackItem[slotNumber] = new Empty(); m_game.m_inventory.addInventoryItem(new Apple()); m_game.m_ui.backpackTextArea.setText("Press Switch to move an item to your inventory. If you do not have any space, the item will be dropped"); updateBackpack(1); break;
+				case "Fish": m_game.m_player.backpackItem[slotNumber] = new Empty(); m_game.m_inventory.addInventoryItem(new Fish()); m_game.m_ui.backpackTextArea.setText("Press Switch to move an item to your inventory. If you do not have any space, the item will be dropped"); updateBackpack(1); break;
+			}
 		}
 	}
 	
@@ -67,7 +73,10 @@ public class Backpack {
 		if(slotNumber == 14 && m_game.m_player.backpackItem[14] != new Empty()) noEmptySlots(item);
 		
 		else {
-			if(m_game.m_player.backpackItem[slotNumber].name.equals("[Empty]")) m_game.m_player.backpackItem[slotNumber] = item;
+			if(m_game.m_player.backpackItem[slotNumber].name.equals("[Empty]")) {
+				m_game.m_player.backpackItem[slotNumber] = item;
+				updateBackpack(1);
+			}
 			else if (!m_game.m_player.backpackItem[slotNumber].name.equals("[Empty]")) noEmptySlots(item);
 		}
 	}
@@ -83,12 +92,24 @@ public class Backpack {
 			}
 		}
 		*/
+		m_game.m_ui.backpackTextArea.setText("YOU HAVE NO MORE SPACE. An "+ item.name +" will be dropped.");
 		for(int i = 0; i < m_game.m_player.backpackItem.length; i++) {
-			if(m_game.m_player.backpackItem[i].isDroppable() == true) {
+			if(m_game.m_player.backpackItem[i].droppable = true) {
 				m_game.m_player.backpackItem[i] = item;
 				i = m_game.m_player.backpackItem.length;
 			}
 		}
-		m_game.m_ui.backpackTextArea.setText("You have no more space. An "+ item.name +" will be dropped.");
+		if(m_game.m_constants.BackpackStatus.equals("close")) {
+			m_game.m_ui.backpackButton.doClick();
+		}
+		
+		
+	}
+
+	public void displayStats(int i) {
+		String name = m_game.m_player.backpackItem[i].name;
+		int chance = m_game.m_player.backpackItem[i].stat;
+		String description = m_game.m_player.backpackItem[i].description;
+		m_game.m_ui.backpackStatsTextArea.setText("Name: " + name + "\nStat: " + chance + "\nDescription: \n" + description);
 	}
 }

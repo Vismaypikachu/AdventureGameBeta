@@ -5,5 +5,6 @@ public class Potion extends SuperItem {
 		name = "Potion";
 		droppable = true;
 		useable = true;
+		description = "At least it wasn't Neville's";
 	}
 }

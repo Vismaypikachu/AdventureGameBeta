@@ -5,5 +5,6 @@ public class ChocolateBar extends SuperItem {
 		name = "C. Bar";
 		droppable = true;
 		useable = true;
+		description = "Chocolatey Goodness ;D";
 	}
 }

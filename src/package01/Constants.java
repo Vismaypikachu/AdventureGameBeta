@@ -60,7 +60,7 @@ public class Constants {
 	public static String position, savedPosition, enemyPosition, fishingPosition;
 	public static Timer timer;
 	//BIOME
-	public static boolean saltySea, shallows, brinyDeep;
+	public static boolean saltySea, shallows;
 	
 	/*
 	public void initializeSounds() {
@@ -84,11 +84,13 @@ public class Constants {
 		forkUsed = false;
 		switchOn = false;
 		saltySea = false;
+		shallows = false;
 		
 		m_game.m_player.playerHP = 100;
 		m_game.m_player.weapon = new None();
+		m_game.m_player.fishingRod = new Empty();
 		m_game.m_player.playerHP = 100;
-		m_game.m_player.gold = 0;
+		m_game.m_player.gold = 20;
 		m_game.m_player.xp = 0;
 		m_game.m_player.playerdefense = 0;
 		m_game.m_player.capsules = 0;

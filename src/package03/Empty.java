@@ -5,5 +5,7 @@ public class Empty extends SuperItem {
 		name = "[Empty]";
 		droppable = false;
 		useable = false;
+		stat = 0;
+		description = "IDK you dumb or something? It's EMPTY";
 	}
 }

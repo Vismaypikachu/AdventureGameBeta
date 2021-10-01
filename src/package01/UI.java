@@ -23,17 +23,10 @@ public class UI {
 	
 	public JFrame window;
 	Container con;
-	JPanel titleNamePanel, startButtonPanel, optionsPanel, optionsPanel2, optionsLabelPanel, backButtonPanel, creditsTextAreaPanel, creditsPanel, creditsPanel2;
-	JPanel mainTextPanel;
-	public JPanel choiceButtonPanel;
-	public JPanel sidePanel, playerPanel, counterPanel, imagePanel, backpackTextAreaPanel, backpackPanel;
-	JLabel titleNameLabel, imageLabel;
-	JButton startButton, loadButton, creditsButton, optionsButton;
-	//Game screen
-	public JTextArea mainTextArea;
-	public JTextArea backpackTextArea, creditsTextArea;
-	public JLabel counterLabel, playerNameLabel, playerNameLabelString, hpLabel, hpLabelNumber, weaponLabel, weaponLabelName, goldLabel, goldLabelNumber, xpLabel, xpLabelNumber, attackLabel, attackLabelNumber, defenseLabel, defenseLabelNumber, capsuleLabel, capsuleLabelNumber, optionsPanelLabel, fullScreenLabel, fullScreenLabelString, buttonBorderLabel, buttonBorderLabelString, creditsPanelLabel, creditsPanelLabel2, creditsPanelLabel3, creditsPanelLabel4, creditsPanelLabel5;
-	public JButton specialattack, inGameOptionsButton, inventoryButton, choice1, choice2, choice3, choice4, fullScreenButton, buttonBorderButton, backButton, creditsBackButton;
+	public JPanel mainTextPanel, choiceButtonPanel, sidePanel, playerPanel, counterPanel, imagePanel, backpackTextAreaPanel, backpackButtonPanel, backpackStatsPanel, backpackPanel, titleNamePanel, startButtonPanel, optionsPanel, optionsPanel2, optionsLabelPanel, backButtonPanel, creditsTextAreaPanel, creditsPanel, creditsPanel2;
+	public JTextArea mainTextArea, backpackTextArea, creditsTextArea, backpackStatsTextArea;
+	public JLabel counterLabel, playerNameLabel, playerNameLabelString, hpLabel, hpLabelNumber, weaponLabel, weaponLabelName, goldLabel, goldLabelNumber, xpLabel, xpLabelNumber, attackLabel, attackLabelNumber, defenseLabel, defenseLabelNumber, capsuleLabel, capsuleLabelNumber, optionsPanelLabel, fullScreenLabel, fullScreenLabelString, buttonBorderLabel, buttonBorderLabelString, creditsPanelLabel, creditsPanelLabel2, creditsPanelLabel3, creditsPanelLabel4, creditsPanelLabel5, titleNameLabel, imageLabel;
+	public JButton specialattack, inGameOptionsButton, backpackButton, inventoryButton, choice1, choice2, choice3, choice4, fullScreenButton, buttonBorderButton, backButton, creditsBackButton, startButton, loadButton, creditsButton, optionsButton;
 	
 	//Input
 	JPanel textPanel, inputPanel;
@@ -756,7 +749,7 @@ public class UI {
 		playerPanel = new JPanel();
 		int pp_x = (int)Math.round(mtp_x + mtp_w);
 		int pp_y = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.2574157303370787);
-		int pp_w = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.3327102803738318);
+		int pp_w = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.444444444);
 		int pp_h = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.3689325842696629);
 		playerPanel.setBounds(pp_x, pp_y, pp_w, pp_h);
 		//playerPanel.setBounds(600, 300, 356, 180);
@@ -786,7 +779,17 @@ public class UI {
 		playerPanel.add(hpLabelNumber);
 		//weaponLabel
 		weaponLabel = new JLabel();
-		weaponLabel.setIcon(m_game.m_images.WeaponIcon);
+		try {
+			if(m_game.m_player.playerType.equals("Physical")) {
+			weaponLabel.setIcon(m_game.m_images.SwordIcon);
+		}
+			else if(m_game.m_player.playerType.equals("Magical")){
+				weaponLabel.setIcon(m_game.m_images.WandIcon);
+			}
+		}
+		catch(Exception e) {
+			weaponLabel.setIcon(m_game.m_images.EmptyIcon);
+		}
 		weaponLabel.setFont(normalFont);
 		weaponLabel.setForeground(Color.white);
 		playerPanel.add(weaponLabel);
@@ -870,6 +873,8 @@ public class UI {
 			//
 			inventoryButton.setBorder(m_game.m_constants.blackline);
 			//
+			backpackButton.setBorder(m_game.m_constants.blackline);
+			//
 			for(int i = 0; i < 5; i++) {
 				inGameOptionsButtons[i].setBorder(m_game.m_constants.blackline);
 			}
@@ -899,6 +904,8 @@ public class UI {
 			inventoryButtons[4].setBorder(null);
 			//
 			inventoryButton.setBorder(null);
+			//
+			backpackButton.setBorder(null);
 			//
 			for(int i = 0; i < 5; i++) {
 				inGameOptionsButtons[i].setBorder(null);
@@ -1113,7 +1120,7 @@ public class UI {
 		playerPanel = new JPanel();
 		int pp_x = (int)Math.round(mtp_x + mtp_w);
 		int pp_y = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.2574157303370787);
-		int pp_w = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.3327102803738318);
+		int pp_w = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.444444444);
 		int pp_h = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.3689325842696629);
 		playerPanel.setBounds(pp_x, pp_y, pp_w, pp_h);
 		//playerPanel.setBounds(600, 300, 356, 180);
@@ -1143,7 +1150,17 @@ public class UI {
 		playerPanel.add(hpLabelNumber);
 		//weaponLabel
 		weaponLabel = new JLabel();
-		weaponLabel.setIcon(m_game.m_images.WeaponIcon);
+		try {
+			if(m_game.m_player.playerType.equals("Physical")) {
+			weaponLabel.setIcon(m_game.m_images.SwordIcon);
+		}
+			else if(m_game.m_player.playerType.equals("Magical")){
+				weaponLabel.setIcon(m_game.m_images.WandIcon);
+			}
+		}
+		catch(Exception e) {
+			weaponLabel.setIcon(m_game.m_images.EmptyIcon);
+		}
 		weaponLabel.setFont(normalFont);
 		weaponLabel.setForeground(Color.white);
 		playerPanel.add(weaponLabel);
@@ -1235,6 +1252,8 @@ public class UI {
 			//
 			inventoryButton.setBorder(m_game.m_constants.blackline);
 			//
+			backpackButton.setBorder(m_game.m_constants.blackline);
+			//
 			for(int i = 0; i < 5; i++){
 				inventoryButtons[i].setBorder(m_game.m_constants.blackline);
 			}
@@ -1265,6 +1284,8 @@ public class UI {
 			inventoryButtons[4].setBorder(null);	
 			//
 			inventoryButton.setBorder(null);
+			//
+			backpackButton.setBorder(null);
 			//
 			for(int i = 0; i < 5; i++){
 				inventoryButtons[i].setBorder(null);
@@ -1324,15 +1345,37 @@ public class UI {
 
 	public void backpack() {
 		backpackPanel = new JPanel();
+		int bp_x = 0;
 		int bp_y = 0;
 		int bp_w = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.5597014925373134);
 		int bp_h = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.4213483146067416);
-		backpackPanel.setBounds(0, bp_y, bp_w, bp_h);
+		backpackPanel.setBounds(bp_x, bp_y, bp_w, bp_h);
 		backpackPanel.setBackground(Color.orange);
 		backpackPanel.setLayout(new GridLayout(4, 4));
 		con.add(backpackPanel);
 		backpackPanel.setVisible(false);
 		
+		//TextArea
+		backpackTextAreaPanel = new JPanel();
+		int btap_y = bp_y + bp_h;
+		int btap_w = (int) Math.round(m_game.m_constants.currentScreenWidth * 0.555555556);
+		int btap_h = (int) Math.round(m_game.m_constants.currentScreenHeight * 0.1404494382022472);
+		backpackTextAreaPanel.setBounds(0, btap_y, btap_w, btap_h);
+		backpackTextAreaPanel.setBackground(Color.blue);
+		backpackTextAreaPanel.setVisible(false);
+		
+		backpackTextArea = new JTextArea("Press Switch to move an item to your inventory. \nIf you do not have any space, the item will be dropped");
+		backpackTextArea.setBackground(Color.blue);
+		backpackTextArea.setBounds(0, btap_y, btap_w, btap_h);
+		backpackTextArea.setFont(backpackFont);
+		backpackTextArea.setLineWrap(true); //word wrap on
+		backpackTextArea.setWrapStyleWord(true); //word wrap at end of word on
+		backpackTextArea.setEditable(false);
+		backpackTextArea.setForeground(Color.white);
+		backpackTextAreaPanel.add(backpackTextArea);		
+		
+		
+		//Items
 		for (int i = 0; i < backpackButtons.length-1; i++) {
 			backpackButtons[i] = new JButton();
 			backpackButtons[i].setBackground(Color.black);
@@ -1360,26 +1403,53 @@ public class UI {
 		backpackButtons[15].setActionCommand("backpackSwitchButton");
 		backpackPanel.add(backpackButtons[15]);
 		
-		backpackTextAreaPanel = new JPanel();
-		int btap_y = bp_y + bp_h;
-		int btap_w = (int) Math.round(m_game.m_constants.currentScreenWidth * 0.555555556);
-		int btap_h = (int) Math.round(m_game.m_constants.currentScreenHeight * 0.1404494382022472);
-		backpackTextAreaPanel.setBounds(0, btap_y, btap_w, btap_h);
-		backpackTextAreaPanel.setBackground(Color.blue);
-		backpackTextAreaPanel.setVisible(false);
+		//StatsPanel
+		backpackButtonPanel = new JPanel();
+		int bbp_x = bp_w;
+		int bbp_y = 0;
+		int bbp_w = (int) Math.round(m_game.m_constants.currentScreenWidth * 0.444444444);
+		int bbp_h = (int) Math.round(m_game.m_constants.currentScreenHeight * 0.0554494382022472);
+		backpackButtonPanel.setBounds(bbp_x, bbp_y, bbp_w, bbp_h);
+		//backpackStatsPanel.setLayout(new GridLayout(2,1));
+		backpackButtonPanel.setBackground(Color.red);
+		backpackButtonPanel.setVisible(true);
 		
-		backpackTextArea = new JTextArea("Press Switch to move an item to your inventory. \nIf you do not have any space, the item will be dropped");
-		backpackTextArea.setBackground(Color.blue);
-		backpackTextArea.setBounds(0, btap_y, btap_w, btap_h);
-		backpackTextArea.setFont(normalFont);
-		backpackTextArea.setLineWrap(true); //word wrap on
-		backpackTextArea.setWrapStyleWord(true); //word wrap at end of word on
-		backpackTextArea.setEditable(false);
-		backpackTextArea.setForeground(Color.white);
-		backpackTextAreaPanel.add(backpackTextArea);
+		backpackButton = new JButton("Show Backpack");
+		backpackButton.setBackground(Color.black);
+		backpackButton.setForeground(Color.white);
+		//itemButton5.setLayout(new GridLayout(5,1));
+		backpackButton.setFont(normalFont);
+		backpackButton.setFocusPainted(false);
+		backpackButton.addActionListener(m_game.m_oHandler);
+		backpackButton.addActionListener(m_game.m_bHandler);
+		backpackButton.addActionListener(m_game.m_bpHandler);
+		backpackButton.setActionCommand("backpack");
+		backpackButtonPanel.add(backpackButton);
 		
+		backpackStatsPanel = new JPanel();
+		int bstp_x = bbp_x;
+		int bstp_y = bbp_y + bbp_h;
+		int bstp_w = (int) Math.round(m_game.m_constants.currentScreenWidth * 0.444444444);
+		int bstp_h = (int) Math.round(m_game.m_constants.currentScreenHeight * 0.2004494382022472);
+		backpackStatsPanel.setBounds(bstp_x, bstp_y, bstp_w, bstp_h);
+		backpackStatsPanel.setBackground(Color.blue);
+		backpackStatsPanel.setFont(normalFont);
+		backpackStatsPanel.setForeground(Color.white);
 		
+		backpackStatsTextArea = new JTextArea("");
+		backpackStatsTextArea.setBounds(bstp_x, bstp_y, bstp_w, bstp_h);
+		backpackStatsTextArea.setFont(backpackFont);
+		backpackStatsTextArea.setLineWrap(true); //word wrap on
+		backpackStatsTextArea.setWrapStyleWord(true); //word wrap at end of word on
+		backpackStatsTextArea.setEditable(false);
+		backpackStatsTextArea.setBackground(Color.blue);
+		backpackStatsTextArea.setForeground(Color.white);
+		backpackStatsPanel.add(backpackStatsTextArea);
+			
+		con.add(backpackStatsPanel);
 		con.add(backpackTextAreaPanel);
+		con.add(backpackButtonPanel);
+		
 	}
 	
 	public void inventory(int cbp_x, int cbp_w) {
@@ -1402,7 +1472,7 @@ public class UI {
 	
 	public void optionsButtons(int cbp_x, int cbp_w) {
 		
-		for (int i = 0; i < inGameOptionsButtons.length-1; i++) {
+		for (int i = 0; i < inGameOptionsButtons.length; i++) {
 			inGameOptionsButtons[i] = new JButton();
 			inGameOptionsButtons[i].setBackground(Color.black);
 			inGameOptionsButtons[i].setForeground(Color.white);
@@ -1418,17 +1488,7 @@ public class UI {
 		inGameOptionsButtons[1].setText("FULLSCREEN");
 		inGameOptionsButtons[2].setText("EXIT FULLSCREEN");
 		inGameOptionsButtons[3].setText("EXIT GAME");
-
-		inGameOptionsButtons[4] = new JButton("Show Backpack");
-		inGameOptionsButtons[4].setBackground(Color.black);
-		inGameOptionsButtons[4].setForeground(Color.white);
-		//itemButton5.setLayout(new GridLayout(5,1));
-		inGameOptionsButtons[4].setFont(backpackFont);
-		inGameOptionsButtons[4].setFocusPainted(false);
-		inGameOptionsButtons[4].addActionListener(m_game.m_oHandler);
-		inGameOptionsButtons[4].addActionListener(m_game.m_bHandler);
-		inGameOptionsButtons[4].addActionListener(m_game.m_bpHandler);
-		inGameOptionsButtons[4].setActionCommand("backpack");
+		inGameOptionsButtons[3].setText("------");
 		
 	}
 	

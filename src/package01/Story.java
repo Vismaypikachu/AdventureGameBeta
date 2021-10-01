@@ -24,6 +24,7 @@ import package02.Wand;
 import package03.Apple;
 import package03.ChocolateBar;
 import package03.Empty;
+import package03.Fish;
 import package03.FishingRod;
 import package03.Fork;
 import package03.Potion;
@@ -32,6 +33,7 @@ import package05.Clam;
 import package05.EmptyAir;
 import package05.Goblin;
 import package05.Guard;
+import package05.Squid;
 
 public class Story {
 	/*
@@ -95,6 +97,7 @@ public class Story {
 			m_game.m_ui.sidePanel.setVisible(false);
 		//}
 		//else {
+			m_game.m_constants.reinitializeVars();
 			m_game.m_constants.position.equals("gameoverStart");
 			setChoices("Continue", "", "", "");
 			setNextPosition("gomenu", "", "", "");
@@ -114,6 +117,7 @@ public class Story {
 	public void playerSetup() {	
 		m_game.m_player.playerHP = 100;
 		m_game.m_player.weapon = new None();
+		m_game.m_player.fishingRod = new Empty();
 		m_game.m_ui.hpLabelNumber.setText("" + m_game.m_player.playerHP);
 		m_game.m_ui.weaponLabelName.setText(m_game.m_player.weapon.name);
 		m_game.m_ui.goldLabelNumber.setText(""+m_game.m_player.gold);
@@ -157,9 +161,10 @@ public class Story {
 			m_game.m_ui.capsuleLabelNumber.setVisible(true);
 		}
 		switch(m_game.m_constants.savedPosition) {
-			case "save1": m_game.m_ui.playerPanel.setLayout(new GridLayout(7,2)); innskeepwife(); break;
+			case "save1": m_game.m_ui.playerPanel.setLayout(new GridLayout(7,2)); inninside(); break;
 			case "save2": plateauFork(); break;
 			case "save3": savePath(); break;
+			case "save4": seafoodMarket(); break;
 		}
 	}
 	
@@ -196,6 +201,7 @@ public class Story {
 					case "farmer": farmerweaponask(); break; 
 					case "plateau": plateauFork(); break;
 					case "shallow": theShallows(); break;
+					case "tunnela": underwaterCaves(); break;
 				}
 			break;
 			case "reel": m_game.m_fishing.reel(); break;
@@ -258,15 +264,21 @@ public class Story {
 			case "savepath": savePath(); break;
 			//------------------------------SALTY SEA-------------------------------SALTY SEA--------------------------------SALTY SEA------------------------------
 			case "saltysea": saltySea(); break;
+			//---------------------------THE SHALLOWS---------------------------
 			case "theshallows": theShallows(); break;
 			case "siftgold": siftGold(); break;
 			case "shallowbattle": m_game.m_constants.enemyPosition = "shallow"; m_game.m_constants.currentEnemy = new Clam(); m_game.m_battle.enemyattack(); break;
 			case "sunbathe": sunbathe(); break;
 			case "unlockfishing": unlockFishing(); break;
 			case "fishing1": m_game.m_constants.fishingPosition = "fishingunlock"; m_game.m_fishing.cast(); break;
-			
-			
-			
+			//---------------------------THE BRINY DEEP---------------------------
+			case "thebrinydeep": theBrinyDeep(); break;
+			case "underwatercaves": underwaterCaves(); break;
+			case "tunnela": tunnelA(); break;
+			case "tunnelbattle": m_game.m_constants.enemyPosition = "tunnela"; m_game.m_constants.currentEnemy = new Squid(); m_game.m_battle.enemyattack(); break;
+			//---------------------------SEAFOOD MARKET---------------------------
+			case "seafoodmarket": seafoodMarket(); break;
+			case "oldwoman": oldWoman(); break;
 			
 			//---------------------------SNOW MOUNTAINS---------------------------SNOW MOUNTAINS---------------------------SNOW MOUNTAINS---------------------------
 		}
@@ -378,6 +390,9 @@ public class Story {
 			bw.newLine();
 			bw.write(""+m_game.m_player.playerdefense);	
 			bw.newLine();
+			bw.write(""+m_game.m_player.fishingRod.stat);
+			bw.newLine();
+			/*
 			bw.write(x);
 			bw.newLine();
 			bw.write(x2);
@@ -417,18 +432,19 @@ public class Story {
 			bw.write(x19);
 			bw.newLine();
 			bw.write(x20);
-			/*
-			for(int i = 0; i < 5; i++) {
-				bw.write(""+playerItem[i].name);
-				bw.newLine();
-			}
-			for(int j = 0; j < 14; j++) {
-				bw.write(""+backpackItem[j].name);
-				bw.newLine();
-			}
-			bw.write(""+backpackItem[15].name);
 			*/
-			bw.newLine();
+			
+			for(int i = 0; i < m_game.m_player.playerItem.length; i++) {
+				bw.write(""+m_game.m_player.playerItem[i].name);
+				bw.newLine();
+			}
+			for(int j = 0; j < m_game.m_player.backpackItem.length; j++) {
+				bw.write(""+m_game.m_player.backpackItem[j].name);
+				bw.newLine();
+			}
+			//bw.write(""+m_game.m_player.backpackItem[15].name);
+			
+			//bw.newLine();
 			bw.write(""+m_game.m_player.specialUnlocked);
 			bw.newLine();
 			bw.write(""+m_game.m_constants.saltySea);
@@ -463,12 +479,14 @@ public class Story {
 			m_game.m_player.xp = Integer.parseInt(br.readLine());
 			m_game.m_player.capsules = Integer.parseInt(br.readLine());
 			m_game.m_player.playerdefense = Double.parseDouble(br.readLine());
+			int x = Integer.parseInt(br.readLine());
+			m_game.m_player.fishingRod = new FishingRod(x);
 			//------------------
 		
-			for(int j = 0; j < 5; j++) {
+			for(int j = 0; j < m_game.m_player.playerItem.length; j++) {
 				setItem(br.readLine(), j, 1);
 			}
-			for(int i = 0; i < 15; i++) {
+			for(int i = 0; i < m_game.m_player.backpackItem.length; i++) {
 				setItem(br.readLine(), i, 2);
 			}
 			
@@ -476,7 +494,6 @@ public class Story {
 			m_game.m_player.specialUnlocked = Boolean.parseBoolean(br.readLine());
 			m_game.m_constants.saltySea = Boolean.parseBoolean(br.readLine());
 			m_game.m_constants.fishingPosition = br.readLine();
-			
 			
 			
 			/*
@@ -487,6 +504,7 @@ public class Story {
 			stringToClass(br.readLine(), 4);
 			 */
 			br.close();
+			
 			
 			m_game.m_constants.currentEnemy = new EmptyAir();
 		}
@@ -523,18 +541,20 @@ public class Story {
 				case "Potion": m_game.m_player.playerItem[i] = new Potion(); break;
 				case "C. Bar": m_game.m_player.playerItem[i] = new ChocolateBar(); break;
 				case "Apple": m_game.m_player.playerItem[i] = new Apple(); break;
+				case "Fish": m_game.m_player.playerItem[i] = new Fish(); break;
 			}
 		}
-		else {
+		else if(num == 2){
 			switch(name) {
 				case "[Empty]": m_game.m_player.backpackItem[i] = new Empty(); break;
 				case "Fork": m_game.m_player.backpackItem[i] = new Fork(); break;
 				case "Potion": m_game.m_player.backpackItem[i] = new Potion(); break;
 				case "C. Bar": m_game.m_player.backpackItem[i] = new ChocolateBar(); break;
 				case "Apple": m_game.m_player.backpackItem[i] = new Apple(); break;
+				case "Fish": m_game.m_player.backpackItem[i] = new Fish(); break;
+				case "Fishing Rod": m_game.m_player.backpackItem[i] = m_game.m_player.fishingRod; break;
 			}
 		}
-		
 	}
 	
 	public void fork() {
@@ -667,6 +687,7 @@ public class Story {
 		m_game.m_ui.mainTextArea.setText("You went to the Blacksmith and recieved a Sword!\n\nWeapon changed to Sword!\n\nLets have a practice battle!");
 		m_game.m_player.weapon = new Sword();
 		m_game.m_player.playerType = "Physical";
+		m_game.m_ui.weaponLabel.setIcon(m_game.m_images.SwordIcon);
 		statschange();
 		
 		setChoices("Continue", "", "", "");
@@ -678,6 +699,7 @@ public class Story {
 		m_game.m_ui.mainTextArea.setText("You went to the Wizard and recieved a Wand!\n\nWeapon changed to Wand!\n\nLets have a practice battle!");
 		m_game.m_player.weapon = new Wand();
 		m_game.m_player.playerType = "Magical";
+		m_game.m_ui.weaponLabel.setIcon(m_game.m_images.WandIcon);
 		statschange();
 		
 		setChoices("Continue", "", "", "");
@@ -755,15 +777,10 @@ public class Story {
 		setChoices("Continue", "", "", "");		
 		setNextPosition("insideinn", "", "", "");
 		
-		if(m_game.m_constants.savedPosition.equals("save1")) {
-			m_game.m_constants.position = "innskeepwife";
-		}
-		else {
-			m_game.m_constants.position = "innskeepwife";
-			m_game.m_constants.savedPosition = "save1";
-			saveData();
-		}
 		
+		m_game.m_constants.position = "innskeepwife";
+		m_game.m_constants.savedPosition = "save1";
+		saveData();		
 		statschange();
 	}
 	
@@ -1194,17 +1211,19 @@ public class Story {
 		m_game.m_constants.position = "saltySea";
 		m_game.m_ui.mainTextArea.setText("You have reached the Salty Sea biome.\nYou cannot continue until you unlock the Twilight Zone.\nLets continue!");
 		
-		if(m_game.m_constants.shallows == false || m_game.m_constants.brinyDeep == false) {
+		if(m_game.m_constants.shallows == false /*TODO add a breathing item*/) {
 			setChoices("The Shallows", "The Briny Deep", "The Twilight Zone", "Seafood Market");
-			m_game.m_ui.choice3.setLayout(new GridLayout(1,2));
+			//m_game.m_ui.choice3.setLayout(new GridLayout(1,2));
 			m_game.m_ui.choice3.setIcon(m_game.m_images.CapsulesIcon);
 			setNextPosition("theshallows", "thebrinydeep", "", "seafoodmarket");
 		}
-		else if(m_game.m_constants.shallows == true && m_game.m_constants.brinyDeep == true){
+		else if(m_game.m_constants.shallows == true /*TODO add a breathing item*/){
 			setChoices("The Shallows", "The Briny Deep", "The Twilight Zone", "Seafood Market");
 			setNextPosition("theshallows", "thebrinydeep", "thetwilightzone", "seafoodmarket");
 		}		
 	}
+	
+	//------------------------------THE SHALLOWS-------------------------------
 	
 	public void theShallows() {
 		m_game.m_constants.position = "theShallows";
@@ -1219,21 +1238,21 @@ public class Story {
 	
 	public void siftGold() {
 		int sift = r.nextInt(100);
-		if(sift % 5 != 0 && sift != 1) {
-			m_game.m_ui.mainTextArea.setText("You got attacked by a Clam!");
-			
-			setChoices("Continue", "", "", "");
-			setNextPosition("shallowbattle", "", "", "");
-			
-			System.out.println(sift);
-		}
-		else if(sift % 5 == 0 || sift % 5 == 1) {
+		if(sift % 5 == 0 || sift % 5 == 1) {
 			int gold = r.nextInt((m_game.m_player.xp/25 - m_game.m_player.xp/40) + 1) + m_game.m_player.xp/50;
 			m_game.m_ui.mainTextArea.setText("You struck Gold!\nYou recieved " + gold + " Gold.");
 			m_game.m_player.gold += gold;
 			
 			setChoices("Continue", "", "", "");
 			setNextPosition("theshallows", "", "", "");
+		}
+		else if(sift % 5 != 0 && sift != 1) {
+			m_game.m_ui.mainTextArea.setText("You got attacked by a Clam!");
+			
+			setChoices("Continue", "", "", "");
+			setNextPosition("shallowbattle", "", "", "");
+			
+			System.out.println(sift);
 		}
 	}
 	
@@ -1246,7 +1265,7 @@ public class Story {
 		if(fish == false) {
 			int chance = r.nextInt((20-10)+1)+10;
 			m_game.m_player.fishingRod = new FishingRod(chance);
-			m_game.m_backpack.addBackpackItem(new FishingRod(chance));
+			m_game.m_backpack.addBackpackItem(m_game.m_player.fishingRod);
 			m_game.m_ui.mainTextArea.setText("While floating around your knee brushes up against something solid.\nYou reach down and find and old fishing rod.\n(Fishing Unlocked)\nYour rod has a stat of "+chance);
 		}
 		else {
@@ -1265,6 +1284,62 @@ public class Story {
 		setChoices("Continue", "", "", "");
 		setNextPosition("theshallows", "", "", "");
 	}
+	
+	//------------------------------THE BRINY DEEP-------------------------------
+	
+	public void theBrinyDeep() {
+		/*TODO add a breathing item, also caves have squid, shipwreck will have shark, shark tooth will add attack*/
+		m_game.m_constants.position = "theBrinyDeep";
+		
+		m_game.m_ui.mainTextArea.setText("You have entered the Briny Deep. A salty and dark place, many ships lie upon the seabed.\nWhere do you go next?");
+	
+		
+		setChoices("Explore Caves", "Investigate the Shipwreck's", "", "Go Back to The Salty Sea");
+		setNextPosition("underwatercaves", "", "", "saltysea");
+	}
+	
+	public void underwaterCaves() {
+		m_game.m_constants.position = "underwaterCaves";
+		
+		m_game.m_ui.mainTextArea.setText("You have entered the Underwater Caves. A narrow and dark place, many Sea Urchins lie upon its walls.\nWhere do you go next?");
+	
+		
+		setChoices("Tunnel A", "Tunnel B", "Tunnel C", "Go Back to The Salty Sea");
+		setNextPosition("tunnela", "", "", "saltysea");
+	}
+	
+	public void tunnelA() {
+		m_game.m_ui.mainTextArea.setText("You got attacked by a Squid!");
+		
+		setChoices("Continue", "", "", "");
+		setNextPosition("tunnelbattle", "", "", "");
+	}
+	
+	//------------------------------THE TWILIGHT ZONE-------------------------------
+	//TODO add under water ruins
+	
+	
+	//------------------------------SEAFOOD MARKET-------------------------------
+	
+	public void seafoodMarket() {
+		m_game.m_constants.position = "seafoodMarket";
+		m_game.m_ui.mainTextArea.setText("You walk into the Seafood Market. A busy and hectic place, many people rush back and forth to bargain with merchants.\nWhere do you go next?");
+	
+		
+		setChoices("Go to the Shops", "Go to the Alley", "Talk to the Old Woman", "Go Back to The Salty Sea");
+		setNextPosition("", "", "oldwoman", "saltysea");
+	}
+	
+	public void oldWoman() {
+		m_game.m_constants.position = "seafoodMarket";
+		m_game.m_ui.mainTextArea.setText("Old Woman: Hello, I am a save NPC. Don't talk to me. Just let me save the game for you.\n\n(Your progress has been saved)");
+		setChoices("Continue", "", "", "");
+		setNextPosition("seafoodmarket", "", "", "");
+		m_game.m_constants.savedPosition = "save4";
+		saveData();
+		statschange();
+	}
+	
 	
 	//---------------------------SNOW MOUNTAINS---------------------------SNOW MOUNTAINS---------------------------SNOW MOUNTAINS---------------------------
 	

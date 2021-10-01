@@ -5,5 +5,6 @@ public class Fish extends SuperItem{
 		name = "Fish";
 		droppable = true;
 		useable = true;
+		description = "I wonder if it knows Nemo?";
 	}
 }
