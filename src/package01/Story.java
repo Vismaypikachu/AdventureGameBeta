@@ -145,7 +145,7 @@ public class Story {
 	}
 	
 	public void positionCheck() {
-		
+		System.out.print(m_game.m_constants.position);
 		m_game.m_constants.currentEnemy = new EmptyAir();
 		/*
 		itemButton1.setText(itemButton1Text);
@@ -160,6 +160,7 @@ public class Story {
 			m_game.m_ui.playerPanel.add(m_game.m_ui.capsuleLabelNumber);
 			m_game.m_ui.capsuleLabelNumber.setVisible(true);
 		}
+		m_game.m_ui.setImage(m_game.m_constants.testImageURL);
 		switch(m_game.m_constants.savedPosition) {
 			case "save1": m_game.m_ui.playerPanel.setLayout(new GridLayout(7,2)); inninside(); break;
 			case "save2": plateauFork(); break;
@@ -296,7 +297,7 @@ public class Story {
 		int tp_h = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.0842696629213483);
 		m_game.m_ui.textPanel.setBounds(tp_x, tp_y, tp_w, tp_h);
 		//textPanel.setBounds(270, 300, 550, 100);
-		m_game.m_ui.textPanel.setBackground(Color.blue);
+		m_game.m_ui.textPanel.setBackground(m_game.m_constants.black);
 		m_game.m_ui.textLabel = new JLabel("Please enter your name: ");
 		m_game.m_ui.textLabel.setForeground(Color.white);
 		m_game.m_ui.textLabel.setFont(m_game.m_ui.normalFont);
@@ -715,7 +716,7 @@ public class Story {
 	}
 	
 	public void inninside() {
-		if(m_game.m_constants.position.equals("innskeep") || m_game.m_constants.position.equals("innskeepwife")) {
+		if(m_game.m_constants.position.equals("innskeep") || m_game.m_constants.position.equals("innskeepwife") || m_game.m_constants.position.equals("loadData")) {
 			m_game.m_constants.position = "inninside";
 			m_game.m_ui.mainTextArea.setText("You have decided to go get a room for the night.\n\n Health is restored.\n\nLooking forward for more adventure!");
 			if(m_game.m_player.playerHP < 100) m_game.m_player.playerHP = 100;
@@ -1239,7 +1240,7 @@ public class Story {
 	public void siftGold() {
 		int sift = r.nextInt(100);
 		if(sift % 5 == 0 || sift % 5 == 1) {
-			int gold = r.nextInt((m_game.m_player.xp/25 - m_game.m_player.xp/40) + 1) + m_game.m_player.xp/50;
+			int gold = r.nextInt((m_game.m_player.xp/25 - m_game.m_player.xp/40) + 1) + 4;
 			m_game.m_ui.mainTextArea.setText("You struck Gold!\nYou recieved " + gold + " Gold.");
 			m_game.m_player.gold += gold;
 			

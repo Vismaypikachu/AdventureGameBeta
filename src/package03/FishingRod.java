@@ -7,7 +7,7 @@ public class FishingRod extends SuperItem{
 		useable = false;
 		stat = x;
 		if(x == 10) description = "What luck... You got the worst Fishing Rod possible";
-		if(x == 20) description = "What luck! You got the best Fishing Rod possible";
+		else if(x == 20) description = "What luck! You got the best Fishing Rod possible";
 		else description = "Some sort of old Fishing Rod";
 	}
 }

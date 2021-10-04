@@ -69,8 +69,8 @@ public class Backpack {
 	
 	public void addBackpackItem(SuperItem item) {
 		int slotNumber = 0;
-		while(!m_game.m_player.backpackItem[slotNumber].name.equals("[Empty]") && slotNumber < 14) slotNumber++;
-		if(slotNumber == 14 && m_game.m_player.backpackItem[14] != new Empty()) noEmptySlots(item);
+		while(!m_game.m_player.backpackItem[slotNumber].name.equals("[Empty]") && slotNumber < m_game.m_player.backpackItem.length-1) slotNumber++;
+		if(slotNumber == m_game.m_player.backpackItem.length-1 && !m_game.m_player.backpackItem[m_game.m_player.backpackItem.length-1].name.equals("[Empty]")) noEmptySlots(item);
 		
 		else {
 			if(m_game.m_player.backpackItem[slotNumber].name.equals("[Empty]")) {
@@ -92,16 +92,28 @@ public class Backpack {
 			}
 		}
 		*/
-		m_game.m_ui.backpackTextArea.setText("YOU HAVE NO MORE SPACE. An "+ item.name +" will be dropped.");
+		if(m_game.m_constants.BackpackStatus.equals("close")) {
+			m_game.m_ui.backpackButton.doClick();
+		}
+		m_game.m_ui.backpackTextArea.setText("YOU HAVE NO MORE SPACE. An item will need to be dropped to add " + item.name + ".\nPlease click the item to drop!");
+		m_game.m_player.backup = item;
+		m_game.m_ui.backpackDropButton.setText("Drop Item (ON)");
+		m_game.m_constants.switchOn = false;
+		m_game.m_constants.DropStatus = true;
+		m_game.m_ui.choiceButtonPanel.setVisible(false);
+		m_game.m_ui.sidePanel.setVisible(false);
+		m_game.m_constants.InventoryStatus = "close";
+		m_game.m_constants.OptionsStatus = "close";
+		
+		/*
 		for(int i = 0; i < m_game.m_player.backpackItem.length; i++) {
 			if(m_game.m_player.backpackItem[i].droppable = true) {
 				m_game.m_player.backpackItem[i] = item;
 				i = m_game.m_player.backpackItem.length;
 			}
 		}
-		if(m_game.m_constants.BackpackStatus.equals("close")) {
-			m_game.m_ui.backpackButton.doClick();
-		}
+		*/
+		
 		
 		
 	}
@@ -112,4 +124,5 @@ public class Backpack {
 		String description = m_game.m_player.backpackItem[i].description;
 		m_game.m_ui.backpackStatsTextArea.setText("Name: " + name + "\nStat: " + chance + "\nDescription: \n" + description);
 	}
+
 }

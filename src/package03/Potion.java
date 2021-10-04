@@ -5,6 +5,8 @@ public class Potion extends SuperItem {
 		name = "Potion";
 		droppable = true;
 		useable = true;
+		stat = 20;
 		description = "At least it wasn't Neville's";
+		itemType = "Food";
 	}
 }

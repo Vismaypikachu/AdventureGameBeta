@@ -36,6 +36,11 @@ public class Constants {
 	public static int credits3FontSize;
 	public static int backpackFontSize;
 	public static Border blackline = BorderFactory.createLineBorder(Color.white);
+	//COLOR
+	public static Color black = Color.black;
+	public static Color white = Color.white;
+	public static Color blue = Color.blue;
+	public static Color green = Color.green;
 	//SOUND
 	public URL clickSoundURL = getClass().getResource("/ButtonPress.wav");
 	public URL titleTrackURL = getClass().getResource("/titleTrack.wav");
@@ -49,6 +54,7 @@ public class Constants {
 	public static String InventoryStatus;
 	public static String OptionsStatus;
 	public static String BackpackStatus;
+	public static boolean DropStatus;
 	public static boolean fullScreenOn;
 	//BUTTONS
 	public static String text, b1text, b2text, b3text, b4text, b5text;
@@ -97,6 +103,7 @@ public class Constants {
 		InventoryStatus = "close";
 		OptionsStatus = "close";
 		BackpackStatus = "close";
+		DropStatus = false;
 		savedPosition = "";
 		
 		m_game.m_player.playerItem[0] = new Potion();

@@ -1,5 +1,6 @@
 package package04;
 
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -74,6 +75,9 @@ public class BackpackHandler implements ActionListener {
 						m_game.m_ui.inGameOptionsButtons[1].setVisible(false);
 						m_game.m_ui.backpackPanel.setVisible(true);
 						m_game.m_ui.backpackTextAreaPanel.setVisible(true);
+						m_game.m_ui.backpackButtonPanel.setLayout(new GridLayout(1,2));
+						m_game.m_ui.backpackButtonPanel.add(m_game.m_ui.backpackDropButton);
+						m_game.m_ui.backpackDropButton.setVisible(true);
 						//
 						m_game.m_backpack.updateBackpack(1);
 						//
@@ -88,6 +92,10 @@ public class BackpackHandler implements ActionListener {
 						m_game.m_ui.inGameOptionsButtons[1].setVisible(true);
 						m_game.m_ui.backpackPanel.setVisible(false);
 						m_game.m_ui.backpackTextAreaPanel.setVisible(false);
+						m_game.m_ui.backpackDropButton.setVisible(false);
+						m_game.m_ui.backpackButtonPanel.remove(m_game.m_ui.backpackDropButton);
+						m_game.m_ui.backpackButtonPanel.setLayout(new GridLayout(1,1));
+						
 						m_game.m_ui.imagePanel.setVisible(true);
 						m_game.m_constants.BackpackStatus = "close";
 					}

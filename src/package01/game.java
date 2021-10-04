@@ -25,8 +25,8 @@ public class game {
 	Fishing m_fishing = new Fishing(this);
 	
 	//package04
-	BackpackHandler m_bpHandler = new BackpackHandler(this);
-	ButtonHandler m_bHandler = new ButtonHandler(this);
+	public BackpackHandler m_bpHandler = new BackpackHandler(this);
+	public ButtonHandler m_bHandler = new ButtonHandler(this);
 	CapsulesHandler m_cHandler = new CapsulesHandler(this);
 	GameoverHandler m_goHandler = new GameoverHandler(this);
 	InputHandler m_inHandler = new InputHandler(this);
@@ -35,6 +35,7 @@ public class game {
 	StatsHandler m_sHandler = new StatsHandler(this);
 	ChoiceHandler m_choiceHandler = new ChoiceHandler();
 	MouseHandler m_mHandler = new MouseHandler(this);
+	DropHandler m_dHandler = new DropHandler(this);
 	
 	//package05
 	Battle m_battle = new Battle(this);

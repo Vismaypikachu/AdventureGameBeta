@@ -17,6 +17,7 @@ public class Player {
 	public static boolean specialUnlocked;
 	public static SuperItem [] playerItem = new SuperItem[5];
 	public static SuperItem [] backpackItem = new SuperItem[15];
+	public static SuperItem backup;
 	public static String playerType;
 	
 	game m_game;
@@ -26,35 +27,10 @@ public class Player {
 	}
 	
 	public void itemUsed(int slotNumber) {
-		if(playerItem[slotNumber].useable == true) {
-			switch(playerItem[slotNumber].name) {
-				case "Potion": 
-					playerHP += 20; 
-					m_game.m_story.statschange();
-					playerItem[slotNumber] = new Empty();
-				break;
-				case "Fork": 
-					m_game.m_constants.forkUsed = true;
-					playerHP -= 10; 
-					m_game.m_story.statschange();
-					playerItem[slotNumber] = new Empty();
-				break;
-				case "C. Bar": 
-					playerHP += 10; 
-					m_game.m_story.statschange();
-					playerItem[slotNumber] = new Empty();
-				break;
-				case "Apple":
-					playerHP += 15;
-					m_game.m_story.statschange();
-					playerItem[slotNumber] = new Empty();
-				break;
-				case "Fish":
-					playerHP += 20;
-					m_game.m_story.statschange();
-					playerItem[slotNumber] = new Empty();
-				break;
-			}	
+		if(playerItem[slotNumber].useable == true && playerItem[slotNumber].itemType.equals("Food")) {			
+			playerHP += playerItem[slotNumber].stat;
+			m_game.m_story.statschange();
+			playerItem[slotNumber] = new Empty();
 		}
 		else {
 			

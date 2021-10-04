@@ -8,6 +8,7 @@ public class SuperItem {
 	public boolean useable;
 	public int stat;
 	public String description;
+	public String itemType;
 	public boolean isDroppable() {
 		return droppable;
 	}

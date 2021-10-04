@@ -5,5 +5,7 @@ public class Fork extends SuperItem {
 		name = "Fork";
 		droppable = false;
 		useable = true;
+		stat = -10;
+		itemType = "Food";
 	}
 }
