@@ -35,8 +35,8 @@ public class CapsulesHandler implements ActionListener{
 	}
 	
 	public void specialattack(int damage) {
-		m_game.m_ui.mainTextArea.setText("You attacked " + m_game.m_constants.currentEnemy.name + " with Special Attack\nYou dealt " + damage + " damage.\n"+ m_game.m_constants.currentEnemy.name + " has " + m_game.m_constants.currentEnemy.enemyHP + " health left.");
 		m_game.m_constants.currentEnemy.enemyHP -= damage;
+		m_game.m_ui.mainTextArea.setText("You attacked " + m_game.m_constants.currentEnemy.name + " with Special Attack\nYou dealt " + damage + " damage.\n"+ m_game.m_constants.currentEnemy.name + " has " + m_game.m_constants.currentEnemy.enemyHP + " health left.");
 		m_game.m_story.statschange();
 		m_game.m_ui.choice1.setText("Continue");
 		m_game.m_ui.choice2.setText("------");

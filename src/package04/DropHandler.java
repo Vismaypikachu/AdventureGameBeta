@@ -34,7 +34,10 @@ public class DropHandler implements ActionListener{
 				case "backpackButton14": dropItem(13); break;
 				case "backpackButton15": dropItem(14); break;
 				case "backpackSwitchButton": dropItem(15); break;
-				case "drop": m_game.m_constants.DropStatus = false; m_game.m_ui.backpackButtons[15].addActionListener(m_game.m_bpHandler); m_game.m_ui.backpackDropButton.setText("Drop Item (OFF)"); break;
+				case "drop": 
+					if(m_game.m_constants.DropStatus == true) {
+						m_game.m_constants.DropStatus = false; m_game.m_ui.backpackButtons[15].addActionListener(m_game.m_bpHandler); m_game.m_ui.backpackDropButton.setText("Drop Item (OFF)"); break;
+					}
 			}
 		}
 		else if(m_game.m_constants.DropStatus == false){
@@ -45,6 +48,7 @@ public class DropHandler implements ActionListener{
 	}	
 	
 	public void dropItem(int i) {
+		i = m_game.m_backpack.getFrame(i);
 		if(i == 15) {
 			String currentText = m_game.m_ui.backpackTextArea.getText();
 			m_game.m_ui.backpackTextArea.setText(currentText + "\nYou cannot drop the switch button...");
@@ -54,8 +58,9 @@ public class DropHandler implements ActionListener{
 		else if(m_game.m_player.backpackItem[i].droppable == true) {
 			m_game.m_ui.backpackTextArea.setText("You dropped " + m_game.m_player.backpackItem[i].name + " and added " + m_game.m_player.backup.name + ".");
 			m_game.m_player.backpackItem[i] = m_game.m_player.backup;
-			m_game.m_ui.backpackDropButton.setText("Drop Item (OFF)");
-			m_game.m_constants.DropStatus = false;
+			m_game.m_ui.backpackDropButton.doClick();
+			/*m_game.m_ui.backpackDropButton.setText("Drop Item (OFF)");
+			m_game.m_constants.DropStatus = false;*/
 			m_game.m_ui.backpackButtons[15].addActionListener(m_game.m_bpHandler);
 			m_game.m_ui.choiceButtonPanel.setVisible(true);
 			m_game.m_ui.sidePanel.setVisible(false);

@@ -6,6 +6,7 @@ public class Fish extends SuperItem{
 		droppable = true;
 		useable = true;
 		stat = 20;
+		displayStat = "20";
 		description = "I wonder if it knows Nemo?";
 		itemType = "Food";
 	}

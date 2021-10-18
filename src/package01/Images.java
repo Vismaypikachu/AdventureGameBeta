@@ -8,7 +8,7 @@ import javax.swing.ImageIcon;
 public class Images {
 	
 	ImageIcon PlayerIcon, HealthIcon, SwordIcon, WandIcon, EmptyIcon, GoldIcon, XPIcon, AttackIcon, DefenseIcon, CapsulesIcon;
-	
+	ImageIcon SkullsIcon;
 	
 	game m_game;
 	
@@ -79,5 +79,10 @@ public class Images {
 		Image image8 = CapsulesIcon.getImage();
 		Image newimg8 = image8.getScaledInstance(iconwidth, iconheight,  java.awt.Image.SCALE_SMOOTH);
 		CapsulesIcon = new ImageIcon(newimg8);
+		
+		SkullsIcon = new ImageIcon(getClass().getClassLoader().getResource("Skulls.png"));
+		Image image9 = SkullsIcon.getImage();
+		Image newimg9 = image9.getScaledInstance(iconwidth, iconheight,  java.awt.Image.SCALE_SMOOTH);
+		SkullsIcon = new ImageIcon(newimg9);
 	}
 }

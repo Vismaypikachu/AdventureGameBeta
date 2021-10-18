@@ -16,6 +16,28 @@ public class BackpackHandler implements ActionListener {
 	
 	public void actionPerformed(ActionEvent event) {
 		String yourChoice = event.getActionCommand();
+		switch(yourChoice) {
+			case "backpackRightButton": 
+				if(m_game.m_constants.currentBackpackFrame < 2) {
+					m_game.m_constants.currentBackpackFrame++;
+					m_game.m_backpack.updateBackpack(1);
+					break;
+				}
+				else if(m_game.m_constants.currentBackpackFrame == 2) {
+					m_game.m_backpack.updateBackpack(1);
+					break;
+				}
+			case "backpackLeftButton": 
+				if(m_game.m_constants.currentBackpackFrame > 0) {
+					m_game.m_constants.currentBackpackFrame--;
+					m_game.m_backpack.updateBackpack(1);
+					break;
+				}
+				else if(m_game.m_constants.currentBackpackFrame == 0) {
+					m_game.m_backpack.updateBackpack(1);
+					break;
+				}
+		}
 		if(m_game.m_constants.switchOn == true) {
 			switch(yourChoice) {
 				case "backpack":
@@ -25,9 +47,12 @@ public class BackpackHandler implements ActionListener {
 						m_game.m_ui.inGameOptionsButtons[1].setVisible(false);
 						m_game.m_ui.inGameOptionsButton.setVisible(false);
 						m_game.m_ui.backpackPanel.setVisible(true);
+						m_game.m_ui.backpackNavigationPanel.setVisible(true);
 						m_game.m_ui.backpackTextAreaPanel.setVisible(true);
 						//
 						m_game.m_backpack.updateBackpack(1);
+						//
+						m_game.m_constants.DropStatus = false;
 						//
 						m_game.m_constants.BackpackStatus = "open";
 					}
@@ -35,11 +60,14 @@ public class BackpackHandler implements ActionListener {
 						//
 						m_game.m_backpack.updateBackpack(1);
 						//
+						m_game.m_constants.DropStatus = false;
+						//
 						m_game.m_ui.backpackStatsTextArea.setText("");
 						m_game.m_ui.sidePanel.setVisible(true);
 						m_game.m_ui.inGameOptionsButtons[0].setVisible(true);
 						m_game.m_ui.inGameOptionsButtons[1].setVisible(true);
 						m_game.m_ui.backpackPanel.setVisible(false);
+						m_game.m_ui.backpackNavigationPanel.setVisible(false);
 						m_game.m_ui.backpackTextAreaPanel.setVisible(false);
 						m_game.m_ui.imagePanel.setVisible(true);
 						m_game.m_ui.inGameOptionsButton.setVisible(true);
@@ -74,12 +102,15 @@ public class BackpackHandler implements ActionListener {
 						m_game.m_ui.inGameOptionsButtons[0].setVisible(false);
 						m_game.m_ui.inGameOptionsButtons[1].setVisible(false);
 						m_game.m_ui.backpackPanel.setVisible(true);
+						m_game.m_ui.backpackNavigationPanel.setVisible(true);
 						m_game.m_ui.backpackTextAreaPanel.setVisible(true);
 						m_game.m_ui.backpackButtonPanel.setLayout(new GridLayout(1,2));
 						m_game.m_ui.backpackButtonPanel.add(m_game.m_ui.backpackDropButton);
 						m_game.m_ui.backpackDropButton.setVisible(true);
 						//
 						m_game.m_backpack.updateBackpack(1);
+						//
+						m_game.m_constants.DropStatus = false;
 						//
 						m_game.m_constants.BackpackStatus = "open";
 					}
@@ -91,6 +122,7 @@ public class BackpackHandler implements ActionListener {
 						m_game.m_ui.inGameOptionsButtons[0].setVisible(true);
 						m_game.m_ui.inGameOptionsButtons[1].setVisible(true);
 						m_game.m_ui.backpackPanel.setVisible(false);
+						m_game.m_ui.backpackNavigationPanel.setVisible(false);
 						m_game.m_ui.backpackTextAreaPanel.setVisible(false);
 						m_game.m_ui.backpackDropButton.setVisible(false);
 						m_game.m_ui.backpackButtonPanel.remove(m_game.m_ui.backpackDropButton);
@@ -98,6 +130,9 @@ public class BackpackHandler implements ActionListener {
 						
 						m_game.m_ui.imagePanel.setVisible(true);
 						m_game.m_constants.BackpackStatus = "close";
+						//
+						m_game.m_constants.DropStatus = false;
+						//
 					}
 				break;
 				case "backpackButton1": m_game.m_backpack.displayStats(0); break;

@@ -6,6 +6,7 @@ public class ChocolateBar extends SuperItem {
 		droppable = true;
 		useable = true;
 		stat = 10;
+		displayStat = "10";
 		description = "Chocolatey Goodness ;D";
 		itemType = "Food";
 	}

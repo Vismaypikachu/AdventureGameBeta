@@ -12,13 +12,14 @@ public class game {
 	//packge01
 	public Backpack m_backpack = new Backpack(this);
 	public Constants m_constants = new Constants(this);
-	Images m_images = new Images(this);
+	public Images m_images = new Images(this);
 	public Inventory m_inventory = new Inventory(this);
 	public Player m_player = new Player(this);
-	Sound m_sound = new Sound(this);
+	public Sound m_sound = new Sound(this);
 	public SoundEffect m_se = new SoundEffect();
 	public Story m_story = new Story(this);
 	public UI m_ui = new UI(this);
+	public Update m_update = new Update(this);
 	public VisibilityManager m_vm = new VisibilityManager(this);
 	
 	//package03

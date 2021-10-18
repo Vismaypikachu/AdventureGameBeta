@@ -12,11 +12,11 @@ public class Player {
 	public static SuperItem fishingRod;
 	public static int gold;
 	public static int xp;
-	public static double playerdefense;
+	public static SuperItem shield;
 	public static int capsules;
 	public static boolean specialUnlocked;
-	public static SuperItem [] playerItem = new SuperItem[5];
-	public static SuperItem [] backpackItem = new SuperItem[15];
+	public static SuperItem[] playerItem = new SuperItem[5];
+	public static SuperItem[] backpackItem = new SuperItem[45];
 	public static SuperItem backup;
 	public static String playerType;
 	

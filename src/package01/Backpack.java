@@ -31,12 +31,20 @@ public class Backpack {
 	
 	public void updateBackpack(int number) {
 		m_game.m_inventory.updateInventory();
+		//Update NAV Header
+		switch(m_game.m_constants.currentBackpackFrame) {
+			case 0: m_game.m_ui.backpackNavigationLabel.setText("Food Items"); break;
+			case 1: m_game.m_ui.backpackNavigationLabel.setText("Equipment"); break;
+			case 2: m_game.m_ui.backpackNavigationLabel.setText("Key Items"); break;
+		}
+		
+		//Update Buttons
 		if(number == 1) {
 			if(m_game.m_constants.switchOn == true) m_game.m_ui.backpackTextArea.setText("Please select the item to move to your inventory.");
 			else m_game.m_ui.backpackTextArea.setText("Press Switch to move an item to your inventory. \nIf you do not have any space, the item will be dropped");
 			//
 			for(int i = 0; i < m_game.m_ui.backpackButtons.length-1; i++) {
-				m_game.m_ui.backpackButtons[i].setText(m_game.m_player.backpackItem[i].name);
+				m_game.m_ui.backpackButtons[i].setText(m_game.m_player.backpackItem[getFrame(i)].name);
 			}
 			//
 		}
@@ -45,7 +53,7 @@ public class Backpack {
 			m_game.m_ui.backpackTextArea.setText("Not a valid selection, please try again.");
 			//
 			for(int i = 0; i < m_game.m_ui.backpackButtons.length-1; i++) {
-				m_game.m_ui.backpackButtons[i].setText(m_game.m_player.backpackItem[i].name);
+				m_game.m_ui.backpackButtons[i].setText(m_game.m_player.backpackItem[getFrame(i)].name);
 			}
 			//
 		}	
@@ -53,6 +61,7 @@ public class Backpack {
 	}
 
 	public void backpackSwitch(int slotNumber) {
+		slotNumber = m_game.m_backpack.getFrame(slotNumber);
 		updateBackpack(1);
 		if(m_game.m_player.backpackItem[slotNumber].droppable == false) {
 			updateBackpack(0);
@@ -68,16 +77,46 @@ public class Backpack {
 	}
 	
 	public void addBackpackItem(SuperItem item) {
-		int slotNumber = 0;
-		while(!m_game.m_player.backpackItem[slotNumber].name.equals("[Empty]") && slotNumber < m_game.m_player.backpackItem.length-1) slotNumber++;
-		if(slotNumber == m_game.m_player.backpackItem.length-1 && !m_game.m_player.backpackItem[m_game.m_player.backpackItem.length-1].name.equals("[Empty]")) noEmptySlots(item);
-		
-		else {
-			if(m_game.m_player.backpackItem[slotNumber].name.equals("[Empty]")) {
-				m_game.m_player.backpackItem[slotNumber] = item;
-				updateBackpack(1);
+		//add Food Type
+		if(item.itemType.equals("Food")) {
+			int slotNumber = 0;
+			while(!m_game.m_player.backpackItem[slotNumber].name.equals("[Empty]") && slotNumber < 14) slotNumber++;
+			if(slotNumber == 14 && !m_game.m_player.backpackItem[14].name.equals("[Empty]")) noEmptySlots(item);
+			
+			else {
+				if(m_game.m_player.backpackItem[slotNumber].name.equals("[Empty]")) {
+					m_game.m_player.backpackItem[slotNumber] = item;
+					updateBackpack(1);
+				}
+				else if (!m_game.m_player.backpackItem[slotNumber].name.equals("[Empty]")) noEmptySlots(item);
 			}
-			else if (!m_game.m_player.backpackItem[slotNumber].name.equals("[Empty]")) noEmptySlots(item);
+		}
+		//add Equipment Type
+		if(item.itemType.equals("Equipment")) {
+			int slotNumber = 15;
+			while(!m_game.m_player.backpackItem[slotNumber].name.equals("[Empty]") && slotNumber < 29) slotNumber++;
+			if(slotNumber == 29 && !m_game.m_player.backpackItem[29].name.equals("[Empty]")) noEmptySlots(item);
+			
+			else {
+				if(m_game.m_player.backpackItem[slotNumber].name.equals("[Empty]")) {
+					m_game.m_player.backpackItem[slotNumber] = item;
+					updateBackpack(1);
+				}
+				else if (!m_game.m_player.backpackItem[slotNumber].name.equals("[Empty]")) noEmptySlots(item);
+			}
+		}
+		//add Key Item Type
+		if(item.itemType.equals("Key")) {
+			int slotNumber = 30;
+			while(!m_game.m_player.backpackItem[slotNumber].name.equals("[Empty]") && slotNumber < 45) slotNumber++;
+			if(slotNumber == 45 && !m_game.m_player.backpackItem[45].name.equals("[Empty]")) noEmptySlots(item);	
+			else {
+				if(m_game.m_player.backpackItem[slotNumber].name.equals("[Empty]")) {
+					m_game.m_player.backpackItem[slotNumber] = item;
+					updateBackpack(1);
+				}
+				else if (!m_game.m_player.backpackItem[slotNumber].name.equals("[Empty]")) noEmptySlots(item);
+			}
 		}
 	}
 	
@@ -119,10 +158,45 @@ public class Backpack {
 	}
 
 	public void displayStats(int i) {
-		String name = m_game.m_player.backpackItem[i].name;
-		int chance = m_game.m_player.backpackItem[i].stat;
-		String description = m_game.m_player.backpackItem[i].description;
-		m_game.m_ui.backpackStatsTextArea.setText("Name: " + name + "\nStat: " + chance + "\nDescription: \n" + description);
+		String name = m_game.m_player.backpackItem[getFrame(i)].name;
+		String stat = m_game.m_player.backpackItem[getFrame(i)].displayStat;
+		String description = m_game.m_player.backpackItem[getFrame(i)].description;
+		m_game.m_ui.backpackStatsTextArea.setText("Name: " + name + "\nStat: " + stat + "\nDescription: \n" + description);
 	}
 
+	public int getFrame(int x) {
+		if(m_game.m_constants.currentBackpackFrame == 0) {
+			return x;
+		}
+		else if(m_game.m_constants.currentBackpackFrame == 1) {
+			return x+15;
+		}
+		else if(m_game.m_constants.currentBackpackFrame == 2) {
+			return x+30;
+		}
+		else {
+			return 0;
+		}
+	}
+
+	public boolean contains(SuperItem item) {
+		boolean contains = false;
+		int frame = 0;
+		if(item.itemType.equals("Food")) {
+			frame = 0;
+		}
+		else if(item.itemType.equals("Equipment")) {
+			frame = 15;
+		}
+		else if(item.itemType.equals("Key")) {
+			frame = 30;
+		}
+		
+		for(int i = frame; i < m_game.m_player.backpackItem.length; i++) {
+			if(m_game.m_player.backpackItem[i].name.equals(item.name)) {
+				contains = true;
+			}
+		}
+		return contains;
+	}
 }
