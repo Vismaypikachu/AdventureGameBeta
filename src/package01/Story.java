@@ -84,30 +84,35 @@ public class Story {
 		gameOverPanel.setVisible(true);
 		con.add(gameOverPanel);
 		*/
-		statschange();
-		//if(m_game.m_constants.position.equals("gameover")) {
-			m_game.m_ui.choice1.setText("Main Menu");
-			m_game.m_ui.choice2.setText("Exit Game");
+		if(m_game.m_constants.position.equals("gameover")) {
+			m_game.m_constants.position = "gameover";
+			setChoices("Main Menu", "Exit Game", "Load from Last Save", "");
+			setNextPosition("gomenu", "exitGame", "loadGame", "");
 			m_game.m_ui.mainTextArea.setText("Seems like you died... Oh well. Lets go back");
 			m_game.m_ui.choice1.setVisible(true);
 			m_game.m_ui.choice2.setVisible(true);
-			m_game.m_ui.choiceButtonPanel.remove(m_game.m_ui.choice3);
+			m_game.m_ui.choice3.setVisible(true);
 			m_game.m_ui.choiceButtonPanel.remove(m_game.m_ui.choice4);
 			m_game.m_ui.choiceButtonPanel.remove(m_game.m_ui.specialattack);
 			m_game.m_ui.inventoryButton.setVisible(false);
 			m_game.m_ui.inGameOptionsButton.setVisible(false);
 			m_game.m_ui.sidePanel.setVisible(false);
 			m_game.m_ui.sidePanel.setVisible(false);
-		//}
-		//else {
 			m_game.m_constants.reinitializeVars();
-			m_game.m_constants.position.equals("gameoverStart");
+		}
+		else {
+			m_game.m_constants.reinitializeVars();
+			m_game.m_ui.mainTextArea.setText("You don't have a saveFile. Please start a game to save your progress.");
 			setChoices("Continue", "", "", "");
 			setNextPosition("gomenu", "", "", "");
-		//}
+		}
 	}
 	
 	public void statschange() {
+		if(m_game.m_player.playerHP <= 0 && !m_game.m_constants.position.equals("noLoad")) {
+			m_game.m_constants.position = "gameover";
+			m_game.m_story.gameover();
+		}
 		m_game.m_ui.hpLabelNumber.setText("" + m_game.m_player.playerHP);
 		m_game.m_ui.goldLabelNumber.setText("" + m_game.m_player.gold);
 		m_game.m_ui.xpLabelNumber.setText("" + m_game.m_player.xp);
@@ -201,6 +206,7 @@ public class Story {
 				else {
 					m_game.m_ui.createUIComponent(); m_game.m_ui.setFullScreen(); break;
 				}
+			case "exitGame": System.exit(0); break;
 			case "battlewon":
 				switch(m_game.m_constants.enemyPosition) {
 					case "practice": inn(); break;
@@ -211,6 +217,7 @@ public class Story {
 					case "seaweedguard": seaweedTowers(); break;
 				}
 			break;
+			case "loadGame": m_game.m_sound.stop(); m_game.m_story.loadData(); break;
 			case "reel": m_game.m_fishing.reel(); break;
 			case "fishingdone":
 				switch(m_game.m_constants.fishingPosition) {
@@ -294,11 +301,23 @@ public class Story {
 			case "seaweedbattle": m_game.m_constants.enemyPosition = "seaweedguard"; m_game.m_constants.currentEnemy = new Guard(); m_game.m_battle.enemyattack(); break;
 			case "seaweedchild": seaweedChild(); break;
 			case "seaweedchief": seaweedChief(); break;
+			//---------------------------THE TWILIGHT ZONE---------------------------
+			//shipwreck
+			case "thetwilightzone": theTwilightZone(); break;
+			case "shipwreck": shipwreck(); break;
 			//---------------------------SEAFOOD MARKET---------------------------
 			case "seafoodmarket": seafoodMarket(); break;
 			case "oldwoman": oldWoman(); break;
 			
 			//---------------------------SNOW MOUNTAINS---------------------------SNOW MOUNTAINS---------------------------SNOW MOUNTAINS---------------------------
+		}
+	}
+	
+	public void updateButtonIcons() {
+		switch(m_game.m_constants.position) {
+			case "saltySea": m_game.m_ui.choice3.setIcon(m_game.m_images.CapsulesIcon); break;
+			case "seaweedTowersUnlocked": m_game.m_ui.choice1.setIcon(m_game.m_images.SkullsIcon); break;
+			default: m_game.m_ui.choice1.setIcon(null);  m_game.m_ui.choice2.setIcon(null); m_game.m_ui.choice3.setIcon(null); m_game.m_ui.choice4.setIcon(null); break;
 		}
 	}
 	
@@ -1246,17 +1265,16 @@ public class Story {
 	
 	public void saltySea() {
 		//TODO add lock icons
-		m_game.m_constants.position = "saltySea";
 		m_game.m_ui.mainTextArea.setText("You have reached the Salty Sea biome.\nYou cannot continue until you unlock the Twilight Zone.\nLets continue!");
 		
 		if(m_game.m_backpack.contains(new FishingRod(0)) == false || m_game.m_backpack.contains(new BreathingMask()) == false) {
+			m_game.m_constants.position = "saltySea";
 			setChoices("The Shallows", "The Briny Deep", "The Twilight Zone", "Seafood Market");
-			m_game.m_ui.choice3.setIcon(m_game.m_images.CapsulesIcon);
 			setNextPosition("theshallows", "thebrinydeep", "", "seafoodmarket");
 		}
 		else if(m_game.m_backpack.contains(new FishingRod(0)) == true && m_game.m_backpack.contains(new BreathingMask()) == true){
+			m_game.m_constants.position = "saltySeaUnlocked";
 			setChoices("The Shallows", "The Briny Deep", "The Twilight Zone", "Seafood Market");
-			m_game.m_ui.choice3.setIcon(null);
 			setNextPosition("theshallows", "thebrinydeep", "thetwilightzone", "seafoodmarket");
 		}		
 	}
@@ -1295,7 +1313,7 @@ public class Story {
 	public void unlockFishing() {
 		boolean fish = false;
 		m_game.m_constants.position = "unlockFishing";
-		if(m_game.m_backpack.contains(new BreathingMask()) == true) fish = true;
+		if(m_game.m_backpack.contains(new FishingRod(0)) == true) fish = true;
 		if(fish == false) {
 			int chance = r.nextInt((20-10)+1)+10;
 			m_game.m_player.fishingRod = new FishingRod(chance);
@@ -1322,11 +1340,9 @@ public class Story {
 	//------------------------------THE BRINY DEEP-------------------------------
 	
 	public void theBrinyDeep() {
-		/*TODO seaweed towers have people living*/
 		m_game.m_constants.position = "theBrinyDeep";
-		m_game.m_ui.choice1.setIcon(null);
 		
-		m_game.m_ui.mainTextArea.setText("You have entered the Briny Deep. A salty and dark place, many ships lie upon the seabed.\nWhere do you go next?");
+		m_game.m_ui.mainTextArea.setText("You have entered the Briny Deep. A salty and dark place, many creatures swim between the seaweed.\nWhere do you go next?");
 	
 		
 		setChoices("Explore Caves", "Seaweed Towers", "", "Go Back to The Salty Sea");
@@ -1407,17 +1423,17 @@ public class Story {
 	}
 
 	public void seaweedTowers() {
-		m_game.m_constants.position = "seaweedTowers";
-		
 		m_game.m_ui.mainTextArea.setText("You have entered the Underwater Caves. A narrow and dark place, many Sea Urchins lie upon its walls.\nWhere do you go next?");
 	
 		if(m_game.m_constants.seaweedGuard == false) {
+			m_game.m_constants.position = "seaweedTowers";
 			setChoices("Talk to the Guard", "Talk to the Child", "Talk to the Chief", "Go Back to The Briny Deep");
 			setNextPosition("seaweedguard", "seaweedchild", "", "thebrinydeep");
 		}
 		else if(m_game.m_constants.seaweedGuard == true) {
 			//TODO add lock
-			m_game.m_ui.choice1.setIcon(m_game.m_images.SkullsIcon);
+			m_game.m_constants.position = "seaweedTowersUnlocked";
+			
 			setChoices("Talk to the Corpse", "Talk to the Child", "Talk to the Chief", "Go Back to The Briny Deep");
 			setNextPosition("seaweedguard", "seaweedchild", "seaweedchief", "thebrinydeep");
 		}
@@ -1425,7 +1441,6 @@ public class Story {
 	
 	public void seaweedGuard() {
 		m_game.m_constants.position = "seaweedGuard";
-		m_game.m_ui.choice1.setIcon(null);
 		if(m_game.m_constants.seaweedGuard == false) {
 			m_game.m_constants.seaweedGuard = true;
 			m_game.m_ui.mainTextArea.setText("You talk to the Guard.\nGuard: YOU! What are you doing here!");
@@ -1445,7 +1460,6 @@ public class Story {
 	public void seaweedChild() {
 		m_game.m_constants.position = "seaweedChild";
 		
-		m_game.m_ui.choice1.setIcon(null);
 		m_game.m_ui.mainTextArea.setText("You talk to the Child.\nChild: Blub Blub Blub");
 	
 		setChoices("", "Continue", "", "");
@@ -1454,7 +1468,6 @@ public class Story {
 	
 	public void seaweedChief() {
 		m_game.m_constants.position = "seaweedChief";
-		m_game.m_ui.choice1.setIcon(null);
 		
 		m_game.m_ui.mainTextArea.setText("You talk to the Chief.\nChief: Welcome to the Seaweed Towers. Please don't kill us, that Guard thought you were an Enemy.\nPlease take this Seaweed Shield for our repentance.\n(You recieved a Seaweed Shield)");
 		m_game.m_player.shield = new SeaweedShield();
@@ -1466,24 +1479,31 @@ public class Story {
 	}
 	
 	//------------------------------THE TWILIGHT ZONE-------------------------------
-	
+	//TODO add under water ruins
 	public void theTwilightZone() {
 		/*shipwreck will have shark, shark tooth will add attack*/
+		
+		m_game.m_constants.position = "theTwilightZone";		
+		m_game.m_ui.mainTextArea.setText("You have entered The Twilight Zone. The bottom of the sea, many ships lie upon the seabed.\nWhere do you go next?");
+	
+		
+		setChoices("Explore Shipwreck", "Underwater Ruins", "", "Go Back to The Salty Sea");
+		setNextPosition("shipwreck", "underwaterRuins", "", "saltysea");
 	}
 	
 	public void shipwreck() {
 		m_game.m_constants.position = "shipwreck";
 		
-		m_game.m_ui.mainTextArea.setText("You decide to investigate the Shipwreck's which lie upon the floor. A narrow and dark place, many Sea Urchins lie upon its walls.\nWhere do you go next?");
+		m_game.m_ui.mainTextArea.setText("You decide to investigate the Shipwreck's which lie upon the floor. \nWhere do you go next?");
 	
 		
-		setChoices("Tunnel A", "Tunnel B", "Tunnel C", "Go Back to The Salty");
+		setChoices("The Hold", "Crew Quarters", "Captain's Quarters", "thetwilightzone");
+		setNextPosition("", "", "", "");
 	}
 	
-	//------------------------------THE TWILIGHT ZONE-------------------------------
-	//TODO add under water ruins
-	
-	
+	public void underwaterRuins() {
+		
+	}
 	//------------------------------SEAFOOD MARKET-------------------------------
 	
 	public void seafoodMarket() {

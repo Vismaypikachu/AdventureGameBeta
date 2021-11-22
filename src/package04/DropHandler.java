@@ -66,7 +66,7 @@ public class DropHandler implements ActionListener{
 			m_game.m_ui.sidePanel.setVisible(false);
 			m_game.m_constants.InventoryStatus = "close";
 			m_game.m_constants.OptionsStatus = "close";
-			m_game.m_backpack.updateBackpack(1);
+			m_game.m_backpack.displayTextResult(1);
 		}
 		else if(m_game.m_player.backpackItem[i].droppable == false) {
 			m_game.m_ui.backpackTextArea.setText("You cannot drop that item, please select a different item.");

@@ -20,21 +20,21 @@ public class BackpackHandler implements ActionListener {
 			case "backpackRightButton": 
 				if(m_game.m_constants.currentBackpackFrame < 2) {
 					m_game.m_constants.currentBackpackFrame++;
-					m_game.m_backpack.updateBackpack(1);
+					m_game.m_backpack.displayTextResult(1);
 					break;
 				}
 				else if(m_game.m_constants.currentBackpackFrame == 2) {
-					m_game.m_backpack.updateBackpack(1);
+					m_game.m_backpack.displayTextResult(1);
 					break;
 				}
 			case "backpackLeftButton": 
 				if(m_game.m_constants.currentBackpackFrame > 0) {
 					m_game.m_constants.currentBackpackFrame--;
-					m_game.m_backpack.updateBackpack(1);
+					m_game.m_backpack.displayTextResult(1);
 					break;
 				}
 				else if(m_game.m_constants.currentBackpackFrame == 0) {
-					m_game.m_backpack.updateBackpack(1);
+					m_game.m_backpack.displayTextResult(1);
 					break;
 				}
 		}
@@ -50,7 +50,7 @@ public class BackpackHandler implements ActionListener {
 						m_game.m_ui.backpackNavigationPanel.setVisible(true);
 						m_game.m_ui.backpackTextAreaPanel.setVisible(true);
 						//
-						m_game.m_backpack.updateBackpack(1);
+						m_game.m_backpack.displayTextResult(1);
 						//
 						m_game.m_constants.DropStatus = false;
 						//
@@ -58,7 +58,7 @@ public class BackpackHandler implements ActionListener {
 					}
 					else if(m_game.m_constants.BackpackStatus.equals("open")) {
 						//
-						m_game.m_backpack.updateBackpack(1);
+						m_game.m_backpack.displayTextResult(1);
 						//
 						m_game.m_constants.DropStatus = false;
 						//
@@ -75,21 +75,21 @@ public class BackpackHandler implements ActionListener {
 						m_game.m_constants.switchOn = false;
 					}
 				break;
-				case "backpackButton1": m_game.m_backpack.backpackSwitch(0); m_game.m_constants.switchOn = false; m_game.m_ui.backpackTextArea.setText("Press Switch to move an item to your inventory. \nIf you do not have any space, the item will be dropped"); break;
-				case "backpackButton2": m_game.m_backpack.backpackSwitch(1); m_game.m_constants.switchOn = false; m_game.m_ui.backpackTextArea.setText("Press Switch to move an item to your inventory. \nIf you do not have any space, the item will be dropped"); break;
-				case "backpackButton3": m_game.m_backpack.backpackSwitch(2); m_game.m_constants.switchOn = false; m_game.m_ui.backpackTextArea.setText("Press Switch to move an item to your inventory. \nIf you do not have any space, the item will be dropped"); break;
-				case "backpackButton4": m_game.m_backpack.backpackSwitch(3); m_game.m_constants.switchOn = false; m_game.m_ui.backpackTextArea.setText("Press Switch to move an item to your inventory. \nIf you do not have any space, the item will be dropped"); break;
-				case "backpackButton5": m_game.m_backpack.backpackSwitch(4); m_game.m_constants.switchOn = false; m_game.m_ui.backpackTextArea.setText("Press Switch to move an item to your inventory. \nIf you do not have any space, the item will be dropped"); break;
-				case "backpackButton6": m_game.m_backpack.backpackSwitch(5); m_game.m_constants.switchOn = false; m_game.m_ui.backpackTextArea.setText("Press Switch to move an item to your inventory. \nIf you do not have any space, the item will be dropped"); break;
-				case "backpackButton7": m_game.m_backpack.backpackSwitch(6); m_game.m_constants.switchOn = false; m_game.m_ui.backpackTextArea.setText("Press Switch to move an item to your inventory. \nIf you do not have any space, the item will be dropped"); break;
-				case "backpackButton8": m_game.m_backpack.backpackSwitch(7); m_game.m_constants.switchOn = false; m_game.m_ui.backpackTextArea.setText("Press Switch to move an item to your inventory. \nIf you do not have any space, the item will be dropped"); break;
-				case "backpackButton9": m_game.m_backpack.backpackSwitch(8); m_game.m_constants.switchOn = false; m_game.m_ui.backpackTextArea.setText("Press Switch to move an item to your inventory. \nIf you do not have any space, the item will be dropped"); break;
-				case "backpackButton10": m_game.m_backpack.backpackSwitch(9); m_game.m_constants.switchOn = false; m_game.m_ui.backpackTextArea.setText("Press Switch to move an item to your inventory. \nIf you do not have any space, the item will be dropped"); break;
-				case "backpackButton11": m_game.m_backpack.backpackSwitch(10); m_game.m_constants.switchOn = false; m_game.m_ui.backpackTextArea.setText("Press Switch to move an item to your inventory. \nIf you do not have any space, the item will be dropped"); break;
-				case "backpackButton12": m_game.m_backpack.backpackSwitch(11); m_game.m_constants.switchOn = false; m_game.m_ui.backpackTextArea.setText("Press Switch to move an item to your inventory. \nIf you do not have any space, the item will be dropped"); break;
-				case "backpackButton13": m_game.m_backpack.backpackSwitch(12); m_game.m_constants.switchOn = false; m_game.m_ui.backpackTextArea.setText("Press Switch to move an item to your inventory. \nIf you do not have any space, the item will be dropped"); break;
-				case "backpackButton14": m_game.m_backpack.backpackSwitch(13); m_game.m_constants.switchOn = false; m_game.m_ui.backpackTextArea.setText("Press Switch to move an item to your inventory. \nIf you do not have any space, the item will be dropped"); break;
-				case "backpackButton15": m_game.m_backpack.backpackSwitch(14); m_game.m_constants.switchOn = false; m_game.m_ui.backpackTextArea.setText("Press Switch to move an item to your inventory. \nIf you do not have any space, the item will be dropped"); break;
+				case "backpackButton1": m_game.m_backpack.backpackSwitch(0); m_game.m_constants.switchOn = false; break;
+				case "backpackButton2": m_game.m_backpack.backpackSwitch(1); m_game.m_constants.switchOn = false; break;
+				case "backpackButton3": m_game.m_backpack.backpackSwitch(2); m_game.m_constants.switchOn = false; break;
+				case "backpackButton4": m_game.m_backpack.backpackSwitch(3); m_game.m_constants.switchOn = false; break;
+				case "backpackButton5": m_game.m_backpack.backpackSwitch(4); m_game.m_constants.switchOn = false; break;
+				case "backpackButton6": m_game.m_backpack.backpackSwitch(5); m_game.m_constants.switchOn = false; break;
+				case "backpackButton7": m_game.m_backpack.backpackSwitch(6); m_game.m_constants.switchOn = false; break;
+				case "backpackButton8": m_game.m_backpack.backpackSwitch(7); m_game.m_constants.switchOn = false; break;
+				case "backpackButton9": m_game.m_backpack.backpackSwitch(8); m_game.m_constants.switchOn = false; break;
+				case "backpackButton10": m_game.m_backpack.backpackSwitch(9); m_game.m_constants.switchOn = false; break;
+				case "backpackButton11": m_game.m_backpack.backpackSwitch(10); m_game.m_constants.switchOn = false; break;
+				case "backpackButton12": m_game.m_backpack.backpackSwitch(11); m_game.m_constants.switchOn = false; break;
+				case "backpackButton13": m_game.m_backpack.backpackSwitch(12); m_game.m_constants.switchOn = false; break;
+				case "backpackButton14": m_game.m_backpack.backpackSwitch(13); m_game.m_constants.switchOn = false; break;
+				case "backpackButton15": m_game.m_backpack.backpackSwitch(14); m_game.m_constants.switchOn = false; break;
 				case "backpackSwitchButton": m_game.m_constants.switchOn = false; m_game.m_ui.backpackTextArea.setText("Press Switch to move an item to your inventory. \nIf you do not have any space, the item will be dropped"); break;
 			}
 		}
@@ -108,7 +108,7 @@ public class BackpackHandler implements ActionListener {
 						m_game.m_ui.backpackButtonPanel.add(m_game.m_ui.backpackDropButton);
 						m_game.m_ui.backpackDropButton.setVisible(true);
 						//
-						m_game.m_backpack.updateBackpack(1);
+						m_game.m_backpack.displayTextResult(1);
 						//
 						m_game.m_constants.DropStatus = false;
 						//
@@ -116,7 +116,7 @@ public class BackpackHandler implements ActionListener {
 					}
 					else if(m_game.m_constants.BackpackStatus.equals("open")) {
 						//
-						m_game.m_backpack.updateBackpack(1);
+						m_game.m_backpack.displayTextResult(1);
 						//
 						m_game.m_ui.backpackStatsTextArea.setText("");
 						m_game.m_ui.inGameOptionsButtons[0].setVisible(true);

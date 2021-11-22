@@ -47,6 +47,8 @@ public class Update implements Runnable {
 	
 	public void update() {
 		m_game.m_story.statschange();
-		m_game.m_backpack.updateBackpack(1);
+		m_game.m_backpack.updateBackpack();
+		m_game.m_inventory.updateInventory();
+		m_game.m_story.updateButtonIcons();
 	}
 }

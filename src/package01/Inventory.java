@@ -40,17 +40,20 @@ public class Inventory {
 	}
 	
 	public void addInventoryItem(SuperItem item) {
-		int slotNumber = 0;
-		while(!m_game.m_player.playerItem[slotNumber].name.equals("[Empty]") && slotNumber < 4) slotNumber++;
-		
-		if(m_game.m_player.playerItem[slotNumber].name.equals("[Empty]")) {
-			m_game.m_player.playerItem[slotNumber] = item;
-		}
-		
+		if(!item.itemType.equals("Food")) m_game.m_backpack.addBackpackItem(item);
 		else {
-			String currentText = m_game.m_ui.mainTextArea.getText();
-			m_game.m_ui.mainTextArea.setText(currentText + "\nInventory is full, item sent to backpack.");
-			m_game.m_backpack.addBackpackItem(item);
+			int slotNumber = 0;
+			while(!m_game.m_player.playerItem[slotNumber].name.equals("[Empty]") && slotNumber < 4) slotNumber++;
+			
+			if(m_game.m_player.playerItem[slotNumber].name.equals("[Empty]")) {
+				m_game.m_player.playerItem[slotNumber] = item;
+			}
+			
+			else {
+				String currentText = m_game.m_ui.mainTextArea.getText();
+				m_game.m_ui.mainTextArea.setText(currentText + "\nInventory is full, item sent to backpack.");
+				m_game.m_backpack.addBackpackItem(item);
+			}
 		}
 	}
 }

@@ -29,8 +29,7 @@ public class Backpack {
 		m_game = g;
 	}
 	
-	public void updateBackpack(int number) {
-		m_game.m_inventory.updateInventory();
+	public void updateBackpack() {
 		//Update NAV Header
 		switch(m_game.m_constants.currentBackpackFrame) {
 			case 0: m_game.m_ui.backpackNavigationLabel.setText("Food Items"); break;
@@ -39,39 +38,34 @@ public class Backpack {
 		}
 		
 		//Update Buttons
-		if(number == 1) {
-			if(m_game.m_constants.switchOn == true) m_game.m_ui.backpackTextArea.setText("Please select the item to move to your inventory.");
-			else m_game.m_ui.backpackTextArea.setText("Press Switch to move an item to your inventory. \nIf you do not have any space, the item will be dropped");
-			//
-			for(int i = 0; i < m_game.m_ui.backpackButtons.length-1; i++) {
-				m_game.m_ui.backpackButtons[i].setText(m_game.m_player.backpackItem[getFrame(i)].name);
-			}
-			//
-		}
-		
-		if(number == 0) {
-			m_game.m_ui.backpackTextArea.setText("Not a valid selection, please try again.");
-			//
-			for(int i = 0; i < m_game.m_ui.backpackButtons.length-1; i++) {
-				m_game.m_ui.backpackButtons[i].setText(m_game.m_player.backpackItem[getFrame(i)].name);
-			}
-			//
+		for(int i = 0; i < m_game.m_ui.backpackButtons.length-1; i++) {
+			m_game.m_ui.backpackButtons[i].setText(m_game.m_player.backpackItem[getFrame(i)].name);
 		}	
-		
 	}
 
+	
+	public void displayTextResult(int number) {
+		if(number == 0) {
+			m_game.m_ui.backpackTextArea.setText("Not a valid selection, please try again.");
+		}
+		else if(number == 1) {
+			if(m_game.m_constants.switchOn == true) m_game.m_ui.backpackTextArea.setText("Please select the item to move to your inventory.");
+			else if(m_game.m_constants.switchOn == false) m_game.m_ui.backpackTextArea.setText("Press Switch to move an item to your inventory. \nIf you do not have any space, the item will be dropped");
+		}
+	}
+	
 	public void backpackSwitch(int slotNumber) {
 		slotNumber = m_game.m_backpack.getFrame(slotNumber);
-		updateBackpack(1);
 		if(m_game.m_player.backpackItem[slotNumber].droppable == false) {
-			updateBackpack(0);
+			displayTextResult(0);
 		}
-		else {
+		else if(m_game.m_player.backpackItem[slotNumber].droppable == true){
 			switch(m_game.m_player.backpackItem[slotNumber].name) {
-				case "Potion":  m_game.m_player.backpackItem[slotNumber] = new Empty(); m_game.m_inventory.addInventoryItem(new Potion()); m_game.m_ui.backpackTextArea.setText("Press Switch to move an item to your inventory. If you do not have any space, the item will be dropped"); updateBackpack(1); break;
-				case "C. Bar": m_game.m_player.backpackItem[slotNumber] = new Empty(); m_game.m_inventory.addInventoryItem(new ChocolateBar()); m_game.m_ui.backpackTextArea.setText("Press Switch to move an item to your inventory. If you do not have any space, the item will be dropped"); updateBackpack(1); break;
-				case "Apple": m_game.m_player.backpackItem[slotNumber] = new Empty(); m_game.m_inventory.addInventoryItem(new Apple()); m_game.m_ui.backpackTextArea.setText("Press Switch to move an item to your inventory. If you do not have any space, the item will be dropped"); updateBackpack(1); break;
-				case "Fish": m_game.m_player.backpackItem[slotNumber] = new Empty(); m_game.m_inventory.addInventoryItem(new Fish()); m_game.m_ui.backpackTextArea.setText("Press Switch to move an item to your inventory. If you do not have any space, the item will be dropped"); updateBackpack(1); break;
+				case "Potion":  m_game.m_player.backpackItem[slotNumber] = new Empty(); m_game.m_inventory.addInventoryItem(new Potion()); displayTextResult(1); break;
+				case "C. Bar": m_game.m_player.backpackItem[slotNumber] = new Empty(); m_game.m_inventory.addInventoryItem(new ChocolateBar());  displayTextResult(1); break;
+				case "Apple": m_game.m_player.backpackItem[slotNumber] = new Empty(); m_game.m_inventory.addInventoryItem(new Apple()); displayTextResult(1); break;
+				case "Fish": m_game.m_player.backpackItem[slotNumber] = new Empty(); m_game.m_inventory.addInventoryItem(new Fish()); displayTextResult(1); break;
+				//case "[Empty]": m_game.m_player.backpackItem[slotNumber] = new Empty(); m_game.m_inventory.addInventoryItem(new Empty()); checkSwitch(0); break;
 			}
 		}
 	}
@@ -86,7 +80,7 @@ public class Backpack {
 			else {
 				if(m_game.m_player.backpackItem[slotNumber].name.equals("[Empty]")) {
 					m_game.m_player.backpackItem[slotNumber] = item;
-					updateBackpack(1);
+					displayTextResult(1);
 				}
 				else if (!m_game.m_player.backpackItem[slotNumber].name.equals("[Empty]")) noEmptySlots(item);
 			}
@@ -100,7 +94,7 @@ public class Backpack {
 			else {
 				if(m_game.m_player.backpackItem[slotNumber].name.equals("[Empty]")) {
 					m_game.m_player.backpackItem[slotNumber] = item;
-					updateBackpack(1);
+					displayTextResult(1);
 				}
 				else if (!m_game.m_player.backpackItem[slotNumber].name.equals("[Empty]")) noEmptySlots(item);
 			}
@@ -113,7 +107,7 @@ public class Backpack {
 			else {
 				if(m_game.m_player.backpackItem[slotNumber].name.equals("[Empty]")) {
 					m_game.m_player.backpackItem[slotNumber] = item;
-					updateBackpack(1);
+					displayTextResult(1);
 				}
 				else if (!m_game.m_player.backpackItem[slotNumber].name.equals("[Empty]")) noEmptySlots(item);
 			}
@@ -181,18 +175,8 @@ public class Backpack {
 
 	public boolean contains(SuperItem item) {
 		boolean contains = false;
-		int frame = 0;
-		if(item.itemType.equals("Food")) {
-			frame = 0;
-		}
-		else if(item.itemType.equals("Equipment")) {
-			frame = 15;
-		}
-		else if(item.itemType.equals("Key")) {
-			frame = 30;
-		}
 		
-		for(int i = frame; i < m_game.m_player.backpackItem.length; i++) {
+		for(int i = 0; i < m_game.m_player.backpackItem.length; i++) {
 			if(m_game.m_player.backpackItem[i].name.equals(item.name)) {
 				contains = true;
 			}

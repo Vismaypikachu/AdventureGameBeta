@@ -33,8 +33,6 @@ public class InventoryHandler implements ActionListener{
 					m_game.m_ui.sidePanel.setLayout(new GridLayout(5,1));
 					m_game.m_ui.sidePanel.setVisible(true);
 					//
-					m_game.m_inventory.updateInventory();
-					//
 					m_game.m_constants.InventoryStatus = "open";
 				}
 				else if(m_game.m_constants.InventoryStatus.equals("open")) {
