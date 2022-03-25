@@ -51,7 +51,7 @@ public class OptionsHandler implements ActionListener {
 					m_game.m_ui.inGameOptionsButtons[1].setText("Small Screen");
 					m_game.m_ui.inGameOptionsButtons[2].setText("Main Menu");
 					m_game.m_ui.inGameOptionsButtons[3].setText("Exit Game");
-					m_game.m_ui.inGameOptionsButtons[4].setText("Show Backpack");
+					m_game.m_ui.inGameOptionsButtons[4].setText("------");
 					m_game.m_constants.OptionsStatus = "open";
 				}
 				else if(m_game.m_constants.OptionsStatus.equals("open")) {

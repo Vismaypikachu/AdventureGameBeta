@@ -14,8 +14,8 @@ public class GameoverHandler implements ActionListener{
 	}
 
 	public void actionPerformed(ActionEvent event) {
-		
-		if(m_game.m_player.playerHP <= 0) {
+		if(m_game.m_player.playerHP <= 0 && !m_game.m_constants.position.equals("noLoad")) {
+			m_game.m_constants.position = "gameover";
 			m_game.m_story.gameover();
 		}
 	}

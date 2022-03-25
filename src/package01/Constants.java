@@ -27,7 +27,8 @@ public class Constants {
 	//UI
 	public static int currentScreenWidth = 1070;
 	public static int currentScreenHeight = 712;
-	public static boolean buttonBorderOn = false;;
+	public static boolean buttonBorderOn = false;
+	public static int fps = 30;
 	//FONT
 	public static int titleFontSize;
 	public static int normalFontSize;
@@ -36,6 +37,12 @@ public class Constants {
 	public static int credits3FontSize;
 	public static int backpackFontSize;
 	public static Border blackline = BorderFactory.createLineBorder(Color.white);
+	//COLOR
+	public static Color black = Color.black;
+	public static Color red = Color.red;
+	public static Color white = Color.white;
+	public static Color blue = Color.blue;
+	public static Color green = Color.green;
 	//SOUND
 	public URL clickSoundURL = getClass().getResource("/ButtonPress.wav");
 	public URL titleTrackURL = getClass().getResource("/titleTrack.wav");
@@ -49,18 +56,21 @@ public class Constants {
 	public static String InventoryStatus;
 	public static String OptionsStatus;
 	public static String BackpackStatus;
+	public static boolean DropStatus;
 	public static boolean fullScreenOn;
+	public static int currentBackpackFrame;
 	//BUTTONS
 	public static String text, b1text, b2text, b3text, b4text, b5text;
 	//ENEMIES
 	public static SuperEnemy currentEnemy;
 	//MISC
-	public static int inputcount, bisonCount, second, Ncount, Ecount, timesGiven;
+	public static int inputcount, bisonCount, bubbleCount, second, Ncount, Ecount, timesGiven;
 	public static boolean inBattle, forkUsed, switchOn;
 	public static String position, savedPosition, enemyPosition, fishingPosition;
 	public static Timer timer;
+	public static boolean seaweedGuard;
 	//BIOME
-	public static boolean saltySea, shallows, brinyDeep;
+	public static boolean saltySea;
 	
 	/*
 	public void initializeSounds() {
@@ -87,15 +97,19 @@ public class Constants {
 		
 		m_game.m_player.playerHP = 100;
 		m_game.m_player.weapon = new None();
+		m_game.m_player.fishingRod = new Empty();
 		m_game.m_player.playerHP = 100;
-		m_game.m_player.gold = 0;
+		m_game.m_player.gold = 20;
 		m_game.m_player.xp = 0;
-		m_game.m_player.playerdefense = 0;
+		m_game.m_player.shield = new Empty();
 		m_game.m_player.capsules = 0;
 		InventoryStatus = "close";
 		OptionsStatus = "close";
 		BackpackStatus = "close";
+		DropStatus = false;
 		savedPosition = "";
+		
+		seaweedGuard = false;
 		
 		m_game.m_player.playerItem[0] = new Potion();
 		for(int i = 1; i < m_game.m_player.playerItem.length; i++) m_game.m_player.playerItem[i] = new Empty();

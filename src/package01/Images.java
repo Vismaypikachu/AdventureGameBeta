@@ -7,8 +7,8 @@ import javax.swing.ImageIcon;
 
 public class Images {
 	
-	ImageIcon PlayerIcon, HealthIcon, WeaponIcon, GoldIcon, XPIcon, AttackIcon, DefenseIcon, CapsulesIcon;
-	
+	ImageIcon PlayerIcon, HealthIcon, SwordIcon, WandIcon, EmptyIcon, GoldIcon, XPIcon, AttackIcon, DefenseIcon, CapsulesIcon;
+	ImageIcon SkullsIcon;
 	
 	game m_game;
 	
@@ -40,10 +40,20 @@ public class Images {
 		Image newimg2 = image2.getScaledInstance(iconwidth, iconheight,  java.awt.Image.SCALE_SMOOTH);
 		HealthIcon = new ImageIcon(newimg2);
 		
-		WeaponIcon = new ImageIcon(getClass().getClassLoader().getResource("SwordIcon.png"));
-		Image image3 = WeaponIcon.getImage();
+		SwordIcon = new ImageIcon(getClass().getClassLoader().getResource("SwordIcon.png"));
+		Image image3 = SwordIcon.getImage();
 		Image newimg3 = image3.getScaledInstance(iconwidth, iconheight,  java.awt.Image.SCALE_SMOOTH);
-		WeaponIcon = new ImageIcon(newimg3);
+		SwordIcon = new ImageIcon(newimg3);
+		
+		WandIcon = new ImageIcon(getClass().getClassLoader().getResource("WandIcon.png"));
+		Image image35 = WandIcon.getImage();
+		Image newimg35 = image35.getScaledInstance(iconwidth, iconheight,  java.awt.Image.SCALE_SMOOTH);
+		WandIcon = new ImageIcon(newimg35);
+		
+		EmptyIcon = new ImageIcon(getClass().getClassLoader().getResource("Empty.png"));
+		Image image36 = EmptyIcon.getImage();
+		Image newimg36 = image36.getScaledInstance(iconwidth, iconheight,  java.awt.Image.SCALE_SMOOTH);
+		EmptyIcon = new ImageIcon(newimg36);
 		
 		GoldIcon = new ImageIcon(getClass().getClassLoader().getResource("GoldIcon.png"));
 		Image image4 = GoldIcon.getImage();
@@ -69,5 +79,10 @@ public class Images {
 		Image image8 = CapsulesIcon.getImage();
 		Image newimg8 = image8.getScaledInstance(iconwidth, iconheight,  java.awt.Image.SCALE_SMOOTH);
 		CapsulesIcon = new ImageIcon(newimg8);
+		
+		SkullsIcon = new ImageIcon(getClass().getClassLoader().getResource("Skulls.png"));
+		Image image9 = SkullsIcon.getImage();
+		Image newimg9 = image9.getScaledInstance(iconwidth, iconheight,  java.awt.Image.SCALE_SMOOTH);
+		SkullsIcon = new ImageIcon(newimg9);
 	}
 }

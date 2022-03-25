@@ -24,7 +24,7 @@ public class Fishing {
 	public void reel() {
 		int x = r.nextInt((20-10)+1)+7;
 		
-		if(m_game.m_player.fishingRod.chance >= x) {
+		if(m_game.m_player.fishingRod.stat >= x) {
 			m_game.m_ui.mainTextArea.setText("You caught a fish!\n(Fish added to Inventory)");
 			m_game.m_inventory.addInventoryItem(new Fish());
 		}

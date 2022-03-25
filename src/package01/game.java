@@ -12,21 +12,22 @@ public class game {
 	//packge01
 	public Backpack m_backpack = new Backpack(this);
 	public Constants m_constants = new Constants(this);
-	Images m_images = new Images(this);
+	public Images m_images = new Images(this);
 	public Inventory m_inventory = new Inventory(this);
 	public Player m_player = new Player(this);
-	Sound m_sound = new Sound(this);
+	public Sound m_sound = new Sound(this);
 	public SoundEffect m_se = new SoundEffect();
 	public Story m_story = new Story(this);
 	public UI m_ui = new UI(this);
+	public Update m_update = new Update(this);
 	public VisibilityManager m_vm = new VisibilityManager(this);
 	
 	//package03
 	Fishing m_fishing = new Fishing(this);
 	
 	//package04
-	BackpackHandler m_bpHandler = new BackpackHandler(this);
-	ButtonHandler m_bHandler = new ButtonHandler(this);
+	public BackpackHandler m_bpHandler = new BackpackHandler(this);
+	public ButtonHandler m_bHandler = new ButtonHandler(this);
 	CapsulesHandler m_cHandler = new CapsulesHandler(this);
 	GameoverHandler m_goHandler = new GameoverHandler(this);
 	InputHandler m_inHandler = new InputHandler(this);
@@ -35,6 +36,7 @@ public class game {
 	StatsHandler m_sHandler = new StatsHandler(this);
 	ChoiceHandler m_choiceHandler = new ChoiceHandler();
 	MouseHandler m_mHandler = new MouseHandler(this);
+	DropHandler m_dHandler = new DropHandler(this);
 	
 	//package05
 	Battle m_battle = new Battle(this);
@@ -69,8 +71,8 @@ public class game {
 		public void actionPerformed(ActionEvent event){
 			String yourChoice = event.getActionCommand();
 			switch(yourChoice){
-				case "start": m_vm.hideTitleScreen(); m_sound.stop(); m_story.input(); break;
-				case "load": m_sound.stop(); m_story.loadData(); break;
+				case "start": m_vm.hideTitleScreen(); m_constants.reinitializeVars(); m_sound.stop(); m_story.input(); break;
+				case "load": m_sound.stop(); m_story.loadData(); m_ui.choice1.setVisible(true); m_ui.choice2.setVisible(true); m_ui.choice3.setVisible(true); m_ui.choice4.setVisible(true); m_ui.specialattack.setVisible(true); m_ui.inGameOptionsButton.setVisible(true); m_ui.inventoryButton.setVisible(true); break;
 				case "credits": m_ui.credits(); break;
 				case "fullScreen": 
 					if(m_constants.fullScreenOn == false) {

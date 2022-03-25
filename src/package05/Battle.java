@@ -15,17 +15,19 @@ public class Battle {
 	
 	public void enemyattack(){
 		m_game.m_constants.position = "enemyattack";
+		m_game.m_constants.inBattle = true;
+		m_game.m_ui.inGameOptionsButton.setVisible(false);
 		int enemydamage = 0;
 		//magical player vs physical
 		if(m_game.m_player.playerType.equals("Magical") && m_game.m_constants.currentEnemy.enemyAttackType.equals("Physical")) {
-			enemydamage = (int)Math.round((r.nextInt(((m_game.m_constants.currentEnemy.enemyAttackStat-5) - 1) + 1) + 1) - m_game.m_player.playerdefense);
+			enemydamage = (int)Math.round((r.nextInt(((m_game.m_constants.currentEnemy.enemyAttackStat-5) - 1) + 1) + 1) - m_game.m_player.shield.statDouble);
 		}
 		//physical player vs magical
 		if(m_game.m_player.playerType.equals("Physical") && m_game.m_constants.currentEnemy.enemyAttackType.equals("Magical")) {
-			enemydamage = (int)Math.round((r.nextInt(((m_game.m_constants.currentEnemy.enemyAttackStat+5) - 3) + 1) + 3) - m_game.m_player.playerdefense);
+			enemydamage = (int)Math.round((r.nextInt(((m_game.m_constants.currentEnemy.enemyAttackStat+5) - 3) + 1) + 3) - m_game.m_player.shield.statDouble);
 		}
 		else {
-			enemydamage = (int)Math.round((r.nextInt((m_game.m_constants.currentEnemy.enemyAttackStat - 3) + 1) + 3) - m_game.m_player.playerdefense);
+			enemydamage = (int)Math.round((r.nextInt((m_game.m_constants.currentEnemy.enemyAttackStat - 3) + 1) + 3) - m_game.m_player.shield.statDouble);
 		}
 		
 		m_game.m_ui.mainTextArea.setText(m_game.m_constants.currentEnemy.name + " attacked and dealt " + enemydamage + " damage.");
