@@ -72,7 +72,7 @@ public class game {
 			String yourChoice = event.getActionCommand();
 			switch(yourChoice){
 				case "start": m_vm.hideTitleScreen(); m_constants.reinitializeVars(); m_sound.stop(); m_story.input(); break;
-				case "load": m_sound.stop(); m_story.loadData(); break;
+				case "load": m_sound.stop(); m_story.loadData(); m_ui.choice1.setVisible(true); m_ui.choice2.setVisible(true); m_ui.choice3.setVisible(true); m_ui.choice4.setVisible(true); m_ui.specialattack.setVisible(true); m_ui.inGameOptionsButton.setVisible(true); m_ui.inventoryButton.setVisible(true); break;
 				case "credits": m_ui.credits(); break;
 				case "fullScreen": 
 					if(m_constants.fullScreenOn == false) {

@@ -656,6 +656,7 @@ public class UI {
 		choice1.addActionListener(m_game.m_goHandler);
 		choice1.addActionListener(m_game.m_sHandler);
 		choice1.setActionCommand("c1");
+		choice1.setVisible(true);
 		choiceButtonPanel.add(choice1);
 		
 		choice2 = new JButton("Choice2");
@@ -668,6 +669,7 @@ public class UI {
 		choice2.addActionListener(m_game.m_goHandler);
 		choice2.addActionListener(m_game.m_sHandler);
 		choice2.setActionCommand("c2");
+		choice2.setVisible(true);
 		choiceButtonPanel.add(choice2);
 		
 		choice3 = new JButton("Choice3");
@@ -680,6 +682,7 @@ public class UI {
 		choice3.addActionListener(m_game.m_goHandler);
 		choice3.addActionListener(m_game.m_sHandler);
 		choice3.setActionCommand("c3");
+		choice3.setVisible(true);
 		choiceButtonPanel.add(choice3);
 		
 		choice4 = new JButton("Choice4");
@@ -692,6 +695,7 @@ public class UI {
 		choice4.addActionListener(m_game.m_goHandler);
 		choice4.addActionListener(m_game.m_sHandler);
 		choice4.setActionCommand("c4");
+		choice4.setVisible(true);
 		choiceButtonPanel.add(choice4);
 		
 		specialattack = new JButton("Special Attack");
@@ -721,9 +725,9 @@ public class UI {
 		inGameOptionsButton.addActionListener(m_game.m_oHandler);
 		inGameOptionsButton.addActionListener(m_game.m_bHandler);
 		inGameOptionsButton.setActionCommand("inGameOptions");
+		inGameOptionsButton.setVisible(true);
 		choiceButtonPanel.add(inGameOptionsButton);
 
-		
 		inventoryButton = new JButton("[Inventory]");
 		inventoryButton.setBackground(Color.white);
 		inventoryButton.setForeground(Color.black);
@@ -732,6 +736,7 @@ public class UI {
 		inventoryButton.addActionListener(m_game.m_iHandler);
 		inventoryButton.addActionListener(m_game.m_bHandler);
 		inventoryButton.setActionCommand("inventoryButton");
+		inventoryButton.setVisible(true);
 		choiceButtonPanel.add(inventoryButton);
 		
 		

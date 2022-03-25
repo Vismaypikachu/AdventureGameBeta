@@ -24,6 +24,7 @@ import package02.Wand;
 import package03.Apple;
 import package03.BreathingMask;
 import package03.ChocolateBar;
+import package03.DevHead;
 import package03.Empty;
 import package03.Fish;
 import package03.FishingRod;
@@ -85,22 +86,22 @@ public class Story {
 		con.add(gameOverPanel);
 		*/
 		if(m_game.m_constants.position.equals("gameover")) {
-			m_game.m_constants.position = "gameover";
 			setChoices("Main Menu", "Exit Game", "Load from Last Save", "");
 			setNextPosition("gomenu", "exitGame", "loadGame", "");
 			m_game.m_ui.mainTextArea.setText("Seems like you died... Oh well. Lets go back");
 			m_game.m_ui.choice1.setVisible(true);
 			m_game.m_ui.choice2.setVisible(true);
 			m_game.m_ui.choice3.setVisible(true);
-			m_game.m_ui.choiceButtonPanel.remove(m_game.m_ui.choice4);
-			m_game.m_ui.choiceButtonPanel.remove(m_game.m_ui.specialattack);
+			m_game.m_ui.choice4.setVisible(false);
+			m_game.m_ui.specialattack.setVisible(false);
+//			m_game.m_ui.choiceButtonPanel.remove(m_game.m_ui.choice4);
+//			m_game.m_ui.choiceButtonPanel.remove(m_game.m_ui.specialattack);
 			m_game.m_ui.inventoryButton.setVisible(false);
 			m_game.m_ui.inGameOptionsButton.setVisible(false);
 			m_game.m_ui.sidePanel.setVisible(false);
 			m_game.m_ui.sidePanel.setVisible(false);
-			m_game.m_constants.reinitializeVars();
 		}
-		else {
+		else if(!m_game.m_constants.position.equals("gameover")){
 			m_game.m_constants.reinitializeVars();
 			m_game.m_ui.mainTextArea.setText("You don't have a saveFile. Please start a game to save your progress.");
 			setChoices("Continue", "", "", "");
@@ -217,7 +218,7 @@ public class Story {
 					case "seaweedguard": seaweedTowers(); break;
 				}
 			break;
-			case "loadGame": m_game.m_sound.stop(); m_game.m_story.loadData(); break;
+			case "loadGame": m_game.m_sound.stop(); m_game.m_ui.choice1.doClick(); m_game.m_story.loadData(); break;
 			case "reel": m_game.m_fishing.reel(); break;
 			case "fishingdone":
 				switch(m_game.m_constants.fishingPosition) {
@@ -570,6 +571,12 @@ public class Story {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param name The item being loaded in
+	 * @param i The array index for the backpack slot the item is going to
+	 * @param num 1 = Inventory, 2 = Backpack
+	 */
 	public void setItem(String name, int i, int num) {
 		if(num == 1) {
 			switch(name) {
@@ -596,6 +603,7 @@ public class Story {
 				case "Shield": m_game.m_player.backpackItem[i] = m_game.m_player.shield; break;
 				case "Seaweed Shield": m_game.m_player.backpackItem[i] = m_game.m_player.shield; break;
 				//Key Items
+				case "Dev's Head": m_game.m_backpack.addBackpackItem(new DevHead()); break;
 			}
 		}
 	}
@@ -1488,22 +1496,37 @@ public class Story {
 	
 		
 		setChoices("Explore Shipwreck", "Underwater Ruins", "", "Go Back to The Salty Sea");
-		setNextPosition("shipwreck", "underwaterRuins", "", "saltysea");
+		setNextPosition("shipwreck", "underwaterruins", "", "saltysea");
 	}
 	
 	public void shipwreck() {
 		m_game.m_constants.position = "shipwreck";
 		
-		m_game.m_ui.mainTextArea.setText("You decide to investigate the Shipwreck's which lie upon the floor. \nWhere do you go next?");
+		m_game.m_ui.mainTextArea.setText("You decide to investigate the Shipwrecks which lie upon the sea floor. \nWhere do you go next?");
 	
 		
-		setChoices("The Hold", "Crew Quarters", "Captain's Quarters", "thetwilightzone");
-		setNextPosition("", "", "", "");
+		setChoices("The Hold", "Crew Quarters", "Captain's Quarters", "The Twilight Zone");
+		setNextPosition("", "", "", "thetwilightzone");
+	}
+	
+	public void theHold() {
+		m_game.m_constants.position = "theHold";
+		
+		
+	}
+	
+	public void crewQuarters() {
+		
+	}
+	
+	public void captainsQuarters() {
+		
 	}
 	
 	public void underwaterRuins() {
 		
 	}
+
 	//------------------------------SEAFOOD MARKET-------------------------------
 	
 	public void seafoodMarket() {

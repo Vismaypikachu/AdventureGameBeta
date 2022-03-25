@@ -28,7 +28,7 @@ public class Constants {
 	public static int currentScreenWidth = 1070;
 	public static int currentScreenHeight = 712;
 	public static boolean buttonBorderOn = false;
-	public static int fps = 60;
+	public static int fps = 30;
 	//FONT
 	public static int titleFontSize;
 	public static int normalFontSize;
