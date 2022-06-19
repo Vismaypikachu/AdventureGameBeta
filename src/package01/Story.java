@@ -94,11 +94,8 @@ public class Story {
 			m_game.m_ui.choice3.setVisible(true);
 			m_game.m_ui.choice4.setVisible(false);
 			m_game.m_ui.specialattack.setVisible(false);
-//			m_game.m_ui.choiceButtonPanel.remove(m_game.m_ui.choice4);
-//			m_game.m_ui.choiceButtonPanel.remove(m_game.m_ui.specialattack);
 			m_game.m_ui.inventoryButton.setVisible(false);
 			m_game.m_ui.inGameOptionsButton.setVisible(false);
-			m_game.m_ui.sidePanel.setVisible(false);
 			m_game.m_ui.sidePanel.setVisible(false);
 		}
 		else if(!m_game.m_constants.position.equals("gameover")){
@@ -218,7 +215,14 @@ public class Story {
 					case "seaweedguard": seaweedTowers(); break;
 				}
 			break;
-			case "loadGame": m_game.m_sound.stop(); m_game.m_ui.choice1.doClick(); m_game.m_story.loadData(); break;
+			case "loadGame": 
+				if(!Constants.position.equals("gameover")) {
+					m_game.m_sound.stop(); m_game.m_ui.choice1.doClick(); m_game.m_story.loadData(); break;
+				}
+				else {
+					
+					m_game.m_sound.stop(); m_game.m_ui.choice1.doClick(); m_game.m_story.loadData(); break;
+				}
 			case "reel": m_game.m_fishing.reel(); break;
 			case "fishingdone":
 				switch(m_game.m_constants.fishingPosition) {
@@ -542,6 +546,10 @@ public class Story {
 			stringToClass(br.readLine(), 4);
 			 */
 			br.close();
+			
+			m_game.m_ui.choice4.setVisible(true);
+			m_game.m_ui.inGameOptionsButton.setVisible(true);
+			m_game.m_ui.inventoryButton.setVisible(true);
 			
 			
 			m_game.m_constants.currentEnemy = new EmptyAir();

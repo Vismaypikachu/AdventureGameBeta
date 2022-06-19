@@ -72,9 +72,9 @@ public class game {
 			String yourChoice = event.getActionCommand();
 			switch(yourChoice){
 				case "start": m_vm.hideTitleScreen(); m_constants.reinitializeVars(); m_sound.stop(); m_story.input(); break;
-				case "load": m_sound.stop(); m_story.loadData(); m_ui.choice1.setVisible(true); m_ui.choice2.setVisible(true); m_ui.choice3.setVisible(true); m_ui.choice4.setVisible(true); m_ui.specialattack.setVisible(true); m_ui.inGameOptionsButton.setVisible(true); m_ui.inventoryButton.setVisible(true); break;
-				case "credits": m_ui.credits(); break;
-				case "fullScreen": 
+				case "load": m_vm.hideTitleScreen(); m_sound.stop(); m_story.loadData(); m_ui.choice1.setVisible(true); m_ui.choice2.setVisible(true); m_ui.choice3.setVisible(true); m_ui.choice4.setVisible(true); m_ui.specialattack.setVisible(true); m_ui.inGameOptionsButton.setVisible(true); m_ui.inventoryButton.setVisible(true); break;
+				case "credits": m_vm.hideTitleScreen(); m_ui.credits(); break;
+				case "fullScreen":
 					if(m_constants.fullScreenOn == false) {
 						m_ui.setFullScreen(); break;
 					}
@@ -89,13 +89,22 @@ public class game {
 						m_constants.buttonBorderOn = false; m_ui.createUIComponent(); break;
 					}
 				case "backTitle":
+					try {
+						m_vm.hideCreditsScreen();
+					}catch(Exception e) {}
+					try {
+						m_vm.hideOptionsScreen();
+					}catch(Exception e) {}
+					
+					
 					if(m_constants.fullScreenOn == false) {
-						m_ui.createUIComponent(); break;
+						m_ui.endFullScreen(); m_vm.showTitleScreen(); break;
 					}
 					else {
-						m_ui.createUIComponent(); m_ui.setFullScreen(); break;
+						m_ui.setFullScreen(); m_vm.showTitleScreen(); break;
 					}
-				case "options": m_ui.options(); break;
+					
+				case "options": m_vm.hideTitleScreen(); m_ui.options(); break;
 				case "c1": m_story.selectPosition(nextPosition1); break;
 				case "c2": m_story.selectPosition(nextPosition2); break;
 				case "c3": m_story.selectPosition(nextPosition3); break;

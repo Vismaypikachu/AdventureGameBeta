@@ -16,15 +16,6 @@ public class Images {
 		m_game = g;
 	}
 
-	/*
-	UI m_ui;
-	Constants m_constants = new Constants(m_ui);
-	
-	
-	public Images(UI userInterface) {
-		m_ui = userInterface;
-	}
-	*/
 	public void initializeImages() {
 		//icons
 		int iconwidth = (int) Math.round(m_game.m_constants.currentScreenWidth * 0.03592592592592592592592592592593);

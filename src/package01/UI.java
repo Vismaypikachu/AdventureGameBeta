@@ -6,6 +6,7 @@ import java.awt.Container;
 import java.awt.Font;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.net.URL;
@@ -23,9 +24,9 @@ public class UI {
 	
 	public JFrame window;
 	Container con;
-	public JPanel mainTextPanel, choiceButtonPanel, sidePanel, playerPanel, counterPanel, imagePanel, backpackTextAreaPanel, backpackButtonPanel, backpackStatsPanel, backpackPanel, backpackNavigationPanel, titleNamePanel, startButtonPanel, optionsPanel, optionsPanel2, optionsLabelPanel, backButtonPanel, creditsTextAreaPanel, creditsPanel, creditsPanel2;
+	public JPanel mainTextPanel, choiceButtonPanel, sidePanel, playerPanel, counterPanel, imagePanel, backpackTextAreaPanel, backpackButtonPanel, backpackStatsPanel, backpackPanel, backpackNavigationPanel, titleNamePanel, startButtonPanel, optionsPanel, optionsPanel2, optionsLabelPanel, backButtonPanel, creditsTextAreaPanel, creditsPanel, creditsPanel2, titleScreenImagePanel;
 	public JTextArea mainTextArea, backpackTextArea, creditsTextArea, backpackStatsTextArea;
-	public JLabel counterLabel, playerNameLabel, playerNameLabelString, hpLabel, hpLabelNumber, weaponLabel, weaponLabelName, goldLabel, goldLabelNumber, xpLabel, xpLabelNumber, attackLabel, attackLabelNumber, defenseLabel, defenseLabelNumber, capsuleLabel, capsuleLabelNumber, optionsPanelLabel, fullScreenLabel, fullScreenLabelString, buttonBorderLabel, buttonBorderLabelString, creditsPanelLabel, creditsPanelLabel2, creditsPanelLabel3, creditsPanelLabel4, creditsPanelLabel5, titleNameLabel, imageLabel, backpackNavigationLabel;
+	public JLabel counterLabel, playerNameLabel, playerNameLabelString, hpLabel, hpLabelNumber, weaponLabel, weaponLabelName, goldLabel, goldLabelNumber, xpLabel, xpLabelNumber, attackLabel, attackLabelNumber, defenseLabel, defenseLabelNumber, capsuleLabel, capsuleLabelNumber, optionsPanelLabel, fullScreenLabel, fullScreenLabelString, buttonBorderLabel, buttonBorderLabelString, creditsPanelLabel, creditsPanelLabel2, creditsPanelLabel3, creditsPanelLabel4, creditsPanelLabel5, titleNameLabel, imageLabel, backpackNavigationLabel, titleScreenImageLabel;
 	public JButton specialattack, inGameOptionsButton, backpackButton, backpackDropButton, backpackLeftButton, backpackRightButton, inventoryButton, choice1, choice2, choice3, choice4, fullScreenButton, buttonBorderButton, backButton, creditsBackButton, startButton, loadButton, creditsButton, optionsButton;
 	
 	//Input
@@ -68,12 +69,12 @@ public class UI {
 	
 	//NEW
 	Random r = new Random();
-	ImageIcon image;
+	ImageIcon image, image2;
 	
 	
-	public JButton [] backpackButtons = new JButton[16];
-	public JButton [] inGameOptionsButtons = new JButton[5];
-	public JButton [] inventoryButtons = new JButton[5];
+	public JButton[] backpackButtons = new JButton[16];
+	public JButton[] inGameOptionsButtons = new JButton[5];
+	public JButton[] inventoryButtons = new JButton[5];
 	
 	//previously passed in choiceHandler
 	public void createUI() {
@@ -95,48 +96,27 @@ public class UI {
 		
 		createFont();
 		createUIComponent();
-				
+		window.revalidate();
 	}
 	
 	public void createUIComponent() {
+		System.out.println("1");
+		setTitleImage(getURL("/TitleScreen.png"));
 		m_game.m_constants.position = "title";
 		
 		m_game.m_sound.setMusic(m_game.m_constants.titleTrackURL);
 		try {
-			window.remove(optionsPanel);
-			window.remove(optionsPanel2);
-			window.remove(optionsLabelPanel);
-			window.remove(backButtonPanel);
-			window.dispose();
-		}
-		catch(Exception e) {
-			
-		}
+			m_game.m_vm.hideOptionsScreen();
+		}catch(Exception e) {}
+		
 		try {
-			window.remove(mainTextPanel);
-			window.remove(choiceButtonPanel);
-			window.remove(backpackPanel);
-			window.remove(backpackStatsPanel);
-			window.remove(backpackTextAreaPanel);
-			window.remove(backpackButtonPanel);
-			window.remove(sidePanel);
-			window.remove(playerPanel);
-			window.remove(imagePanel);
-			window.remove(counterPanel);
-			window.dispose();
-		}
-		catch (Exception e) {
-			
-		}
+			m_game.m_vm.hideGameScreen();
+		}catch (Exception e) {}
+		
+		
 		try {
-			window.remove(creditsTextAreaPanel);;
-			window.remove(creditsPanel);
-			window.remove(creditsPanel2);
-			window.dispose();
-		}
-		catch(Exception e) {
-			
-		}
+			m_game.m_vm.hideCreditsScreen();
+		}catch(Exception e) {}
 		
 		
 		titleNamePanel = new JPanel();
@@ -146,12 +126,14 @@ public class UI {
 		int tnp_h = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.2106741573033708);
 		titleNamePanel.setBounds(tnp_x, tnp_y, tnp_w, tnp_h);
 		//titleNamePanel.setBounds(100, 100, 600, 150);
-		titleNamePanel.setBackground(m_game.m_constants.black);
 		int chance = r.nextInt(999);
 		if(chance == 444) titleNameLabel = new JLabel("AVDNERUTE MEAG");
 		else titleNameLabel = new JLabel("ADVENTURE GAME");
 		titleNameLabel.setForeground(Color.white);
 		titleNameLabel.setFont(titleFont);
+		titleNamePanel.setBackground(Color.black);
+		titleNamePanel.setVisible(true);
+		titleNameLabel.setVerticalAlignment(JLabel.CENTER);
 		
 		
 		startButtonPanel = new JPanel();
@@ -161,7 +143,7 @@ public class UI {
 		int sbp_h = (int)Math.round(1.5 * m_game.m_constants.currentScreenHeight * 0.1804494382022472);
 		startButtonPanel.setBounds(sbp_x, sbp_y, sbp_w, sbp_h);
 		//startButtonPanel.setBounds(300, 400, 200, 100);
-		startButtonPanel.setBackground(m_game.m_constants.black);
+		startButtonPanel.setBackground(null);
 		startButtonPanel.setLayout(new GridLayout(4,1));
 		
 		startButton = new JButton("START");
@@ -226,152 +208,26 @@ public class UI {
 		con.add(startButtonPanel);
 		
 		window.setVisible(true);
+		
 	}
 	
 	public void createUIComponent2() {
-		m_game.m_constants.position = "title";
+		System.out.println("2");
 		
-		m_game.m_sound.setMusic(m_game.m_constants.titleTrackURL);
-		try {
-			window.remove(optionsPanel);
-			window.remove(optionsPanel2);
-			window.remove(backButtonPanel);
-			window.dispose();
-		}
-		catch(Exception e) {
-			
-		}
-		
-		try {
-			window.remove(creditsTextAreaPanel);
-			window.remove(creditsPanel);
-			window.remove(creditsPanel2);
-			window.dispose();
-		}
-		catch(Exception e) {
-			
-		}
-		
-		
-		titleNamePanel = new JPanel();
-		int tnp_x = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.2196261682242991);
-		int tnp_y = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.1404494382022472);
-		int tnp_w = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.5607476635514019);
-		int tnp_h = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.2106741573033708);
-		titleNamePanel.setBounds(tnp_x, tnp_y, tnp_w, tnp_h);
-		//titleNamePanel.setBounds(100, 100, 600, 150);
-		titleNamePanel.setBackground(m_game.m_constants.black);
-		int chance = r.nextInt(999);
-		if(chance == 444) titleNameLabel = new JLabel("AVDNERUTE MEAG");
-		else titleNameLabel = new JLabel("ADVENTURE GAME");
-		titleNameLabel.setForeground(Color.white);
-		titleNameLabel.setFont(titleFont);
-		
-		
-		startButtonPanel = new JPanel();
-		int sbp_x = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.4065420560747664);
-		int sbp_y = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.5617977528089888);
-		int sbp_w = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.1869158878504673);
-		int sbp_h = (int)Math.round(1.5 * m_game.m_constants.currentScreenHeight * 0.1804494382022472);
-		startButtonPanel.setBounds(sbp_x, sbp_y, sbp_w, sbp_h);
-		//startButtonPanel.setBounds(300, 400, 200, 100);
-		startButtonPanel.setBackground(m_game.m_constants.black);
-		startButtonPanel.setLayout(new GridLayout(4,1));
-		
-		startButton = new JButton("START");
-		startButton.setBackground(Color.black);
-		startButton.setForeground(Color.white);
-		startButton.setFont(normalFont);
-		startButton.setFocusPainted(false); //gets rid of small text box
-		startButton.addActionListener(m_game.m_choiceHandler);
-		startButton.addActionListener(m_game.m_bHandler);
-		startButton.setActionCommand("start");
-		
-		
-		loadButton = new JButton("CONTINUE");
-		loadButton.setBackground(Color.black);
-		loadButton.setForeground(Color.white);
-		loadButton.setFont(normalFont);
-		loadButton.setFocusPainted(false); //gets rid of small text box
-		loadButton.addActionListener(m_game.m_choiceHandler);
-		loadButton.addActionListener(m_game.m_bHandler);
-		loadButton.setActionCommand("load");
-		
-		creditsButton = new JButton("CREDITS");
-		creditsButton.setBackground(Color.black);
-		creditsButton.setForeground(Color.white);
-		creditsButton.setFont(normalFont);
-		creditsButton.setFocusPainted(false); //gets rid of small text box
-		creditsButton.addActionListener(m_game.m_choiceHandler);
-		creditsButton.addActionListener(m_game.m_bHandler);
-		creditsButton.setActionCommand("credits");
-		
-		optionsButton = new JButton("OPTIONS");
-		optionsButton.setBackground(Color.black);
-		optionsButton.setForeground(Color.white);
-		optionsButton.setFont(normalFont);
-		optionsButton.setFocusPainted(false); //gets rid of small text box
-		optionsButton.addActionListener(m_game.m_choiceHandler);
-		optionsButton.addActionListener(m_game.m_bHandler);
-		optionsButton.setActionCommand("options");
-		
-		titleNamePanel.add(titleNameLabel);
-		startButtonPanel.add(startButton);
-		startButtonPanel.add(loadButton);
-		startButtonPanel.add(creditsButton);
-		startButtonPanel.add(optionsButton);
-		
-		
-		if(m_game.m_constants.buttonBorderOn == true) {
-			startButton.setBorder(m_game.m_constants.blackline);
-			loadButton.setBorder(m_game.m_constants.blackline);
-			creditsButton.setBorder(m_game.m_constants.blackline);
-			optionsButton.setBorder(m_game.m_constants.blackline);
-		}
-		else if(m_game.m_constants.buttonBorderOn == false) {
-			startButton.setBorder(null);
-			loadButton.setBorder(null);
-			creditsButton.setBorder(null);
-			optionsButton.setBorder(null);
-		}
-		
-		con.add(titleNamePanel);
-		con.add(startButtonPanel);
-		
-		window.setVisible(true);
-		
-		
-		setFullScreen();
-	}
-	
-	public void createUIComponent3() {
 		m_game.m_constants.position = "title";
 		m_game.m_constants.reinitializeVars();
 		
 		m_game.m_sound.setMusic(m_game.m_constants.titleTrackURL);
 		try {
-			window.remove(mainTextPanel);
-			window.remove(backpackPanel);
-			window.remove(backpackStatsPanel);
-			window.remove(backpackStatsPanel);
-			window.remove(backpackButtonPanel);
-			window.remove(choiceButtonPanel);
-			window.remove(sidePanel);
-			window.remove(imagePanel);
-			window.remove(playerPanel);
-			window.remove(counterPanel);
-			window.dispose();
-		}
-		catch(Exception e) {
-			
-		}
+			m_game.m_vm.hideGameScreen();
+		}catch(Exception e) {}
 		
 		
 		titleNamePanel = new JPanel();
 		int tnp_x = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.2196261682242991);
 		int tnp_y = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.1404494382022472);
 		int tnp_w = (int)Math.round(m_game.m_constants.currentScreenWidth * 0.5607476635514019);
-		int tnp_h = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.2106741573033708);
+		int tnp_h = (int)Math.round(m_game.m_constants.currentScreenHeight * 0.1106741573033708);
 		titleNamePanel.setBounds(tnp_x, tnp_y, tnp_w, tnp_h);
 		//titleNamePanel.setBounds(100, 100, 600, 150);
 		titleNamePanel.setBackground(m_game.m_constants.black);
@@ -380,6 +236,8 @@ public class UI {
 		else titleNameLabel = new JLabel("ADVENTURE GAME");
 		titleNameLabel.setForeground(Color.white);
 		titleNameLabel.setFont(titleFont);
+		titleNamePanel.setVisible(true);
+		titleNameLabel.setVerticalAlignment(JLabel.CENTER);
 		
 		
 		startButtonPanel = new JPanel();
@@ -452,46 +310,41 @@ public class UI {
 		con.add(titleNamePanel);
 		con.add(startButtonPanel);
 		
+		setTitleImage(getURL("/TitleScreen.png"));
+		
 		window.setVisible(true);
+		startButton.setVisible(true);
+		loadButton.setVisible(true);
+		creditsButton.setVisible(true);
+		optionsButton.setVisible(true);
 	}
 
 	public void endFullScreen() {
 		m_game.m_constants.fullScreenOn = false;
 		try {
-			window.remove(titleNamePanel);
-			window.remove(startButtonPanel);
-			window.dispose();
-		}
-		catch(Exception e) {
-			
-		}
+			m_game.m_vm.hideOptionsScreen();
+		}catch(Exception e) {}
+		
+		try {
+			m_game.m_vm.hideTitleScreen();
+		}catch(Exception e) {}
 	
 		gDevice.setFullScreenWindow(null);
 		
 		m_game.m_constants.currentScreenWidth = 1070;
 		m_game.m_constants.currentScreenHeight = 712;
 		
+		titleScreenImagePanel = null;
+		 
 		createFont();
-		createUIComponent();
+		createUIComponent2();
 	}
 	
 	public void endFullScreen2() {
 		m_game.m_constants.fullScreenOn = false;
 		try {
-			window.remove(mainTextPanel);
-			window.remove(choiceButtonPanel);
-			window.remove(playerPanel);
-			window.remove(backpackPanel);
-			window.remove(backpackTextAreaPanel);
-			window.remove(backpackStatsPanel);
-			window.remove(backpackButtonPanel);
-			window.remove(sidePanel);
-			window.remove(imagePanel);
-			window.dispose();
-		}
-		catch(Exception e) {
-			
-		}
+			m_game.m_vm.hideGameScreen();
+		}catch(Exception e) {}
 	
 		gDevice.setFullScreenWindow(null);
 		
@@ -507,46 +360,32 @@ public class UI {
 		m_game.m_constants.fullScreenOn = true;
 		//full screen from title page
 		try {
-			window.remove(optionsPanel);
-			window.remove(optionsPanel2);
-			window.remove(optionsLabelPanel);
-			window.remove(backButtonPanel);
-			window.dispose();
-		}
-		catch(Exception e) {
-			
-		}
+			m_game.m_vm.hideOptionsScreen();
+		}catch(Exception e) {}
+		
+		
 		gDevice.setFullScreenWindow(window);
 		m_game.m_constants.currentScreenWidth = window.getWidth();
 		m_game.m_constants.currentScreenHeight = window.getHeight();
 		
+		titleScreenImagePanel = null;
 		
 		createFont();
-		createUIComponent3();
+		createUIComponent2();
 	}
 
 	public void setFullScreen2() {
 		m_game.m_constants.fullScreenOn = true;
-		//full screen from options menu
+		//full screen from game menu
 		try {
-			window.remove(mainTextPanel);
-			window.remove(playerPanel);
-			window.remove(choiceButtonPanel);
-			window.remove(imagePanel);
-			window.remove(sidePanel);
-			window.remove(sidePanel);
-			window.remove(backpackPanel);
-			window.remove(backpackTextAreaPanel);
-			window.remove(backpackStatsPanel);
-			window.remove(backpackButtonPanel);
-			window.dispose();
-		}
-		catch(Exception e) {
-			
-		}
+			m_game.m_vm.hideGameScreen();
+		}catch(Exception e) {}
+		
+		
 		gDevice.setFullScreenWindow(window);
 		m_game.m_constants.currentScreenWidth = window.getWidth();
 		m_game.m_constants.currentScreenHeight = window.getHeight();
+		
 		
 		m_game.m_images.initializeImages();
 		createFont();
@@ -558,6 +397,10 @@ public class UI {
 			try {
 				m_game.m_constants.position = "newGame";
 				m_game.m_constants.fishingPosition = "";
+//				choice1.setVisible(true);
+//				choice2.setVisible(true);
+//				choice3.setVisible(true);
+//				choice4.setVisible(true);
 				textPanel.setVisible(false);
 				textLabel.setVisible(false);
 				inputPanel.setVisible(false);
@@ -1365,6 +1208,40 @@ public class UI {
 		image = new ImageIcon(im);
 		imageLabel.setIcon(image);
 	}
+	
+	public void setTitleImage(URL ImageURL) {
+		if(titleScreenImagePanel != null && !titleScreenImagePanel.isVisible()) {
+			titleScreenImagePanel.setVisible(true);
+			titleNamePanel.setVisible(true);
+		}
+		else if(titleScreenImagePanel == null) {
+			titleScreenImagePanel = new JPanel();
+			titleScreenImagePanel.setBounds(0, 0, Constants.currentScreenWidth, Constants.currentScreenHeight);
+			titleScreenImagePanel.setBackground(Color.red);
+			titleScreenImagePanel.setVisible(true);
+			
+			
+			titleScreenImageLabel = new JLabel();
+			titleScreenImagePanel.add(titleScreenImageLabel);
+			
+			con.add(titleScreenImagePanel);
+			
+			m_game.m_constants.currentImage = ImageURL;
+			image2 = new ImageIcon(ImageURL);
+			int image_w = (int)Math.round(m_game.m_constants.currentScreenWidth);
+			int image_h = (int)Math.round(m_game.m_constants.currentScreenHeight);
+			
+			Image im = image2.getImage().getScaledInstance(image_w, image_h, Image.SCALE_DEFAULT);
+			image2 = new ImageIcon(im);
+			titleScreenImageLabel.setIcon(image2);
+			
+			con.setComponentZOrder(titleScreenImagePanel, con.getComponentCount()-1);			
+		}
+	}
+
+	public URL getURL(String fileName) {
+		return getClass().getResource(fileName);
+	}
 
 	public void backpack() {
 		//NAVIGATION
@@ -1574,18 +1451,14 @@ public class UI {
 	
 	public void options() {
 		m_game.m_constants.position = "options";
-		titleNamePanel.setVisible(false);
-		startButtonPanel.setVisible(false);
+		
+		try{
+			m_game.m_vm.hideTitleScreen();
+		} catch(Exception e) {}
 		try {
-			inputPanel.setVisible(false);
-			jtf.setVisible(false);	
-			creditsPanel.setVisible(false);
-			creditsTextAreaPanel.setVisible(false);
-			creditsPanel2.setVisible(false);
+			m_game.m_vm.hideCreditsScreen();
 		}
-		catch(Exception e) {
-			
-		}
+		catch(Exception e) {}
 		
 		optionsLabelPanel = new JPanel();
 		optionsLabelPanel.setBackground(m_game.m_constants.black);
